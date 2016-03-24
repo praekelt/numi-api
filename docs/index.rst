@@ -73,11 +73,13 @@ If the data provided in the request body is invalid JSON, a ``400 Bad Request`` 
 .. sourcecode:: http
 
    HTTP/1.1 400 Bad Request
+   Content-Type: application/json
 
    {
      "type": "parse_error",
      "message": "Invalid JSON in request body"
    }
+
 
 Validation errors
 *****************
@@ -97,6 +99,7 @@ describing the error.
 .. sourcecode:: http
 
    HTTP/1.1 422 Unprocessable Entity
+   Content-Type: application/json
 
    {
      "type": "validation_error",
