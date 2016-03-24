@@ -96,7 +96,7 @@ describing the error.
 
 .. sourcecode:: http
 
-   HTTP/1.1 400 Bad Request
+   HTTP/1.1 422 Unprocessable Entity
 
    {
      "type": "validation_error",
