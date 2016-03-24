@@ -107,11 +107,11 @@ describing the error.
      "details": {
        "errors": [{
          "type", "required",
-         "path": "foo.0.baz"
+         "path": "foo.0.baz",
          "message": "'quux' is a required property"
        }, {
          "type", "type",
-         "path": "bar"
+         "path": "bar",
          "message": "23 is not of type 'string'"
        }]
      }
