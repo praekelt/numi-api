@@ -118,6 +118,38 @@ describing the error.
    }
 
 
+.. TODO Projects endpoints
+
+
+Dialogues
+---------
+
+.. http:get:: /projects/(str:project_id)/dialogues/
+
+  Retrieves a summary of every dialogue contained in the project with id
+  ``:project_id``.
+
+  .. sourcecode:: http
+
+      GET /projecs/23/dialogues/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "dialogues": [{
+         "id": "21",
+         "title": "Service Rating Survey",
+         "url": "/projects/23/dialogues/21"
+       }]
+     }
+
+  :>json string id: The dialogue's identifier
+  :>json string title: The dialogue's human-readable title
+  :>json string url: The dialogue's api url
+
 
 Indices and tables
 ==================
