@@ -59,7 +59,12 @@ the error, ``message`` is a human-readable string describing the error and
 
    {
      "type": "parse_error",
-     "message": "Invalid JSON in request body"
+     "message": "Invalid JSON in request body",
+     "details": {
+       "reason": "Expecting value",
+       "line": 1,
+       "column": 9
+     }
    }
 
 
@@ -68,7 +73,9 @@ Two client errors common to API endpoints expecting a request body are **parsing
 Parsing errors
 **************
 
-If the data provided in the request body is invalid JSON, a ``400 Bad Request`` response will be given:
+If the data provided in the request body is invalid JSON, a ``400 Bad Request`` response will be given.
+
+The ``details`` object contains a human readable ``reason`` string describing why parsing failed, as well as the ``line`` and ``column`` numbers for where parsing failed.
 
 .. sourcecode:: http
 
@@ -77,7 +84,12 @@ If the data provided in the request body is invalid JSON, a ``400 Bad Request`` 
 
    {
      "type": "parse_error",
-     "message": "Invalid JSON in request body"
+     "message": "Invalid JSON in request body",
+     "details": {
+       "reason": "Expecting value",
+       "line": 1,
+       "column": 9
+     }
    }
 
 
