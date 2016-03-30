@@ -138,7 +138,7 @@ Dialogues
 ~~~~~~~~~
 A dialogue comprises the entire set of steps to follow when a user interacts with a service. It contains a set of :ref:`Sequences <data-sequences>`, each of which contain a set of :ref:`Blocks <data-blocks>`.
 
-Dialogue schema
+Dialogue Schema
 ***************
 
 .. literalinclude:: ../schemas/dialogue.yml
@@ -149,7 +149,16 @@ Dialogue schema
 
 Sequences
 ~~~~~~~~~
-.. TODO
+A sequence is a set of steps that follow one after the other, where each step corresponds to a :ref:`Block <data-blocks>`. A user moves from one sequence to another if different steps need to be followed based on certain conditions.
+
+For example, a dialogue could contain a sequence with a block that asks the user a multiple choice question and moves the user to a different sequence that corresponds to their choice.
+
+
+Sequence Schema
+***************
+
+.. literalinclude:: ../schemas/sequence.yml
+  :language: yaml
 
 
 .. _data-blocks:
@@ -157,6 +166,19 @@ Sequences
 Blocks
 ~~~~~~
 .. TODO
+
+.. _data-symbol:
+
+Symbols
+~~~~~~~
+
+Symbols are used in a :ref:`Dialogue <data-dialogue>` data structure to allow clients to identify and reference blocks and sequences.
+
+Symbol Schema
+*************
+
+.. literalinclude:: ../schemas/symbol.yml
+  :language: yaml
 
 
 Indices and tables
