@@ -165,14 +165,24 @@ Sequence Schema
 
 Blocks
 ~~~~~~
-.. TODO
+
+A block is a single step to follow when interacting with the user. This step may be, for example, a screen asking the user a question, or a step not visible to the user, for example, registering the user with a service.
+
+Block Schema
+************
+
+Note that the block is also validated against a schema corresponding to its particular type (represented by the ``type`` field).
+
+.. literalinclude:: ../schemas/block.yml
+  :language: yaml
+
 
 .. _data-symbol:
 
 Symbols
 ~~~~~~~
 
-Symbols are used in a :ref:`Dialogue <data-dialogue>` data structure to allow clients to identify and reference blocks and sequences.
+Symbols are used in a :ref:`Dialogue <data-dialogue>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
 
 Symbol Schema
 *************
