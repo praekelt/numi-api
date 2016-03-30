@@ -1,7 +1,6 @@
 numi api documentation
 ======================
 
-Contents:
 
 .. toctree::
    :maxdepth: 2
@@ -129,6 +128,35 @@ describing the error.
      }
    }
 
+
+Data Structures
+---------------
+
+.. _data-dialogues:
+
+Dialogues
+~~~~~~~~~
+A dialogue comprises the entire set of steps to follow when a user interacts with a service. It contains a set of :ref:`Sequences <data-sequences>`, each of which contain a set of :ref:`Blocks <data-blocks>`.
+
+Dialogue schema
+***************
+
+.. literalinclude:: ../schemas/dialogue.yml
+  :language: yaml
+
+
+.. _data-sequences:
+
+Sequences
+~~~~~~~~~
+.. TODO
+
+
+.. _data-blocks:
+
+Blocks
+~~~~~~
+.. TODO
 
 
 Indices and tables
