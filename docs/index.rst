@@ -240,7 +240,6 @@ Retrieves the :ref:`description <data-dialogues>` of the dialogue with id ``dial
        "sequences": []
      }
 
-
 If the dialogue isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` given in the request.
 
   .. sourcecode:: http
@@ -252,6 +251,31 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
        "type": "not_found",
        "message": "Dialogue 21 not found",
        "details": {"id": "21"}
+     }
+
+.. http:post:: /projects/(str:project_id)/dialogues/
+
+Creates a new dialogue under the project with the id ``project_id`` using the :ref:`dialogue description <data-dialogues>` given in the request body and returns the created dialogue's description with the generated dialogue ``id`` field added.
+
+  .. sourcecode:: http
+
+     POST /projects/23/dialogues/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "title": "Service Rating Survey",
+       "sequences": []
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "title": "Service Rating Survey",
+       "sequences": []
      }
 
 
