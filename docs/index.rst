@@ -218,7 +218,7 @@ Dialogues
 
   :>json string id: The dialogue's identifier
   :>json string title: The dialogue's human-readable title
-  :>json string url: The dialogue's api url
+  :>json string url: API url for accessing the dialogue description.
 
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
@@ -255,7 +255,7 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
 
 .. http:post:: /projects/(str:project_id)/dialogues/
 
-Creates a new dialogue under the project with the id ``project_id`` using the :ref:`dialogue description <data-dialogues>` given in the request body and returns the created dialogue's description with the generated dialogue ``id`` field added.
+Creates a new dialogue under the project with the id ``project_id`` using the :ref:`dialogue description <data-dialogues>` given in the request body and returns the created dialogue's description, along with the generated dialogue ``id`` field and ``url`` field for accessing the dialogue description.
 
   .. sourcecode:: http
 
@@ -274,13 +274,14 @@ Creates a new dialogue under the project with the id ``project_id`` using the :r
 
      {
        "id": "21",
+       "url": "/projects/23/dialogues/21",
        "title": "Service Rating Survey",
        "sequences": []
      }
 
 .. http:put:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
-Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id`` with the description given in the request body and returns the given description.
+Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id`` with the description given in the request body and returns the given description, along with the dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
 
   .. sourcecode:: http
 
@@ -288,7 +289,6 @@ Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialo
      Content-Type: application/json
 
      {
-       "id": "21",
        "title": "Service Rating Survey",
        "sequences": []
      }
@@ -300,6 +300,7 @@ Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialo
 
      {
        "id": "21",
+       "url": "/projects/23/dialogues/21",
        "title": "Service Rating Survey",
        "sequences": []
      }
