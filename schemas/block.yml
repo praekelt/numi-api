@@ -19,4 +19,10 @@ properties:
     description: |
       A human-readable title describing the block.
 
+  properties:
+    type: object
+    description: |
+      Properties relevant to the block's type. For example, a block that asks
+      the user a question may have a `question` property here.
+
 additionalProperties: false
