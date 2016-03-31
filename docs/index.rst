@@ -223,6 +223,40 @@ Dialogues
   :>json string url: The dialogue's api url
 
 
+.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
+
+Retrieves the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id``.
+
+  .. sourcecode:: http
+
+      GET /projecs/23/dialogues/21 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "title": "Service Rating Survey",
+       "sequences": []
+     }
+
+
+If the dialogue isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` given in the request.
+
+  .. sourcecode:: http
+
+     HTTP/1.1 404 Not Found
+     Content-Type: application/json
+
+     {
+       "type": "not_found",
+       "message": "Dialogue 21 not found",
+       "details": {"id": "21"}
+     }
+
+
 Indices and tables
 ==================
 
