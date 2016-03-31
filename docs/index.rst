@@ -278,6 +278,35 @@ Creates a new dialogue under the project with the id ``project_id`` using the :r
        "sequences": []
      }
 
+.. http:put:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
+
+Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id`` with the description given in the request body and returns the given description.
+
+  .. sourcecode:: http
+
+     POST /projects/23/dialogues/21 HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "title": "Service Rating Survey",
+       "sequences": []
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "title": "Service Rating Survey",
+       "sequences": []
+     }
+
+.. warning::
+  If the ``id`` of a :ref:`sequences <data-sequences>` or :ref:`blocks <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated.
+
 
 Indices and tables
 ==================
