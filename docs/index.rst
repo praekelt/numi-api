@@ -179,7 +179,7 @@ Note that a block's ``properties`` object is validated against a schema correspo
 
 Symbols
 ~~~~~~~
-Symbols are used in a :ref:`Dialogue <data-dialogue>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
+Symbols are used in a :ref:`Dialogue <data-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
 
 Symbol Schema
 *************
