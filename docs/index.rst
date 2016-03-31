@@ -37,7 +37,7 @@ Unless otherwise specified, the following verbs are used for requests:
 +--------+------------------------------------------------------------+
 | POST   | Used for creating a resource                               |
 +--------+------------------------------------------------------------+
-| PUT    | Used to replace a resouce                                  |
+| PUT    | Used to replace a resource                                 |
 +--------+------------------------------------------------------------+
 | PATCH  | Used to partially update a resource with fields given in   |
 |        | the request body                                           |
