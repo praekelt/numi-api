@@ -171,7 +171,7 @@ A block is a single step to follow when interacting with the user. This step may
 Block Schema
 ************
 
-Note that the block is also validated against a schema corresponding to its particular type (represented by the ``type`` field).
+Note that a block's ``properties`` object is validated against a schema corresponding to the block's type (represented by the ``type`` field).
 
 .. literalinclude:: ../schemas/block.yml
   :language: yaml
