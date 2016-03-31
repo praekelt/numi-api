@@ -306,7 +306,7 @@ Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialo
      }
 
 .. warning::
-  If the ``id`` of a :ref:`sequences <data-sequences>` or :ref:`blocks <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated.
+  If the ``id`` of a :ref:`sequence <data-sequences>` or :ref:`block <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
 
 
 Indices and tables
