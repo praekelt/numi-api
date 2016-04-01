@@ -162,26 +162,34 @@ pointing to where in the given object validation failed, and a human readable
 Concepts
 ~~~~~~~~
 
+.. _concepts-dialogues:
+
 Dialogues
 *********
-A dialogue comprises the entire set of steps to follow when a user interacts with a service. It contains a set of :ref:`Sequences <data-sequences>`, each of which contain a set of :ref:`Blocks <data-blocks>`.
+A dialogue comprises the entire set of steps to follow when a user interacts with a service. It contains a set of :ref:`Sequences <concepts-sequences>`, each of which contain a set of :ref:`Blocks <concepts-blocks>`.
 
 - :ref:`Schema for dialogue descriptions <data-dialogues>`
 - :ref:`API endpoints for dialogues <dialogues>`
 
+.. _concepts-sequences:
+
 Sequences
 *********
-A sequence is a set of steps that follow one after the other, where each step corresponds to a :ref:`Block <data-blocks>`. A user moves from one sequence to another if different steps need to be followed based on certain conditions.
+A sequence is a set of steps that follow one after the other, where each step corresponds to a :ref:`Block <concepts-blocks>`. A user moves from one sequence to another if different steps need to be followed based on certain conditions.
 
 For example, a dialogue could contain a sequence with a block that asks the user a multiple choice question and moves the user to a different sequence that corresponds to their choice.
+
+.. _concepts-blocks:
 
 Blocks
 ******
 A block is a single step to follow when interacting with the user. This step may be, for example, a screen asking the user a question, or a step not visible to the user, for example, registering the user with a service.
 
+.. _concepts-symbols:
+
 Symbols
 *******
-Symbols are used in a :ref:`Dialogue <data-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
+Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
 
 Data Structures
 ---------------
