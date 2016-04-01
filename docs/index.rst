@@ -50,7 +50,7 @@ Partial updates
 
 Partial update requests should provide instructions for how a resource should be modified according to the structure proposed in `RFC 6902`_. Note that partial updates are *atomic*, so if any of the given instructions fail, none of the instructures will be carried out.
 
-.. _RFC 6902: http://tools.ietf.org/html/rfc6902#section-4.6
+.. _RFC 6902: http://tools.ietf.org/html/rfc6902
 
 .. TODO patch example once we have an API endpoint supporting this
 
