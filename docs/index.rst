@@ -47,7 +47,7 @@ Unless otherwise specified, the following verbs are used for requests:
 Partial updates
 ~~~~~~~~~~~~~~~
 
-Partial update requests should provide instructions for how a resource should be modified according to the structure proposed in `RFC 6902`_.
+Partial update requests should provide instructions for how a resource should be modified according to the structure proposed in `RFC 6902`_. Note that partial updates are *atomic*, so if any of the given instructions fail, none of the instructures will be carried out.
 
 .. _RFC 6902: http://tools.ietf.org/html/rfc6902#section-4.6
 
@@ -111,9 +111,11 @@ response will be given.
 
 The ``details`` object contains an array of ``errors`` detailing why validation
 failed. Each error object contains a programmitically-usable ``type`` string
-representing the type of validation error, a ``path`` string pointing to where
-in the given object validation failed, and a human readable ``message`` string
-describing the error.
+representing the type of validation error, a ``path`` `JSON pointer`_ string
+pointing to where in the given object validation failed, and a human readable
+``message`` string describing the error.
+
+.. _JSON pointer: http://tools.ietf.org/html/rfc6901
 
 .. TODO more relevant example once we have an api endpoint
 
@@ -128,7 +130,7 @@ describing the error.
      "details": {
        "errors": [{
          "type", "required",
-         "path": "foo.0.baz",
+         "path": "foo/0/baz",
          "message": "'quux' is a required property"
        }, {
          "type", "type",
