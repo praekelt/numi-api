@@ -244,16 +244,36 @@ Dialogues
          "title": "Service Rating Survey",
          "url": "/projects/23/dialogues/21",
          "is_archived": false,
-         "is_unpublished": false
+         "is_published": false
        }]
      }
 
-  :>json string id: The dialogue's identifier
-  :>json string title: The dialogue's human-readable title
-  :>json string url: API url for accessing the dialogue description.
-  :>json boolean is_archived: Flag representing whether this dialogue has been archived.
-  :>json boolean is_published: Flag representing whether this dialogue has been published before.
-  :>json boolean has_changes: Flag representing whether this dialogue has unpublished changes.
+  :query boolean is_archived:
+    If ``false``, only return unarchived dialogues. If ``true``, only return archived dialogues. If omitted, both archived and unarchived dialogues are retrieved.
+
+  :query boolean is_published:
+    If ``false``, only return unpublished dialogues. If ``true``, only return published dialogues. If omitted, both published and unpublished dialogues are retrieved.
+
+  :query boolean has_changes:
+    If ``false``, only return dialogues without unpublished changes. If ``true``, only return dialogues with unpublished changes. If omitted, dialogues with published and unpublished changes are retrieved.
+
+  :>json string id:
+    The dialogue's identifier
+
+  :>json string title:
+    The dialogue's human-readable title
+
+  :>json string url:
+    API url for accessing the dialogue description.
+
+  :>json boolean is_archived:
+    Flag representing whether this dialogue has been archived.
+
+  :>json boolean is_published:
+    Flag representing whether this dialogue has been published before.
+
+  :>json boolean has_changes:
+    Flag representing whether this dialogue has unpublished changes.
 
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
