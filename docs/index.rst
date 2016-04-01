@@ -572,6 +572,44 @@ Releases
       }
     }
 
+.. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
+
+Creates a new release for dialogue ``dialogue_id`` under the project with the id ``project_id`` using the :ref:`description <data-releases>` given in the request body and returns the created releases's description, along with the generated release ``id`` field and ``url`` field for accessing the release description.
+
+  .. sourcecode:: http
+
+     POST /projects/23/dialogues/21/releases/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "message": "Added FAQ section"
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 201 Created
+     Content-Type: application/json
+
+     {
+       "id": "44",
+       "dialogue_id": "21",
+       "url": "/projects/23/dialogues/21/releases/44",
+       "message": "Added FAQ section",
+       "dialogue": {
+         "id": "21",
+         "url": "/projects/23/dialogues/21",
+         "title": "Service Rating Survey",
+         "sequences": [{
+           "id": "start",
+           "title": "Start of sequence",
+           "blocks": []
+         }],
+         "is_archived": false,
+         "is_published": false,
+         "has_changes": false
+       }
+     }
+
 
 Indices and tables
 ==================
