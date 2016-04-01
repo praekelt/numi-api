@@ -241,6 +241,14 @@ Symbols
 .. literalinclude:: ../schemas/symbol.yml
   :language: yaml
 
+.. _data-releases:
+
+Releases
+~~~~~~~~
+
+.. literalinclude:: ../schemas/release.yml
+  :language: yaml
+
 
 .. TODO Projects endpoints
 
