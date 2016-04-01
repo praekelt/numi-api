@@ -36,13 +36,23 @@ Unless otherwise specified, the following verbs are used for requests:
 +--------+------------------------------------------------------------+
 | POST   | Used for creating a resource                               |
 +--------+------------------------------------------------------------+
-| PUT    | Used to replace a resouce                                  |
+| PUT    | Used to replace a resource                                 |
 +--------+------------------------------------------------------------+
 | PATCH  | Used to partially update a resource with fields given in   |
 |        | the request body                                           |
 +--------+------------------------------------------------------------+
 | DELETE | Used to delete a resource                                  |
 +--------+------------------------------------------------------------+
+
+Partial updates
+~~~~~~~~~~~~~~~
+
+Partial update requests should provide instructions for how a resource should be modified according to the structure proposed in `RFC 6902`_.
+
+.. _RFC 6902: http://tools.ietf.org/html/rfc6902#section-4.6
+
+.. TODO patch example once we have an API endpoint supporting this
+
 
 Client errors
 ~~~~~~~~~~~~~
