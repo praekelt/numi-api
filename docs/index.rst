@@ -231,11 +231,11 @@ Dialogues
 
   .. sourcecode:: http
 
-      GET /projecs/23/dialogues/ HTTP/1.1
+      GET /projects/23/dialogues/ HTTP/1.1
 
   .. sourcecode:: http
 
-     HTTP/1.1 G00 OK
+     HTTP/1.1 200 OK
      Content-Type: application/json
 
      {
