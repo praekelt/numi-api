@@ -20,7 +20,7 @@ Where specified, query string parameters can be provided.
 
 .. TODO example request once we have an API endpoint that accepts parameters
 
-Request bodies for ``POST``, ``PUT``, ``PATCH`` and ``DELETE`` requests are expected to be JSON objects.
+Request bodies for ``POST``, ``PUT``, ``PATCH`` and ``DELETE`` requests are expected to be valid JSON values.
 
 .. TODO example request once we have an API endpoint
 
@@ -44,6 +44,8 @@ Unless otherwise specified, the following verbs are used for requests:
 | DELETE | Used to delete a resource                                  |
 +--------+------------------------------------------------------------+
 
+.. _overview-partial-updates:
+
 Partial updates
 ~~~~~~~~~~~~~~~
 
@@ -51,7 +53,23 @@ Partial update requests should provide instructions for how a resource should be
 
 .. _RFC 6902: http://tools.ietf.org/html/rfc6902
 
-.. TODO patch example once we have an API endpoint supporting this
+.. sourcecode:: http
+
+   PATCH /projects/23/dialogues/21 HTTP/1.1
+   Content-Type: application/json-patch+json
+
+   [{
+     "op": "remove",
+     "path": "/sequences/0"
+   }, {
+     "op": "add",
+     "path": "/sequences",
+     "value": {
+       "id": "start",
+       "title": "Start of sequence",
+       "blocks": []
+     }
+   }]
 
 
 Client errors
@@ -198,6 +216,218 @@ Symbol Schema
 
 .. literalinclude:: ../schemas/symbol.yml
   :language: yaml
+
+
+.. TODO Projects endpoints
+
+
+Dialogues
+---------
+
+.. http:get:: /projects/(str:project_id)/dialogues/
+
+  Retrieves a summary of every dialogue contained in the project with id
+  ``:project_id``.
+
+  .. sourcecode:: http
+
+      GET /projecs/23/dialogues/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 G00 OK
+     Content-Type: application/json
+
+     {
+       "dialogues": [{
+         "id": "21",
+         "title": "Service Rating Survey",
+         "url": "/projects/23/dialogues/21",
+         "is_archived": false,
+         "is_published": false,
+         "has_changes": false
+       }]
+     }
+
+  :query boolean is_archived:
+    If ``false``, only return unarchived dialogues. If ``true``, only return archived dialogues. If omitted, both archived and unarchived dialogues are retrieved.
+
+  :query boolean is_published:
+    If ``false``, only return unpublished dialogues. If ``true``, only return published dialogues. If omitted, both published and unpublished dialogues are retrieved.
+
+  :query boolean has_changes:
+    If ``false``, only return dialogues without unpublished changes. If ``true``, only return dialogues with unpublished changes. If omitted, dialogues with published and unpublished changes are retrieved.
+
+  :>json string id:
+    The dialogue's identifier
+
+  :>json string title:
+    The dialogue's human-readable title
+
+  :>json string url:
+    API url for accessing the dialogue description.
+
+  :>json boolean is_archived:
+    Flag representing whether this dialogue has been archived.
+
+  :>json boolean is_published:
+    Flag representing whether this dialogue has been published before.
+
+  :>json boolean has_changes:
+    Flag representing whether this dialogue has unpublished changes.
+
+
+.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
+
+Retrieves the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id``.
+
+  .. sourcecode:: http
+
+      GET /projecs/23/dialogues/21 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "title": "Service Rating Survey",
+       "sequences": [],
+       "is_archived": false,
+       "is_published": false,
+       "has_changes": false
+     }
+
+If the dialogue isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` given in the request.
+
+  .. sourcecode:: http
+
+     HTTP/1.1 404 Not Found
+     Content-Type: application/json
+
+     {
+       "type": "not_found",
+       "message": "Dialogue 21 not found",
+       "details": {"id": "21"}
+     }
+
+.. http:post:: /projects/(str:project_id)/dialogues/
+
+Creates a new dialogue under the project with the id ``project_id`` using the :ref:`dialogue description <data-dialogues>` given in the request body and returns the created dialogue's description, along with the generated dialogue ``id`` field and ``url`` field for accessing the dialogue description.
+
+  .. sourcecode:: http
+
+     POST /projects/23/dialogues/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "title": "Service Rating Survey",
+       "sequences": []
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 201 Created
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "url": "/projects/23/dialogues/21",
+       "title": "Service Rating Survey",
+       "sequences": [],
+       "is_archived": false,
+       "is_published": false,
+       "has_changes": false
+     }
+
+.. _dialogues-put:
+
+.. http:put:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
+
+Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id`` with the description given in the request body and returns the given description, along with the dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
+
+  .. sourcecode:: http
+
+     POST /projects/23/dialogues/21 HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "title": "Service Rating Survey",
+       "sequences": [],
+       "is_archived": false
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "url": "/projects/23/dialogues/21",
+       "title": "Service Rating Survey",
+       "sequences": [],
+       "is_archived": false,
+       "is_published": false,
+       "has_changes": false
+     }
+
+.. warning::
+  If the ``id`` of a :ref:`sequence <data-sequences>` or :ref:`block <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
+
+.. _dialogues-patch:
+
+.. http:patch:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
+
+Partially updates the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in the request body and returns the given description, along with the dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
+
+.. sourcecode:: http
+
+   PATCH /projects/23/dialogues/21 HTTP/1.1
+   Content-Type: application/json-patch+json
+
+   [{
+     "op": "remove",
+     "path": "/sequences/0"
+   }, {
+     "op": "add",
+     "path": "/sequences",
+     "value": {
+       "id": "start",
+       "title": "Start of sequence",
+       "blocks": []
+     }
+   }]
+
+.. sourcecode:: http
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+
+   {
+     "id": "21",
+     "url": "/projects/23/dialogues/21",
+     "title": "Service Rating Survey",
+     "sequences": [{
+       "id": "start",
+       "title": "Start of sequence",
+       "blocks": []
+     }],
+     "is_archived": false,
+     "is_published": false,
+     "has_changes": false
+   }
+
+.. warning::
+  If the ``id`` of a :ref:`sequence <data-sequences>` or :ref:`block <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
+
+
+Archiving dialogues
+~~~~~~~~~~~~~~~~~~~
+A dialogue can be archived by setting ``is_archived`` to ``true`` when :ref:`replacing <dialogues-put>` or :ref:`partially updating <dialogues-patch>` the dialogue description. The dialogue is still accessible via the api, but will no longer be triggered by any events associated to it.
+
+.. TODO ^ reference events if and when they are documented
 
 
 Indices and tables
