@@ -33,4 +33,11 @@ properties:
     description: |
       Flag representing whether this dialogue has been archived.
 
+  is_unpublished:
+    type: boolean
+    readOnly: true
+    description: |
+      Flag representing whether this dialogue has changes which have not yet
+      been published.
+
 additionalProperties: false
