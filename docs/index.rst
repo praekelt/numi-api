@@ -489,6 +489,29 @@ Releases
     }]
 
 
+.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/(str:release_id)
+
+  Retrieves the :ref:`description <data-releases>` for the release with id
+  ``release_id`` for dialogue ``dialogue_id`` contained in the project with id
+  ``:project_id``.
+
+  .. sourcecode:: http
+
+      GET /projects/23/dialogues/21/releases/44 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+    {
+      "id": "44",
+      "dialogue_id": "21",
+      "url": "/projects/23/dialogues/21/releases/44",
+      "message": "Added FAQ section"
+    }
+
+
 Indices and tables
 ==================
 
