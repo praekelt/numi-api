@@ -12,7 +12,7 @@ Overview
 Format
 ~~~~~~
 
-All response bodies are sent as JSON objects.
+All response bodies are sent as JSON values.
 
 .. TODO example success response once we have an API endpoint
 
@@ -238,16 +238,14 @@ Dialogues
      HTTP/1.1 200 OK
      Content-Type: application/json
 
-     {
-       "dialogues": [{
-         "id": "21",
-         "title": "Service Rating Survey",
-         "url": "/projects/23/dialogues/21",
-         "is_archived": false,
-         "is_published": false,
-         "has_changes": false
-       }]
-     }
+     [{
+       "id": "21",
+       "title": "Service Rating Survey",
+       "url": "/projects/23/dialogues/21",
+       "is_archived": false,
+       "is_published": false,
+       "has_changes": false
+     }]
 
   :query boolean is_archived:
     If ``false``, only return unarchived dialogues. If ``true``, only return archived dialogues. If omitted, both archived and unarchived dialogues are retrieved.
