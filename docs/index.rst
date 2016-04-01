@@ -148,7 +148,7 @@ pointing to where in the given object validation failed, and a human readable
      "details": {
        "errors": [{
          "type", "required",
-         "path": "foo/0/baz",
+         "path": "/foo/0/baz",
          "message": "'quux' is a required property"
        }, {
          "type", "type",
