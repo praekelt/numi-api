@@ -243,7 +243,8 @@ Dialogues
          "id": "21",
          "title": "Service Rating Survey",
          "url": "/projects/23/dialogues/21",
-         "is_archived": false
+         "is_archived": false,
+         "is_unpublished": false
        }]
      }
 
@@ -251,6 +252,8 @@ Dialogues
   :>json string title: The dialogue's human-readable title
   :>json string url: API url for accessing the dialogue description.
   :>json boolean is_archived: Flag representing whether this dialogue has been archived.
+  :>json boolean is_published: Flag representing whether this dialogue has been published before.
+  :>json boolean has_changes: Flag representing whether this dialogue has unpublished changes.
 
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
