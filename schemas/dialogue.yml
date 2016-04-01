@@ -25,4 +25,10 @@ properties:
     description: |
       The dialogue's set of sequences
 
+  is_archived:
+    type: boolean
+    default: false
+    description: |
+      Flag representing whether this dialogue has been archived.
+
 additionalProperties: false

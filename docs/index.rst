@@ -215,20 +215,22 @@ Dialogues
 
   .. sourcecode:: http
 
-     HTTP/1.1 200 OK
+     HTTP/1.1 G00 OK
      Content-Type: application/json
 
      {
        "dialogues": [{
          "id": "21",
          "title": "Service Rating Survey",
-         "url": "/projects/23/dialogues/21"
+         "url": "/projects/23/dialogues/21",
+         "is_archived": false
        }]
      }
 
   :>json string id: The dialogue's identifier
   :>json string title: The dialogue's human-readable title
   :>json string url: API url for accessing the dialogue description.
+  :>json boolean is_archived: Flag representing whether this dialogue has been archived.
 
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
@@ -247,7 +249,8 @@ Retrieves the :ref:`description <data-dialogues>` of the dialogue with id ``dial
      {
        "id": "21",
        "title": "Service Rating Survey",
-       "sequences": []
+       "sequences": [],
+       "is_archived": false
      }
 
 If the dialogue isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` given in the request.
@@ -286,8 +289,11 @@ Creates a new dialogue under the project with the id ``project_id`` using the :r
        "id": "21",
        "url": "/projects/23/dialogues/21",
        "title": "Service Rating Survey",
-       "sequences": []
+       "sequences": [],
+       "is_archived": false
      }
+
+.. _dialogues-put:
 
 .. http:put:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
@@ -300,7 +306,8 @@ Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialo
 
      {
        "title": "Service Rating Survey",
-       "sequences": []
+       "sequences": [],
+       "is_archived": false
      }
 
   .. sourcecode:: http
@@ -312,11 +319,19 @@ Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialo
        "id": "21",
        "url": "/projects/23/dialogues/21",
        "title": "Service Rating Survey",
-       "sequences": []
+       "sequences": [],
+       "is_archived": false
      }
 
 .. warning::
   If the ``id`` of a :ref:`sequence <data-sequences>` or :ref:`block <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
+
+
+Archiving dialogues
+~~~~~~~~~~~~~~~~~~~
+A dialogue can be archived by setting ``is_archived`` to ``true`` when :ref:`updating <dialogues-put>` the dialogue description. The dialogue is still accessible via the api, but will no longer be triggered by any events associated to it.
+
+.. TODO ^ reference channels once they exist
 
 
 Indices and tables
