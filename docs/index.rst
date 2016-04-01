@@ -56,7 +56,7 @@ Partial update requests should provide instructions for how a resource should be
 .. sourcecode:: http
 
    PATCH /projects/23/dialogues/21 HTTP/1.1
-   Content-Type: application/json
+   Content-Type: application/json-patch+json
 
    [{
      "op": "remove",
@@ -385,7 +385,7 @@ Partially updates the :ref:`description <data-dialogues>` of the dialogue with i
 .. sourcecode:: http
 
    PATCH /projects/23/dialogues/21 HTTP/1.1
-   Content-Type: application/json
+   Content-Type: application/json-patch+json
 
    [{
      "op": "remove",
