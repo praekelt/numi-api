@@ -20,7 +20,7 @@ Where specified, query string parameters can be provided.
 
 .. TODO example request once we have an API endpoint that accepts parameters
 
-Request bodies for ``POST``, ``PUT``, ``PATCH`` and ``DELETE`` requests are expected to be JSON objects.
+Request bodies for ``POST``, ``PUT``, ``PATCH`` and ``DELETE`` requests are expected to be valid JSON values.
 
 .. TODO example request once we have an API endpoint
 
@@ -44,6 +44,8 @@ Unless otherwise specified, the following verbs are used for requests:
 | DELETE | Used to delete a resource                                  |
 +--------+------------------------------------------------------------+
 
+.. _overview-partial-updates:
+
 Partial updates
 ~~~~~~~~~~~~~~~
 
@@ -51,7 +53,23 @@ Partial update requests should provide instructions for how a resource should be
 
 .. _RFC 6902: http://tools.ietf.org/html/rfc6902#section-4.6
 
-.. TODO patch example once we have an API endpoint supporting this
+.. sourcecode:: http
+
+   PATCH /projects/23/dialogues/21 HTTP/1.1
+   Content-Type: application/json
+
+   [{
+     "op": "remove",
+     "path": "/sequences/0"
+   }, {
+     "op": "add",
+     "path": "/sequences",
+     "value": {
+       "id": "start",
+       "title": "Start of sequence",
+       "blocks": []
+     }
+   }]
 
 
 Client errors
@@ -328,12 +346,56 @@ Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialo
 .. warning::
   If the ``id`` of a :ref:`sequence <data-sequences>` or :ref:`block <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
 
+.. _dialogues-patch:
+
+.. http:patch:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
+
+Partially updates the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in the request body and returns the given description, along with the dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
+
+.. sourcecode:: http
+
+   PATCH /projects/23/dialogues/21 HTTP/1.1
+   Content-Type: application/json
+
+   [{
+     "op": "remove",
+     "path": "/sequences/0"
+   }, {
+     "op": "add",
+     "path": "/sequences",
+     "value": {
+       "id": "start",
+       "title": "Start of sequence",
+       "blocks": []
+     }
+   }]
+
+.. sourcecode:: http
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+
+   {
+     "id": "21",
+     "url": "/projects/23/dialogues/21",
+     "title": "Service Rating Survey",
+     "sequences": [{
+       "id": "start",
+       "title": "Start of sequence",
+       "blocks": []
+     }],
+     "is_archived": false
+   }
+
+.. warning::
+  If the ``id`` of a :ref:`sequence <data-sequences>` or :ref:`block <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
+
 
 Archiving dialogues
 ~~~~~~~~~~~~~~~~~~~
-A dialogue can be archived by setting ``is_archived`` to ``true`` when :ref:`updating <dialogues-put>` the dialogue description. The dialogue is still accessible via the api, but will no longer be triggered by any events associated to it.
+A dialogue can be archived by setting ``is_archived`` to ``true`` when :ref:`replacing <dialogues-put> or partially updating <dialogues-patch>` the dialogue description. The dialogue is still accessible via the api, but will no longer be triggered by any events associated to it.
 
-.. TODO ^ reference channels once they exist
+.. TODO ^ reference events if and when they are documented
 
 
 Indices and tables
