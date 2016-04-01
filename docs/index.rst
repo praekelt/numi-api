@@ -485,7 +485,20 @@ Releases
       "id": "44",
       "dialogue_id": "21",
       "url": "/projects/23/dialogues/21/releases/44",
-      "message": "Added FAQ section"
+      "message": "Added FAQ section",
+      "dialogue": {
+        "id": "21",
+        "url": "/projects/23/dialogues/21",
+        "title": "Service Rating Survey",
+        "sequences": [{
+          "id": "start",
+          "title": "Start of sequence",
+          "blocks": []
+        }],
+        "is_archived": false,
+        "is_published": false,
+        "has_changes": false
+      }
     }]
 
 
@@ -508,7 +521,20 @@ Releases
       "id": "44",
       "dialogue_id": "21",
       "url": "/projects/23/dialogues/21/releases/44",
-      "message": "Added FAQ section"
+      "message": "Added FAQ section",
+      "dialogue": {
+        "id": "21",
+        "url": "/projects/23/dialogues/21",
+        "title": "Service Rating Survey",
+        "sequences": [{
+          "id": "start",
+          "title": "Start of sequence",
+          "blocks": []
+        }],
+        "is_archived": false,
+        "is_published": false,
+        "has_changes": false
+      }
     }
 
 
