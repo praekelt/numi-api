@@ -162,6 +162,8 @@ pointing to where in the given object validation failed, and a human readable
 Concepts
 ~~~~~~~~
 
+.. TODO projects and users
+
 .. _concepts-dialogues:
 
 Dialogues
@@ -190,6 +192,13 @@ A block is a single step to follow when interacting with the user. This step may
 Symbols
 *******
 Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
+
+.. _concepts-releases:
+
+Releases and publishing
+***********************
+Each time a dialogues's changes are published, the changed dialogue is recorded as a new release. The new release will be *made live*: any changes to the dialogue and its :ref:`sequences <concepts-sequences>` and :ref:`blocks <concepts-blocks>` will apply when end users interacting with the dialogue.
+
 
 Data Structures
 ---------------
