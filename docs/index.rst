@@ -393,7 +393,7 @@ Partially updates the :ref:`description <data-dialogues>` of the dialogue with i
 
 Archiving dialogues
 ~~~~~~~~~~~~~~~~~~~
-A dialogue can be archived by setting ``is_archived`` to ``true`` when :ref:`replacing <dialogues-put> or partially updating <dialogues-patch>` the dialogue description. The dialogue is still accessible via the api, but will no longer be triggered by any events associated to it.
+A dialogue can be archived by setting ``is_archived`` to ``true`` when :ref:`replacing <dialogues-put>` or `partially updating <dialogues-patch>` the dialogue description. The dialogue is still accessible via the api, but will no longer be triggered by any events associated to it.
 
 .. TODO ^ reference events if and when they are documented
 
