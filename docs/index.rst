@@ -244,7 +244,8 @@ Dialogues
          "title": "Service Rating Survey",
          "url": "/projects/23/dialogues/21",
          "is_archived": false,
-         "is_published": false
+         "is_published": false,
+         "has_changes": false
        }]
      }
 
@@ -293,7 +294,9 @@ Retrieves the :ref:`description <data-dialogues>` of the dialogue with id ``dial
        "id": "21",
        "title": "Service Rating Survey",
        "sequences": [],
-       "is_archived": false
+       "is_archived": false,
+       "is_published": false,
+       "has_changes": false
      }
 
 If the dialogue isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` given in the request.
@@ -333,7 +336,9 @@ Creates a new dialogue under the project with the id ``project_id`` using the :r
        "url": "/projects/23/dialogues/21",
        "title": "Service Rating Survey",
        "sequences": [],
-       "is_archived": false
+       "is_archived": false,
+       "is_published": false,
+       "has_changes": false
      }
 
 .. _dialogues-put:
@@ -363,7 +368,9 @@ Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialo
        "url": "/projects/23/dialogues/21",
        "title": "Service Rating Survey",
        "sequences": [],
-       "is_archived": false
+       "is_archived": false,
+       "is_published": false,
+       "has_changes": false
      }
 
 .. warning::
@@ -407,7 +414,9 @@ Partially updates the :ref:`description <data-dialogues>` of the dialogue with i
        "title": "Start of sequence",
        "blocks": []
      }],
-     "is_archived": false
+     "is_archived": false,
+     "is_published": false,
+     "has_changes": false
    }
 
 .. warning::
