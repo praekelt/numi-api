@@ -1,7 +1,6 @@
 numi api documentation
 ======================
 
-Contents:
 
 .. toctree::
    :maxdepth: 2
@@ -141,6 +140,64 @@ pointing to where in the given object validation failed, and a human readable
      }
    }
 
+
+Data Structures
+---------------
+
+.. _data-dialogues:
+
+Dialogues
+~~~~~~~~~
+A dialogue comprises the entire set of steps to follow when a user interacts with a service. It contains a set of :ref:`Sequences <data-sequences>`, each of which contain a set of :ref:`Blocks <data-blocks>`.
+
+Dialogue Schema
+***************
+
+.. literalinclude:: ../schemas/dialogue.yml
+  :language: yaml
+
+
+.. _data-sequences:
+
+Sequences
+~~~~~~~~~
+A sequence is a set of steps that follow one after the other, where each step corresponds to a :ref:`Block <data-blocks>`. A user moves from one sequence to another if different steps need to be followed based on certain conditions.
+
+For example, a dialogue could contain a sequence with a block that asks the user a multiple choice question and moves the user to a different sequence that corresponds to their choice.
+
+
+Sequence Schema
+***************
+
+.. literalinclude:: ../schemas/sequence.yml
+  :language: yaml
+
+
+.. _data-blocks:
+
+Blocks
+~~~~~~
+A block is a single step to follow when interacting with the user. This step may be, for example, a screen asking the user a question, or a step not visible to the user, for example, registering the user with a service.
+
+Block Schema
+************
+Note that a block's ``properties`` object is validated against a schema corresponding to the block's type (represented by the ``type`` field).
+
+.. literalinclude:: ../schemas/block.yml
+  :language: yaml
+
+
+.. _data-symbol:
+
+Symbols
+~~~~~~~
+Symbols are used in a :ref:`Dialogue <data-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
+
+Symbol Schema
+*************
+
+.. literalinclude:: ../schemas/symbol.yml
+  :language: yaml
 
 
 Indices and tables
