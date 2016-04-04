@@ -225,7 +225,6 @@ Dialogues
 .. literalinclude:: ../schemas/dialogue.yml
   :language: yaml
 
-
 .. _data-sequences:
 
 Sequences
@@ -246,13 +245,20 @@ Blocks
 .. literalinclude:: ../schemas/block.yml
   :language: yaml
 
-
 .. _data-symbol:
 
 Symbols
 ~~~~~~~
 
 .. literalinclude:: ../schemas/symbol.yml
+  :language: yaml
+
+.. _data-dialogue-summaries:
+
+Dialogue Summaries
+~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/dialogue-summary.yml
   :language: yaml
 
 
@@ -265,8 +271,8 @@ Dialogues
 
 .. http:get:: /projects/(str:project_id)/dialogues/
 
-  Retrieves a summary of every dialogue contained in the project with id
-  ``:project_id``.
+  Retrieves a :ref:`summary <data-dialogue-summaries>` of every dialogue
+  contained in the project with id ``:project_id``.
 
   .. sourcecode:: http
 
@@ -294,24 +300,6 @@ Dialogues
 
   :query boolean has_changes:
     If ``false``, only return dialogues without unpublished changes. If ``true``, only return dialogues with unpublished changes. If omitted, dialogues with published and unpublished changes are retrieved.
-
-  :>json string id:
-    The dialogue's identifier
-
-  :>json string title:
-    The dialogue's human-readable title
-
-  :>json string url:
-    API url for accessing the dialogue description.
-
-  :>json boolean is_archived:
-    Flag representing whether this dialogue has been archived.
-
-  :>json boolean is_published:
-    Flag representing whether this dialogue has been published before.
-
-  :>json boolean has_changes:
-    Flag representing whether this dialogue has unpublished changes.
 
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
