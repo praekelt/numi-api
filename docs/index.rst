@@ -248,8 +248,8 @@ Dialogues
 
 .. http:get:: /projects/(str:project_id)/dialogues/
 
-Retrieves a :ref:`summary <data-dialogue-summaries>` of every dialogue
-contained in the project with id ``:project_id``.
+  Retrieves a :ref:`summary <data-dialogue-summaries>` of every dialogue
+  contained in the project with id ``:project_id``.
 
   .. sourcecode:: http
 
