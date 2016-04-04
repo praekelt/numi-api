@@ -197,7 +197,7 @@ Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as pro
 
 Releases and publishing
 ***********************
-Each time a dialogues's changes are published, the changed dialogue is recorded as a new release. The new release will be *made live*: any changes to the dialogue and its :ref:`sequences <concepts-sequences>` and :ref:`blocks <concepts-blocks>` will apply when end users interacting with the dialogue.
+Each time a dialogues's changes are published, the changed dialogue is recorded as a new release. The new release will be *made live*: any changes to the dialogue and its :ref:`sequences <concepts-sequences>` and :ref:`blocks <concepts-blocks>` will apply when end users interact with the dialogue.
 
 
 Data Structures
