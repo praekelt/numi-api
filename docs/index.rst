@@ -209,6 +209,14 @@ Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as pro
 Data Structures
 ---------------
 
+.. _data-projects:
+
+Projects
+~~~~~~~~
+
+.. literalinclude:: ../schemas/project.yml
+  :language: yaml
+
 .. _data-dialogues:
 
 Dialogues
