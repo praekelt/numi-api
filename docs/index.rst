@@ -535,6 +535,22 @@ Releases
       }
     }
 
+If the release isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` and ``dialogue_id`` given in the request.
+
+  .. sourcecode:: http
+
+     HTTP/1.1 404 Not Found
+     Content-Type: application/json
+
+     {
+       "type": "not_found",
+       "message": "Release 44 not found",
+       "details": {
+         "id": "44",
+         "dialogue_id": "21"
+       }
+     }
+
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/latest
 
   Retrieves the :ref:`description <data-releases>` for the latest release with id
@@ -569,6 +585,19 @@ Releases
         "has_changes": false
       }
     }
+
+If the dialogue with the given id has no releases yet, a ``404`` response will be given. The response body's ``details`` object contains the ``dialogue_id`` given in the request:
+
+  .. sourcecode:: http
+
+     HTTP/1.1 404 Not Found
+     Content-Type: application/json
+
+     {
+       "type": "no_releases",
+       "message": "Dialogue 21 has no releases",
+       "details": {"dialogue_id": "21"}
+     }
 
 .. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
 
