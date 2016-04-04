@@ -260,7 +260,7 @@ Dialogues
 .. http:get:: /projects/(str:project_id)/dialogues/
 
   Retrieves a summary of every dialogue contained in the project with id
-  ``:project_id``.
+  ``project_id``.
 
   .. sourcecode:: http
 
@@ -469,7 +469,7 @@ Releases
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
 
   Retrieves each :ref:`release <concepts-releases>` for ``dialogue_id``
-  contained in the project with id ``:project_id``, returned as an array of
+  contained in the project with id ``project_id``, returned as an array of
   release :ref:`descriptions <data-releases>`.
 
   .. sourcecode:: http
@@ -506,7 +506,7 @@ Releases
 
   Retrieves the :ref:`description <data-releases>` for the release with id
   ``release_id`` for dialogue ``dialogue_id`` contained in the project with id
-  ``:project_id``.
+  ``project_id``.
 
   .. sourcecode:: http
 
@@ -541,7 +541,7 @@ Releases
 
   Retrieves the :ref:`description <data-releases>` for the latest release with id
   ``release_id`` for dialogue ``dialogue_id`` contained in the project with id
-  ``:project_id``.
+  ``project_id``.
 
   .. sourcecode:: http
 
