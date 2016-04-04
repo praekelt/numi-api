@@ -255,6 +255,15 @@ Releases
 .. literalinclude:: ../schemas/release.yml
   :language: yaml
 
+.. _data-release-summaries:
+
+Release Summaries
+~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/release-summary.yml
+  :language: yaml
+
+
 .. TODO Projects endpoints
 
 .. _dialogues:
@@ -453,9 +462,9 @@ Releases
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
 
-  Retrieves each :ref:`release <concepts-releases>` for ``dialogue_id``
-  contained in the project with id ``project_id``, returned as an array of
-  release :ref:`descriptions <data-releases>`.
+  Retrieves a :ref:`summary <data-release-summaries>` of each :ref:`release
+  <concepts-releases>` for ``dialogue_id`` contained in the project with id
+  ``project_id``.
 
   .. sourcecode:: http
 
@@ -475,11 +484,6 @@ Releases
         "id": "21",
         "url": "/projects/23/dialogues/21",
         "title": "Service Rating Survey",
-        "sequences": [{
-          "id": "start",
-          "title": "Start of sequence",
-          "blocks": []
-        }],
         "is_archived": false,
         "is_published": false,
         "has_changes": false
