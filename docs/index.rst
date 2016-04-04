@@ -162,6 +162,21 @@ pointing to where in the given object validation failed, and a human readable
 Concepts
 ~~~~~~~~
 
+.. _concepts-users:
+
+Users
+*****
+Users have access to a set of :ref:`projects <concepts-projects>`. Depending on their permission levels, users can view or modify a project and its :ref:`dialogues <concepts-dialogues>`.
+
+.. TODO link to auth once this is documented.
+.. TODO link to permissions once this is documented.
+
+.. _concepts-projects:
+
+Projects
+********
+A project comprises a set of :ref:`dialogues <concepts-dialogues>`. End user state is shared across dialogues under the same project.
+
 .. _concepts-dialogues:
 
 Dialogues
