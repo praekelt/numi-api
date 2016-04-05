@@ -302,7 +302,7 @@ Projects
 
 .. http:get:: /projects/(str:project_id)
 
-Retrieves the :ref:`description <data-projects>` of the project with id ``project_id``.
+  Retrieves the :ref:`description <data-projects>` of the project with id ``project_id``.
 
   .. sourcecode:: http
 
@@ -314,8 +314,8 @@ Retrieves the :ref:`description <data-projects>` of the project with id ``projec
      Content-Type: application/json
 
      {
-       "id": "21",
-       "title": "Service Rating Survey"
+       "id": "23",
+       "title": "Maternal Health ZA"
        "url": "/projects/23",
        "dialogues": [{
          "id": "21",
@@ -342,7 +342,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
 
 .. http:post:: /projects/
 
-  Creates a new project with the the :ref:`project description <data-projects>`
+  Creates a new project with the :ref:`project description <data-projects>`
   given in the request body and returns the created projects's description,
   along with the generated dialogue ``id`` field and ``url`` field for
   accessing the project description.
@@ -370,6 +370,78 @@ If the project isn't found, a ``404`` response will be given. The response body'
        "title": "Maternal Health ZA",
        "dialogues": []
      }
+
+.. _projects-put:
+
+.. http:put:: /projects/(str:project_id)
+
+  Replaces the :ref:`description <data-projects>` of the project with id ``project_id`` with the description given in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the projects's description.
+
+  .. sourcecode:: http
+
+     PUT /projects/23 HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "title": "Maternal Health ZA"
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "title": "Maternal Health ZA"
+       "url": "/projects/23",
+       "dialogues": [{
+         "id": "21",
+         "title": "Service Rating Survey",
+         "url": "/projects/23/dialogues/21",
+         "is_archived": false,
+         "is_published": false,
+         "has_changes": false
+       }]
+     }
+
+.. _projects-patch:
+
+.. http:patch:: /projects/(str:project_id)/
+
+  Partially updates the :ref:`description <data-projects>` of the project with id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the project's description.
+
+.. sourcecode:: http
+
+   PATCH /projects/23 HTTP/1.1
+   Content-Type: application/json-patch+json
+
+   [{
+     "op": "replace",
+     "path": "/title",
+     "value": "Maternal Health ZA"
+   }]
+
+.. sourcecode:: http
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+
+   {
+     "id": "23",
+     "title": "Maternal Health ZA"
+     "url": "/projects/23",
+     "dialogues": [{
+       "id": "21",
+       "title": "Service Rating Survey",
+       "url": "/projects/23/dialogues/21",
+       "is_archived": false,
+       "is_published": false,
+       "has_changes": false
+     }]
+   }
+
 
 .. _dialogues:
 
