@@ -19,4 +19,12 @@ properties:
     description: |
       The human-readable title of the project
 
+  dialogues:
+    type: array
+    readOnly: true
+    items:
+      $ref: '#/definitions/dialogue-summary'
+    description: |
+      A summary of each dialogue contained in this project.
+
 additionalProperties: false
