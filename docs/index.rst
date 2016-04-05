@@ -340,6 +340,37 @@ If the project isn't found, a ``404`` response will be given. The response body'
        "details": {"id": "23"}
      }
 
+.. http:post:: /projects/
+
+  Creates a new project with the the :ref:`project description <data-projects>`
+  given in the request body and returns the created projects's description,
+  along with the generated dialogue ``id`` field and ``url`` field for
+  accessing the project description.
+
+  .. TODO mention that the user creating the project is given admin access once
+  we have documented permission levels
+
+  .. sourcecode:: http
+
+     POST /projects/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "title": "Maternal Health ZA",
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 201 Created
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "url": "/projects/23",
+       "title": "Maternal Health ZA",
+       "dialogues": []
+     }
+
 .. _dialogues:
 
 Dialogues
