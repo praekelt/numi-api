@@ -253,6 +253,14 @@ Symbols
 .. literalinclude:: ../schemas/symbol.yml
   :language: yaml
 
+.. _data-project-summaries:
+
+Project Summaries
+~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/project-summary.yml
+  :language: yaml
+
 .. _data-dialogue-summaries:
 
 Dialogue Summaries
