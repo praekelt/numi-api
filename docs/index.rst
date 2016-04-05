@@ -272,6 +272,74 @@ Dialogue Summaries
 
 .. TODO Projects endpoints
 
+.. _projects:
+
+Projects
+--------
+
+.. http:get:: /projects/
+
+  Retrieves a :ref:`summary <data-project-summaries>` of projects the authenticated user has access to.
+
+  .. sourcecode:: http
+
+      GET /projects/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "1",
+       "title": "Maternal Health ZA",
+       "url": "/projects/1"
+     }, {
+       "id": "2",
+       "title": "Maternal Health MX",
+       "url": "/projects/2",
+     }]
+
+.. http:get:: /projects/(str:project_id)
+
+Retrieves the :ref:`description <data-projects>` of the project with id ``project_id``.
+
+  .. sourcecode:: http
+
+      GET /projects/23 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "title": "Service Rating Survey"
+       "url": "/projects/23",
+       "dialogues": [{
+         "id": "21",
+         "title": "Service Rating Survey",
+         "url": "/projects/23/dialogues/21",
+         "is_archived": false,
+         "is_published": false,
+         "has_changes": false
+       }]
+     }
+
+If the project isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` of the project given in the request.
+
+  .. sourcecode:: http
+
+     HTTP/1.1 404 Not Found
+     Content-Type: application/json
+
+     {
+       "type": "not_found",
+       "message": "Project 23 not found",
+       "details": {"id": "23"}
+     }
+
 .. _dialogues:
 
 Dialogues
