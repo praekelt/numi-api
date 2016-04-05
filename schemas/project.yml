@@ -19,6 +19,12 @@ properties:
     description: |
       The human-readable title of the project
 
+  is_archived:
+    type: boolean
+    default: false
+    description: |
+      Flag representing whether this project has been archived.
+
   dialogues:
     type: array
     readOnly: true

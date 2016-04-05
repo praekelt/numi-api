@@ -317,6 +317,7 @@ Projects
        "id": "23",
        "title": "Maternal Health ZA"
        "url": "/projects/23",
+       "is_archived": false,
        "dialogues": [{
          "id": "21",
          "title": "Service Rating Survey",
@@ -368,7 +369,8 @@ If the project isn't found, a ``404`` response will be given. The response body'
        "id": "23",
        "url": "/projects/23",
        "title": "Maternal Health ZA",
-       "dialogues": []
+       "dialogues": [],
+       "is_archived": false
      }
 
 .. _projects-put:
@@ -396,6 +398,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
        "id": "23",
        "title": "Maternal Health ZA"
        "url": "/projects/23",
+       "is_archived": false,
        "dialogues": [{
          "id": "21",
          "title": "Service Rating Survey",
@@ -432,6 +435,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
      "id": "23",
      "title": "Maternal Health ZA"
      "url": "/projects/23",
+     "is_archived": false,
      "dialogues": [{
        "id": "21",
        "title": "Service Rating Survey",
@@ -441,6 +445,11 @@ If the project isn't found, a ``404`` response will be given. The response body'
        "has_changes": false
      }]
    }
+
+
+Archiving projects
+~~~~~~~~~~~~~~~~~~
+A project can be archived by setting ``is_archived`` to ``true`` when :ref:`replacing <projects-put>` or :ref:`partially updating <projects-patch>` the project description. The project is still accessible via the api, but its dialogues will no longer be triggered by any events that were previously associated to them.
 
 
 .. _dialogues:
