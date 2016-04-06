@@ -185,6 +185,12 @@ Blocks
 ******
 A block is a single step to follow when interacting with the user. This step may be, for example, a screen asking the user a question, or a step not visible to the user, for example, registering the user with a service.
 
+.. _concepts-dialogue-revision:
+
+Dialogue Revision
+*****************
+A revision represents a set of changes made to a dialogue. For example, changing the content in a :ref:`block <concepts-blocks>` or changing the position of a block in a :ref:`sequence <concepts-sequences>`.
+
 .. _concepts-symbols:
 
 Symbols
