@@ -228,6 +228,14 @@ Blocks
 .. literalinclude:: ../schemas/block.yml
   :language: yaml
 
+.. _data-dialogue-revisions:
+
+Dialogue Revisions
+~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/dialogue-revision.yml
+  :language: yaml
+
 .. _data-symbol:
 
 Symbols
