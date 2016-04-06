@@ -252,7 +252,6 @@ Dialogue Summaries
 .. literalinclude:: ../schemas/dialogue-summary.yml
   :language: yaml
 
-
 .. TODO Projects endpoints
 
 .. _dialogues:
@@ -291,7 +290,6 @@ Dialogues
 
   :query boolean has_changes:
     If ``false``, only return dialogues without unpublished changes. If ``true``, only return dialogues with unpublished changes. If omitted, dialogues with published and unpublished changes are retrieved.
-
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
@@ -444,6 +442,55 @@ Archiving dialogues
 A dialogue can be archived by setting ``is_archived`` to ``true`` when :ref:`replacing <dialogues-put>` or :ref:`partially updating <dialogues-patch>` the dialogue description. The dialogue is still accessible via the api, but will no longer be triggered by any events associated to it.
 
 .. TODO ^ reference events if and when they are documented
+
+.. _dialogue-revisions:
+
+Dialogue Revisions
+------------------
+
+.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
+
+  Retrieves the :ref:`revisions <data-dialogue-revisions>` of dialogue
+  ``dialogue_id`` in the project ``project_id``.
+
+  .. sourcecode:: http
+
+      GET /projects/23/dialogues/21/revisions/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "1",
+       "user_id": 17,
+       "created": 1459943775033,
+       "type": "new_sequence",
+       "details": {
+         "id": "start",
+         "title": "Start of sequence",
+       },
+       "patch": {
+         "op": "add",
+         "path": "/sequences",
+         "value": {
+         "id": "start",
+         "title": "Start of sequence",
+         "blocks": []
+         }
+       }
+     }]
+
+  :query number page:
+    1-based index of the page of revisions to show. Defaults to ``1``.
+  :query number per_page:
+    Number of revisions to show per page. Defaults to ``30``. Maximum is
+    ``100``.
+  :query string ordering:
+    The ordering of the returned revisions. ``created`` returns the revisions
+    in ascending order of creation date and ``-created`` returns the revisions
+    in descending order of creation date. Defaults to ``-created``.
 
 
 Indices and tables
