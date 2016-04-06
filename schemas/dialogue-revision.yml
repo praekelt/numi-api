@@ -14,6 +14,13 @@ properties:
     description: |
       The identifier for the user who created this revision.
 
+  created:
+    type: number
+    readOnly: true
+    description: |
+      Timestamp representing when the revision was created in milliseconds
+      since the Unix epoch.
+
   patch:
     $ref: 'http://json.schemastore.org/json-patch'
     description: |
