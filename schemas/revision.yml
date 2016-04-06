@@ -27,21 +27,22 @@ properties:
       Timestamp representing when the revision was created in milliseconds
       since the Unix epoch.
 
-  patch:
-    $ref: 'http://json.schemastore.org/json-patch'
-    description: |
-      JSON patch representing the changes made to the dialogue description in
-      this revision
-
   type:
     type: string
-    default: 'custom'
+    enum:
+      - edit
+      - revert
     description: |
-      Programmatically usable string representing the type of change made to
-      the dialogue description in this revision.
+      Programmatically usable string representing the type of this revision.
+
+  properties:
+    type: object
+    description: |
+      Properties specific to this revision type.
 
   details:
     type: object
     default: {}
     description: |
-      Optional details about this revision.
+      Details describing this revision. Intended to be used for
+      display purposes.

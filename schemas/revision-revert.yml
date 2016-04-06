@@ -1,0 +1,8 @@
+$ref: '#/definitions/revision'
+
+properties:
+  properties:
+    revision_id:
+      type: string
+      description: |
+        Identifier of the revision to revert to.

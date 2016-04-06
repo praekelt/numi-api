@@ -187,9 +187,17 @@ A block is a single step to follow when interacting with the user. This step may
 
 .. _concepts-dialogue-revision:
 
-Dialogue Revision
-*****************
-A revision represents a set of changes made to a dialogue. For example, changing the content in a :ref:`block <concepts-blocks>` or changing the position of a block in a :ref:`sequence <concepts-sequences>`.
+Revision
+********
+A revision represents a change or set of changes made to a :ref:`dialogue <concepts-dialogues>`. There are different revision types:
+
+Edit
+^^^^
+Applies a set of changes to a :ref:`dialogue description <data-dialogues>`. For example, changing the content in a :ref:`block <concepts-blocks>` or changing the position of a block in a :ref:`sequence <concepts-sequences>`.
+
+Revert
+^^^^^^
+Reverts a dialogue's description back to its state at an earlier revision.
 
 .. _concepts-symbols:
 
@@ -228,20 +236,36 @@ Blocks
 .. literalinclude:: ../schemas/block.yml
   :language: yaml
 
-.. _data-dialogue-revisions:
-
-Dialogue Revisions
-~~~~~~~~~~~~~~~~~~
-
-.. literalinclude:: ../schemas/dialogue-revision.yml
-  :language: yaml
-
 .. _data-symbol:
 
 Symbols
 ~~~~~~~
 
 .. literalinclude:: ../schemas/symbol.yml
+  :language: yaml
+
+.. _data-revisions:
+
+Revisions
+~~~~~~~~~
+
+.. literalinclude:: ../schemas/revision.yml
+  :language: yaml
+
+.. _data-revisions-edit:
+
+Edits
+*****
+
+.. literalinclude:: ../schemas/revision-edit.yml
+  :language: yaml
+
+.. _data-revisions-revert:
+
+Reverts
+*******
+
+.. literalinclude:: ../schemas/revision-revert.yml
   :language: yaml
 
 .. _data-dialogue-summaries:
@@ -466,18 +490,21 @@ Dialogue Revisions
        "id": "1",
        "user_id": 17,
        "created": 1459943775033,
-       "type": "new_sequence",
+       "type": "edit",
        "details": {
          "id": "start",
          "title": "Start of sequence",
        },
-       "patch": {
-         "op": "add",
-         "path": "/sequences",
-         "value": {
-         "id": "start",
-         "title": "Start of sequence",
-         "blocks": []
+       "properties": {
+         "edit_type": "new_sequence",
+         "patch": {
+           "op": "add",
+           "path": "/sequences",
+           "value": {
+             "id": "start",
+             "title": "Start of sequence",
+             "blocks": []
+           }
          }
        }
      }]
