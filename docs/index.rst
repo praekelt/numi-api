@@ -185,15 +185,19 @@ Blocks
 ******
 A block is a single step to follow when interacting with the user. This step may be, for example, a screen asking the user a question, or a step not visible to the user, for example, registering the user with a service.
 
-.. _concepts-dialogue-revision:
+.. _concepts-revisions:
 
 Revision
 ********
 A revision represents a change or set of changes made to a :ref:`dialogue <concepts-dialogues>`. There are different revision types:
 
+.. _concepts-revisions-edit:
+
 Edit
 ^^^^
 Applies a set of changes to a :ref:`dialogue description <data-dialogues>`. For example, changing the content in a :ref:`block <concepts-blocks>` or changing the position of a block in a :ref:`sequence <concepts-sequences>`.
+
+.. _concepts-revisions-revert:
 
 Revert
 ^^^^^^
@@ -283,6 +287,8 @@ Dialogue Summaries
 Dialogues
 ---------
 
+.. _dialogues-get:
+
 .. http:get:: /projects/(str:project_id)/dialogues/
 
   Retrieves a :ref:`summary <data-dialogue-summaries>` of every dialogue
@@ -352,7 +358,10 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
 
 .. http:post:: /projects/(str:project_id)/dialogues/
 
-Creates a new dialogue under the project with the id ``project_id`` using the :ref:`dialogue description <data-dialogues>` given in the request body and returns the created dialogue's description, along with the generated dialogue ``id`` field and ``url`` field for accessing the dialogue description.
+  Creates a new dialogue under the project with the id ``project_id`` using the
+  :ref:`dialogue description <data-dialogues>` given in the request body and
+  returns the created dialogue's description, along with the generated dialogue
+  ``id`` field and ``url`` field for accessing the dialogue description.
 
   .. sourcecode:: http
 
@@ -383,33 +392,43 @@ Creates a new dialogue under the project with the id ``project_id`` using the :r
 
 .. http:put:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
-Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id`` with the description given in the request body and returns the given description, along with the dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
+  Replaces the :ref:`description <data-dialogues>` of the dialogue with id
+  ``dialogue_id`` in the project with id ``project_id`` with the description
+  given in the request body and returns the given description, along with the
+  dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
+
+  Replacing the dialogue creates a new :ref:`edit revision
+  <concepts-revisions-edit>` with a `JSON patch`_ representing the
+  instructions needed to change the current dialogue description to the new
+  description given in the request body.
+
+  .. _JSON Patch: http://tools.ietf.org/html/rfc6902
 
   .. sourcecode:: http
 
-     POST /projects/23/dialogues/21 HTTP/1.1
-     Content-Type: application/json
+    POST /projects/23/dialogues/21 HTTP/1.1
+    Content-Type: application/json
 
-     {
-       "title": "Service Rating Survey",
-       "sequences": [],
-       "is_archived": false
-     }
+    {
+      "title": "Service Rating Survey",
+      "sequences": [],
+      "is_archived": false
+    }
 
   .. sourcecode:: http
 
-     HTTP/1.1 200 OK
-     Content-Type: application/json
+    HTTP/1.1 200 OK
+    Content-Type: application/json
 
-     {
-       "id": "21",
-       "url": "/projects/23/dialogues/21",
-       "title": "Service Rating Survey",
-       "sequences": [],
-       "is_archived": false,
-       "is_published": false,
-       "has_changes": false
-     }
+    {
+      "id": "21",
+      "url": "/projects/23/dialogues/21",
+      "title": "Service Rating Survey",
+      "sequences": [],
+      "is_archived": false,
+      "is_published": false,
+      "has_changes": false
+    }
 
 .. warning::
   If the ``id`` of a :ref:`sequence <data-sequences>` or :ref:`block <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
@@ -418,7 +437,14 @@ Replaces the :ref:`description <data-dialogues>` of the dialogue with id ``dialo
 
 .. http:patch:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
-Partially updates the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in the request body and returns the given description, along with the dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
+  Partially updates the :ref:`description <data-dialogues>` of the dialogue
+  with id ``dialogue_id`` in the project with id ``project_id`` with the
+  :ref:`instructions <overview-partial-updates>` in the request body and
+  returns the given description, along with the dialogue's ``id`` and the
+  ``url`` for accessing the dialogue's description.
+
+  Partially updating the dialogue creates a new :ref:`edit revision
+  <concepts-revisions-edit>` using the provided patch instructions.
 
 .. sourcecode:: http
 
@@ -479,7 +505,7 @@ Dialogue Revisions
 
   .. sourcecode:: http
 
-      GET /projects/23/dialogues/21/revisions/ HTTP/1.1
+     GET /projects/23/dialogues/21/revisions/ HTTP/1.1
 
   .. sourcecode:: http
 
@@ -488,7 +514,7 @@ Dialogue Revisions
 
      [{
        "id": "1",
-       "user_id": 17,
+       "user_id": "17",
        "created": 1459943775033,
        "type": "edit",
        "details": {
@@ -518,6 +544,73 @@ Dialogue Revisions
     The ordering of the returned revisions. ``created`` returns the revisions
     in ascending order of creation date and ``-created`` returns the revisions
     in descending order of creation date. Defaults to ``-created``.
+
+
+.. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
+
+  Creates a new revision for dialogue ``dialogue_id`` under project
+  ``project_id`` using the :ref:`description <data-revisions>` given in
+  the request body and returns the created revisions's description, along with
+  the generated ``id`` field and ``url`` field for accessing the revision
+  description.
+
+  Creating a new revision updates the dialogue's description. Any new requests
+  to :ref:`retrieve <dialogues-get>` the dialogue will return a dialogue
+  :ref:`description <data-dialogues>` with the new revision applied.
+
+  .. sourcecode:: http
+
+     POST /projects/23/dialogues/21/revisions/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "created": 1459943775033,
+       "type": "edit",
+       "details": {
+         "id": "start",
+         "title": "Start of sequence",
+       },
+       "properties": {
+         "edit_type": "new_sequence",
+         "patch": {
+           "op": "add",
+           "path": "/sequences",
+           "value": {
+             "id": "start",
+             "title": "Start of sequence",
+             "blocks": []
+           }
+         }
+       }
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 201 Created
+     Content-Type: application/json
+
+     {
+       "id": "1",
+       "user_id": "17",
+       "created": 1459943775033,
+       "type": "edit",
+       "details": {
+         "id": "start",
+         "title": "Start of sequence",
+       },
+       "properties": {
+         "edit_type": "new_sequence",
+         "patch": {
+           "op": "add",
+           "path": "/sequences",
+           "value": {
+             "id": "start",
+             "title": "Start of sequence",
+             "blocks": []
+           }
+         }
+       }
+     }
 
 
 Indices and tables
