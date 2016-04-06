@@ -493,15 +493,15 @@ A dialogue can be archived by setting ``is_archived`` to ``true`` when :ref:`rep
 
 .. TODO ^ reference events if and when they are documented
 
-.. _dialogue-revisions:
+.. _revisions:
 
-Dialogue Revisions
-------------------
+Revisions
+---------
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
 
-  Retrieves the :ref:`revisions <data-dialogue-revisions>` of dialogue
-  ``dialogue_id`` in the project ``project_id``.
+  Retrieves the :ref:`revisions <data-revisions>` of dialogue ``dialogue_id``
+  in the project ``project_id``.
 
   .. sourcecode:: http
 
