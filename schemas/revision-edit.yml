@@ -2,7 +2,7 @@ $ref: '#/definitions/revision'
 
 properties:
   properties:
-    type:
+    edit_type:
       type: string
       description: |
         Programmatically usable string representing the type of edit done in
