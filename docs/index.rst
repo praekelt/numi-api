@@ -541,10 +541,25 @@ Revisions
     Number of revisions to show per page. Defaults to ``30``. Maximum is
     ``100``.
   :query string ordering:
-    The ordering of the returned revisions. ``created`` returns the revisions
-    in ascending order of creation date and ``-created`` returns the revisions
-    in descending order of creation date. Defaults to ``-created``.
+    The ordering of the returned revisions. If multiple ``ordering`` parameters
+    are provided, the returned revisions will be sorted by each provided
+    parameter, in the order the parameters were specified. Defaults to
+    ``-number``.
 
+Ordering revisions
+~~~~~~~~~~~~~~~~~~
+
++--------------+------------------------------------------------------------+
+| Parameter    | Description                                                |
++==============+============================================================+
+| ``number``   | Return revisions in ascending order of revision number     |
++--------------+------------------------------------------------------------+
+| ``-number``  | Return revisions in descending order of revision number    |
++--------------+------------------------------------------------------------+
+| ``created``  | Return revisions in ascending order of creation date       |
++--------------+------------------------------------------------------------+
+| ``-created`` | Return revisions in descending order of creation date      |
++--------------+------------------------------------------------------------+
 
 .. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
 
