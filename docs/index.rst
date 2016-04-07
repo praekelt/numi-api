@@ -168,20 +168,20 @@ For ``POST`` and ``PATCH`` requests, if a client provides read-only fields, the 
 
 .. sourcecode:: http
 
-   HTTP/1.1 422 Unprocessable Entity
-   Content-Type: application/json
+  HTTP/1.1 422 Unprocessable Entity
+  Content-Type: application/json
 
-   {
-     "type": "validation_error",
-     "message": "Invalid request body",
-     "details": {
-       "errors": [{
-         "type", "additionalProperties",
-         "path": "/",
-         "message": "Additional properties are not allowed ('id' was unexpected)"
-       }]
-     }
-   }
+  {
+    "type": "validation_error",
+    "message": "Invalid request body",
+    "details": {
+      "errors": [{
+        "type", "additionalProperties",
+        "path": "/",
+        "message": "Additional properties are not allowed ('id' was unexpected)"
+      }]
+    }
+  }
 
 Concepts
 ~~~~~~~~
