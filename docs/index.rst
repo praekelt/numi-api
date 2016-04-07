@@ -709,7 +709,7 @@ It is also possible to create revisions in bulk by providing an array of revisio
          "new_title": "Start"
        },
        "properties": {
-         "edit_type": "new_sequence",
+         "edit_type": "rename_sequence",
          "patch": [{
            "op": "add",
            "path": "/sequences/title",
