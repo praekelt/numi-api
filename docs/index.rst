@@ -233,6 +233,39 @@ Symbols
 *******
 Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
 
+
+Permissions
+~~~~~~~~~~~
+A user's actions are limited by the permissions they have been granted. Users can be granted the following permissions:
+
+``admin``
+*********
+Grants create, archive, read and write access for all projects and dialogues, and publish access for all dialogues.
+
+``projects:create``
+*******************
+Grants access to create new projects. Users with this permission obtain ``project:admin`` access for the projects they create.
+
+``project:admin``
+*****************
+Grants create, archive, read, write and publish access for a given project's dialogues.
+
+``project:dialogues:read``
+**************************
+Grants read access for a given project's dialogues.
+
+``project:dialogues:write``
+***************************
+Grants write access for a given project's dialogues.
+
+``dialogue:read``
+*****************
+Grants read access for a given dialogue.
+
+``dialogue:write``
+******************
+Grants write access for a given dialogue.
+
 .. _data:
 
 Data Structures
@@ -304,6 +337,44 @@ Dialogue Summaries
 ~~~~~~~~~~~~~~~~~~
 
 .. literalinclude:: ../schemas/dialogue/summary.yml
+  :language: yaml
+
+.. _data-permissions:
+
+Permissions
+~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/permission/permission.yml
+  :language: yaml
+
+``project:admin``
+*****************
+
+.. literalinclude:: ../schemas/permission/project-admin.yml
+  :language: yaml
+
+``project:dialogues:read``
+**************************
+
+.. literalinclude:: ../schemas/permission/project-dialogues-read.yml
+  :language: yaml
+
+``project:dialogues:write``
+***************************
+
+.. literalinclude:: ../schemas/permission/project-dialogues-write.yml
+  :language: yaml
+
+``dialogue:read``
+*****************
+
+.. literalinclude:: ../schemas/permission/dialogue-read.yml
+  :language: yaml
+
+``dialogue:write``
+******************
+
+.. literalinclude:: ../schemas/permission/dialogue-write.yml
   :language: yaml
 
 .. TODO Projects endpoints
