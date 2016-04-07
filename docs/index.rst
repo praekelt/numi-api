@@ -214,7 +214,7 @@ Data Structures
 Projects
 ~~~~~~~~
 
-.. literalinclude:: ../schemas/project.yml
+.. literalinclude:: ../schemas/project/project.yml
   :language: yaml
 
 .. _data-dialogues:
@@ -258,7 +258,7 @@ Symbols
 Project Summaries
 ~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../schemas/project-summary.yml
+.. literalinclude:: ../schemas/project/summary.yml
   :language: yaml
 
 .. _data-dialogue-summaries:
