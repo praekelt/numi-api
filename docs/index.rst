@@ -238,6 +238,44 @@ Dialogue Summaries
 .. literalinclude:: ../schemas/dialogue/summary.yml
   :language: yaml
 
+.. _data-permissions:
+
+Permissions
+~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/permission/permission.yml
+  :language: yaml
+
+``project:admin``
+*****************
+
+.. literalinclude:: ../schemas/permission/project-admin.yml
+  :language: yaml
+
+``project:dialogues:read``
+**************************
+
+.. literalinclude:: ../schemas/permission/project-dialogues-read.yml
+  :language: yaml
+
+``project:dialogues:write``
+***************************
+
+.. literalinclude:: ../schemas/permission/project-dialogues-write.yml
+  :language: yaml
+
+``dialogue:read``
+*****************
+
+.. literalinclude:: ../schemas/permission/dialogue-read.yml
+  :language: yaml
+
+``dialogue:write``
+******************
+
+.. literalinclude:: ../schemas/permission/dialogue-write.yml
+  :language: yaml
+
 
 .. TODO Projects endpoints
 
