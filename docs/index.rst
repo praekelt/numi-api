@@ -592,14 +592,6 @@ If the project isn't found, a ``404`` response will be given. The response body'
      }]
    }
 
-
-Archiving projects
-~~~~~~~~~~~~~~~~~~
-A project can be archived by setting ``is_archived`` to ``true`` when :ref:`replacing <projects-put>` or :ref:`partially updating <projects-patch>` the project description. The project is still accessible via the api, but its dialogues will no longer be triggered by any events that were previously associated to them.
-
-
-.. _dialogues:
-
 Dialogues
 ---------
 
