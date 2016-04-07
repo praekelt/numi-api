@@ -563,15 +563,15 @@ Ordering revisions
 
 .. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
 
-  Creates a new revision for dialogue ``dialogue_id`` under project
-  ``project_id`` using the :ref:`description <data-revisions>` given in
-  the request body and returns the created revisions's description, along with
-  the generated ``id`` field and ``url`` field for accessing the revision
-  description.
+Creates a new revision for dialogue ``dialogue_id`` under project
+``project_id`` using the :ref:`description <data-revisions>` given in
+the request body and returns the created revisions's description, along with
+the generated ``id`` field and ``url`` field for accessing the revision
+description.
 
-  Creating a new revision updates the dialogue's description. Any new requests
-  to :ref:`retrieve <dialogues-get>` the dialogue will return a dialogue
-  :ref:`description <data-dialogues>` with the new revision applied.
+Creating a new revision updates the dialogue's description. Any new requests
+to :ref:`retrieve <dialogues-get>` the dialogue will return a dialogue
+:ref:`description <data-dialogues>` with the new revision applied.
 
   .. sourcecode:: http
 
@@ -625,6 +625,97 @@ Ordering revisions
          }]
        }
      }
+
+It is also possible to create revisions in bulk by providing an array of revisions. In this case, an array of revision descriptions will be returned:
+
+  .. sourcecode:: http
+
+     POST /projects/23/dialogues/21/revisions/ HTTP/1.1
+     Content-Type: application/json
+
+     [{
+       "type": "edit",
+       "details": {
+         "id": "start",
+         "title": "Start of sequence",
+       },
+       "properties": {
+         "edit_type": "new_sequence",
+         "patch": [{
+           "op": "add",
+           "path": "/sequences",
+           "value": {
+             "id": "start",
+             "title": "Start of sequence",
+             "blocks": []
+           }
+         }]
+       }
+     }, {
+       "type": "edit",
+       "details": {
+         "id": "start",
+         "old_title": "Start of sequence",
+         "new_title": "Start"
+       },
+       "properties": {
+         "edit_type": "rename_sequence",
+         "patch": [{
+           "op": "add",
+           "path": "/sequences/title",
+           "value": "Start"
+         }]
+       }
+     }]
+
+  .. sourcecode:: http
+
+     HTTP/1.1 201 Created
+     Content-Type: application/json
+
+     [{
+       "id": "1",
+       "user_id": "17",
+       "created": 1459943775033,
+       "type": "edit",
+       "details": {
+         "id": "start",
+         "title": "Start of sequence",
+       },
+       "properties": {
+         "edit_type": "new_sequence",
+         "patch": [{
+           "op": "add",
+           "path": "/sequences",
+           "value": {
+             "id": "start",
+             "title": "Start of sequence",
+             "blocks": []
+           }
+         }]
+       }
+     }, {
+       "id": "2",
+       "user_id": "17",
+       "created": 1459943775033,
+       "type": "edit",
+       "details": {
+         "id": "start",
+         "old_title": "Start of sequence",
+         "new_title": "Start"
+       },
+       "properties": {
+         "edit_type": "new_sequence",
+         "patch": [{
+           "op": "add",
+           "path": "/sequences/title",
+           "value": "Start"
+         }]
+       }
+     }]
+
+.. note
+  Created revisions in bulk is done atomically. If one of the given revisions cannot be created, none of the given revisions will be created.
 
 
 Indices and tables
