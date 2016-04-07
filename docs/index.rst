@@ -523,7 +523,7 @@ Revisions
        },
        "properties": {
          "edit_type": "new_sequence",
-         "patch": {
+         "patch": [{
            "op": "add",
            "path": "/sequences",
            "value": {
@@ -531,7 +531,7 @@ Revisions
              "title": "Start of sequence",
              "blocks": []
            }
-         }
+         }]
        }
      }]
 
