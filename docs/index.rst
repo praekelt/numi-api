@@ -564,7 +564,6 @@ Revisions
      Content-Type: application/json
 
      {
-       "created": 1459943775033,
        "type": "edit",
        "details": {
          "id": "start",
@@ -572,7 +571,7 @@ Revisions
        },
        "properties": {
          "edit_type": "new_sequence",
-         "patch": {
+         "patch": [{
            "op": "add",
            "path": "/sequences",
            "value": {
@@ -580,7 +579,7 @@ Revisions
              "title": "Start of sequence",
              "blocks": []
            }
-         }
+         }]
        }
      }
 
@@ -600,7 +599,7 @@ Revisions
        },
        "properties": {
          "edit_type": "new_sequence",
-         "patch": {
+         "patch": [{
            "op": "add",
            "path": "/sequences",
            "value": {
@@ -608,7 +607,7 @@ Revisions
              "title": "Start of sequence",
              "blocks": []
            }
-         }
+         }]
        }
      }
 
