@@ -158,6 +158,30 @@ pointing to where in the given object validation failed, and a human readable
      }
    }
 
+Read-only fields
+~~~~~~~~~~~~~~~~
+Many of the API's :ref:`data structures <data>` return read-only fields in API responses. For example, API-generated ``id`` fields, or a resource's ``url`` field. If read only fields are provided by clients in API request bodies, the way these are handled depends on the request method.
+
+For ``PUT`` requests, in order to allow clients to more easily send back an updated description, clients may include read-only fields, but these fields will be ignored when replacing the resource.
+
+For ``POST`` and ``PATCH`` requests, if a client provides read-only fields, the API will return an ``422 Unprocessable Entity`` response, since this case is likely to be a client error:
+
+.. sourcecode:: http
+
+  HTTP/1.1 422 Unprocessable Entity
+  Content-Type: application/json
+
+  {
+    "type": "validation_error",
+    "message": "Invalid request body",
+    "details": {
+      "errors": [{
+        "type", "additionalProperties",
+        "path": "/",
+        "message": "Additional properties are not allowed ('id' was unexpected)"
+      }]
+    }
+  }
 
 Concepts
 ~~~~~~~~
@@ -219,6 +243,41 @@ Releases
 A release marks a point in a dialogue's history of revisions. End users will always interact with the most recently published release's corresponding dialogue description.
 
 
+
+Permissions
+~~~~~~~~~~~
+A user's actions are limited by the permissions they have been granted. Users can be granted the following permissions:
+
+``admin``
+*********
+Grants create, archive, read and write access for all projects and dialogues, and publish access for all dialogues.
+
+``projects:create``
+*******************
+Grants access to create new projects. Users with this permission obtain ``project:admin`` access for the projects they create.
+
+``project:admin``
+*****************
+Grants create, archive, read, write and publish access for a given project's dialogues.
+
+``project:dialogues:read``
+**************************
+Grants read access for a given project's dialogues.
+
+``project:dialogues:write``
+***************************
+Grants write access for a given project's dialogues.
+
+``dialogue:read``
+*****************
+Grants read access for a given dialogue.
+
+``dialogue:write``
+******************
+Grants write access for a given dialogue.
+
+.. _data:
+
 Data Structures
 ---------------
 
@@ -227,7 +286,7 @@ Data Structures
 Dialogues
 ~~~~~~~~~
 
-.. literalinclude:: ../schemas/dialogue.yml
+.. literalinclude:: ../schemas/dialogue/dialogue.yml
   :language: yaml
 
 .. _data-sequences:
@@ -235,7 +294,7 @@ Dialogues
 Sequences
 ~~~~~~~~~
 
-.. literalinclude:: ../schemas/sequence.yml
+.. literalinclude:: ../schemas/dialogue/sequence.yml
   :language: yaml
 
 
@@ -247,7 +306,7 @@ Blocks
 .. note::
   A block's ``properties`` object is validated against a schema corresponding to the block's type (represented by the ``type`` field).
 
-.. literalinclude:: ../schemas/block.yml
+.. literalinclude:: ../schemas/dialogue/block.yml
   :language: yaml
 
 .. _data-symbol:
@@ -255,7 +314,7 @@ Blocks
 Symbols
 ~~~~~~~
 
-.. literalinclude:: ../schemas/symbol.yml
+.. literalinclude:: ../schemas/dialogue/symbol.yml
   :language: yaml
 
 .. _data-revisions:
@@ -263,7 +322,7 @@ Symbols
 Revisions
 ~~~~~~~~~
 
-.. literalinclude:: ../schemas/revision.yml
+.. literalinclude:: ../schemas/revision/revision.yml
   :language: yaml
 
 .. _data-revisions-edit:
@@ -271,7 +330,7 @@ Revisions
 Edits
 *****
 
-.. literalinclude:: ../schemas/revision-edit.yml
+.. literalinclude:: ../schemas/revision/edit.yml
   :language: yaml
 
 .. _data-revisions-revert:
@@ -279,7 +338,7 @@ Edits
 Reverts
 *******
 
-.. literalinclude:: ../schemas/revision-revert.yml
+.. literalinclude:: ../schemas/revision/revert.yml
   :language: yaml
 
 .. _data-releases:
@@ -295,7 +354,45 @@ Releases
 Dialogue Summaries
 ~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../schemas/dialogue-summary.yml
+.. literalinclude:: ../schemas/dialogue/summary.yml
+  :language: yaml
+
+.. _data-permissions:
+
+Permissions
+~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/permission/permission.yml
+  :language: yaml
+
+``project:admin``
+*****************
+
+.. literalinclude:: ../schemas/permission/project-admin.yml
+  :language: yaml
+
+``project:dialogues:read``
+**************************
+
+.. literalinclude:: ../schemas/permission/project-dialogues-read.yml
+  :language: yaml
+
+``project:dialogues:write``
+***************************
+
+.. literalinclude:: ../schemas/permission/project-dialogues-write.yml
+  :language: yaml
+
+``dialogue:read``
+*****************
+
+.. literalinclude:: ../schemas/permission/dialogue-read.yml
+  :language: yaml
+
+``dialogue:write``
+******************
+
+.. literalinclude:: ../schemas/permission/dialogue-write.yml
   :language: yaml
 
 .. TODO Projects endpoints

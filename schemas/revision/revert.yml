@@ -1,4 +1,4 @@
-$ref: '#/definitions/revision'
+$ref: '#/definitions/revision/revision'
 
 properties:
   properties:

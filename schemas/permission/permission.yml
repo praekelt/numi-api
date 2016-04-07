@@ -1,0 +1,22 @@
+required:
+  - type
+
+properties:
+  type:
+    type: string
+    enum:
+      - admin
+      - projects:create
+      - project:admin
+      - project:dialogues:read
+      - project:dialogues:write
+      - dialogue:read
+      - dialogue:write
+    description: |
+      Identifies the type of this permission.
+
+  properties:
+    type: object
+    default: {}
+    description: |
+      Properties relevant to the permission type.
