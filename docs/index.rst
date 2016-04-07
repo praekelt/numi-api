@@ -158,6 +158,30 @@ pointing to where in the given object validation failed, and a human readable
      }
    }
 
+Read-only fields
+~~~~~~~~~~~~~~~~
+Many of the API's :ref:`data structures <data>` contain read-only fields provided in API responses, for example, API-generated ``id`` fields, or a resource's ``url`` field. If read only fields are provided by clients in API request bodies, the way these are handled depends on the request method.
+
+For ``PUT`` requests, in order to allow clients to more easily send back an updated description, clients providing read-only fields is allowed, but these fields will be ignored when replacing the resource.
+
+For ``POST`` and ``PATCH`` requests, if a client provides read-only fields, the API will return an ``422 Unprocessable Entity`` response, since this case is likely to be a client error:
+
+.. sourcecode:: http
+
+   HTTP/1.1 422 Unprocessable Entity
+   Content-Type: application/json
+
+   {
+     "type": "validation_error",
+     "message": "Invalid request body",
+     "details": {
+       "errors": [{
+         "type", "additionalProperties",
+         "path": "/",
+         "message": "Additional properties are not allowed ('id' was unexpected)"
+       }]
+     }
+   }
 
 Concepts
 ~~~~~~~~
@@ -190,6 +214,8 @@ A block is a single step to follow when interacting with the user. This step may
 Symbols
 *******
 Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
+
+.. _data:
 
 Data Structures
 ---------------
