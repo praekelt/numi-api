@@ -1,3 +1,6 @@
+required:
+  - revision_id
+
 properties:
   id:
     type: string
@@ -11,15 +14,23 @@ properties:
     description: |
       API url for accessing the release's description.
 
-  message:
-    type: string
-    description: |
-      A human-readable message describing the release.
-
-  dialogue:
-    $ref: '#/definitions/dialogue'
+  number:
+    type: number
     readOnly: true
     description: |
-      The dialogue description associated with this release.
+      The releases's number, starting at `1` for the first release, and
+      incremented for each new release.
+
+  created:
+    type: number
+    readOnly: true
+    description: |
+      Timestamp representing when the revision was created in milliseconds
+      since the Unix epoch.
+
+  revision_id:
+    type: string
+    description: |
+      Identifier of the revision this release is for.
 
 additionalProperties: false

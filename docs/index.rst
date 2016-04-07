@@ -187,6 +187,13 @@ Blocks
 ******
 A block is a single step to follow when interacting with the user. This step may be, for example, a screen asking the user a question, or a step not visible to the user, for example, registering the user with a service.
 
+.. _concepts-symbols:
+
+Symbols
+*******
+Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
+
+
 .. _concepts-revisions:
 
 Revision
@@ -205,17 +212,11 @@ Revert
 ^^^^^^
 Reverts a dialogue's description back to its state at an earlier revision.
 
-.. _concepts-symbols:
-
-Symbols
-*******
-Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
-
 .. _concepts-releases:
 
-Releases and publishing
-***********************
-Each time a dialogues's changes are published, the changed dialogue is recorded as a new release. The new release will be *made live*: any changes to the dialogue and its :ref:`sequences <concepts-sequences>` and :ref:`blocks <concepts-blocks>` will apply when end users interact with the dialogue.
+Releases
+********
+A release marks a point in a dialogue's history of revisions. End users will always interact with the most recently published release's corresponding dialogue description.
 
 
 Data Structures
@@ -281,14 +282,6 @@ Reverts
 .. literalinclude:: ../schemas/revision-revert.yml
   :language: yaml
 
-.. _data-dialogue-summaries:
-
-Dialogue Summaries
-~~~~~~~~~~~~~~~~~~
-
-.. literalinclude:: ../schemas/dialogue-summary.yml
-  :language: yaml
-
 .. _data-releases:
 
 Releases
@@ -297,14 +290,13 @@ Releases
 .. literalinclude:: ../schemas/release.yml
   :language: yaml
 
-.. _data-release-summaries:
+.. _data-dialogue-summaries:
 
-Release Summaries
-~~~~~~~~~~~~~~~~~
+Dialogue Summaries
+~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../schemas/release-summary.yml
+.. literalinclude:: ../schemas/dialogue-summary.yml
   :language: yaml
-
 
 .. TODO Projects endpoints
 
@@ -753,40 +745,56 @@ Releases
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
 
-  Retrieves a :ref:`summary <data-release-summaries>` of each :ref:`release
-  <concepts-releases>` for ``dialogue_id`` contained in the project with id
-  ``project_id``.
+Retrieves the :ref:`descriptions <data-releases>` of the :ref:`releases
+<concepts-releases>` of dialogue ``dialogue_id`` in the project ``project_id``.
 
   .. sourcecode:: http
 
-      GET /projects/23/dialogues/21/releases/ HTTP/1.1
+    GET /projects/23/dialogues/21/releases/ HTTP/1.1
 
   .. sourcecode:: http
 
-     HTTP/1.1 200 OK
-     Content-Type: application/json
+    HTTP/1.1 200 OK
+    Content-Type: application/json
 
     [{
-      "id": "44",
-      "dialogue_id": "21",
-      "url": "/projects/23/dialogues/21/releases/44",
-      "message": "Added FAQ section",
-      "dialogue": {
-        "id": "21",
-        "url": "/projects/23/dialogues/21",
-        "title": "Service Rating Survey",
-        "is_archived": false,
-        "is_published": false,
-        "has_changes": false
-      }
+      "id": "1",
+      "number": 1,
+      "url": "/projects/23/dialogues/21/releases/1",
+      "revision_id": "7"
     }]
 
+  :query number page:
+    1-based index of the page of releases to show. Defaults to ``1``.
+  :query number per_page:
+    Number of releases to show per page. Defaults to ``30``. Maximum is
+    ``100``.
+  :query string ordering:
+    The ordering of the returned releases. If multiple ``ordering`` parameters
+    are provided, the returned releases will be sorted by each provided
+    parameter, in the order the parameters were specified. Defaults to
+    ``-number``.
+
+Ordering releases
+~~~~~~~~~~~~~~~~~~
+
++--------------+------------------------------------------------------------+
+| Parameter    | Description                                                |
++==============+============================================================+
+| ``number``   | Return releases in ascending order of release number       |
++--------------+------------------------------------------------------------+
+| ``-number``  | Return releases in descending order of release number      |
++--------------+------------------------------------------------------------+
+| ``created``  | Return releases in ascending order of creation date        |
++--------------+------------------------------------------------------------+
+| ``-created`` | Return releases in descending order of creation date       |
++--------------+------------------------------------------------------------+
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/(str:release_id)
 
-  Retrieves the :ref:`description <data-releases>` for the release with id
-  ``release_id`` for dialogue ``dialogue_id`` contained in the project with id
-  ``project_id``.
+Retrieves the :ref:`description <data-releases>` for the release with id
+``release_id`` for dialogue ``dialogue_id`` contained in the project with id
+``project_id``.
 
   .. sourcecode:: http
 
@@ -798,23 +806,11 @@ Releases
      Content-Type: application/json
 
     {
-      "id": "44",
-      "dialogue_id": "21",
-      "url": "/projects/23/dialogues/21/releases/44",
-      "message": "Added FAQ section",
-      "dialogue": {
-        "id": "21",
-        "url": "/projects/23/dialogues/21",
-        "title": "Service Rating Survey",
-        "sequences": [{
-          "id": "start",
-          "title": "Start of sequence",
-          "blocks": []
-        }],
-        "is_archived": false,
-        "is_published": false,
-        "has_changes": false
-      }
+      "id": "1",
+      "number": 1,
+      "url": "/projects/23/dialogues/21/releases/1",
+      "revision_id": "7",
+      "created": 1460022608855
     }
 
 If the release isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` and ``dialogue_id`` given in the request.
@@ -833,91 +829,31 @@ If the release isn't found, a ``404`` response will be given. The response body'
        }
      }
 
-.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/latest
-
-  Retrieves the :ref:`description <data-releases>` for the latest release with id
-  ``release_id`` for dialogue ``dialogue_id`` contained in the project with id
-  ``project_id``.
-
-  .. sourcecode:: http
-
-      GET /projects/23/dialogues/21/releases/latest HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-    {
-      "id": "44",
-      "dialogue_id": "21",
-      "url": "/projects/23/dialogues/21/releases/44",
-      "message": "Added FAQ section",
-      "dialogue": {
-        "id": "21",
-        "url": "/projects/23/dialogues/21",
-        "title": "Service Rating Survey",
-        "sequences": [{
-          "id": "start",
-          "title": "Start of sequence",
-          "blocks": []
-        }],
-        "is_archived": false,
-        "is_published": false,
-        "has_changes": false
-      }
-    }
-
-If the dialogue with the given id has no releases yet, a ``404`` response will be given. The response body's ``details`` object contains the ``dialogue_id`` given in the request:
-
-  .. sourcecode:: http
-
-     HTTP/1.1 404 Not Found
-     Content-Type: application/json
-
-     {
-       "type": "no_releases",
-       "message": "Dialogue 21 has no releases",
-       "details": {"dialogue_id": "21"}
-     }
-
 .. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
 
 Creates a new release for dialogue ``dialogue_id`` under the project with the id ``project_id`` using the :ref:`description <data-releases>` given in the request body and returns the created releases's description, along with the generated release ``id`` field and ``url`` field for accessing the release description.
 
   .. sourcecode:: http
 
-     POST /projects/23/dialogues/21/releases/ HTTP/1.1
-     Content-Type: application/json
+    POST /projects/23/dialogues/21/releases/ HTTP/1.1
+    Content-Type: application/json
 
-     {
-       "message": "Added FAQ section"
-     }
+    {
+      "revision_id": "7"
+    }
 
   .. sourcecode:: http
 
-     HTTP/1.1 201 Created
-     Content-Type: application/json
+    HTTP/1.1 201 Created
+    Content-Type: application/json
 
-     {
-       "id": "44",
-       "dialogue_id": "21",
-       "url": "/projects/23/dialogues/21/releases/44",
-       "message": "Added FAQ section",
-       "dialogue": {
-         "id": "21",
-         "url": "/projects/23/dialogues/21",
-         "title": "Service Rating Survey",
-         "sequences": [{
-           "id": "start",
-           "title": "Start of sequence",
-           "blocks": []
-         }],
-         "is_archived": false,
-         "is_published": false,
-         "has_changes": false
-       }
-     }
+    {
+      "id": "1",
+      "number": 1,
+      "revision_id": "7",
+      "created": 1460022608855,
+      "url": "/projects/23/dialogues/21/releases/1"
+    }
 
 
 Indices and tables
