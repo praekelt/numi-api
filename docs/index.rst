@@ -217,7 +217,7 @@ Data Structures
 Dialogues
 ~~~~~~~~~
 
-.. literalinclude:: ../schemas/dialogue.yml
+.. literalinclude:: ../schemas/dialogue/dialogue.yml
   :language: yaml
 
 .. _data-sequences:
@@ -225,7 +225,7 @@ Dialogues
 Sequences
 ~~~~~~~~~
 
-.. literalinclude:: ../schemas/sequence.yml
+.. literalinclude:: ../schemas/dialogue/sequence.yml
   :language: yaml
 
 
@@ -237,7 +237,7 @@ Blocks
 .. note::
   A block's ``properties`` object is validated against a schema corresponding to the block's type (represented by the ``type`` field).
 
-.. literalinclude:: ../schemas/block.yml
+.. literalinclude:: ../schemas/dialogue/block.yml
   :language: yaml
 
 .. _data-symbol:
@@ -245,7 +245,7 @@ Blocks
 Symbols
 ~~~~~~~
 
-.. literalinclude:: ../schemas/symbol.yml
+.. literalinclude:: ../schemas/dialogue/symbol.yml
   :language: yaml
 
 .. _data-revisions:
@@ -277,7 +277,7 @@ Reverts
 Dialogue Summaries
 ~~~~~~~~~~~~~~~~~~
 
-.. literalinclude:: ../schemas/dialogue-summary.yml
+.. literalinclude:: ../schemas/dialogue/summary.yml
   :language: yaml
 
 .. TODO Projects endpoints
