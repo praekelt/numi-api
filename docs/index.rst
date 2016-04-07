@@ -514,6 +514,7 @@ Revisions
 
      [{
        "id": "1",
+       "number": 1,
        "user_id": "17",
        "created": 1459943775033,
        "type": "edit",
@@ -605,6 +606,7 @@ to :ref:`retrieve <dialogues-get>` the dialogue will return a dialogue
 
      {
        "id": "1",
+       "number": 1,
        "user_id": "17",
        "created": 1459943775033,
        "type": "edit",
@@ -675,6 +677,7 @@ It is also possible to create revisions in bulk by providing an array of revisio
 
      [{
        "id": "1",
+       "number": 1,
        "user_id": "17",
        "created": 1459943775033,
        "type": "edit",
@@ -696,6 +699,7 @@ It is also possible to create revisions in bulk by providing an array of revisio
        }
      }, {
        "id": "2",
+       "number": 2,
        "user_id": "17",
        "created": 1459943775033,
        "type": "edit",
