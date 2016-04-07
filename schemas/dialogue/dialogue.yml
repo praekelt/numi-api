@@ -23,7 +23,7 @@ properties:
   sequences:
     type: array
     items:
-      $ref: '#/definitions/sequence'
+      $ref: '#/definitions/dialogue/sequence'
     description: |
       The dialogue's set of sequences
 
