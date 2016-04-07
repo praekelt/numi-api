@@ -249,33 +249,49 @@ Symbols
 Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
 
 
+.. _permissions:
+
 Permissions
 ~~~~~~~~~~~
 A user's actions are limited by the permissions they have been granted. Users can be granted the following permissions:
+
+.. _permissions-admin:
 
 ``admin``
 *********
 Grants create, archive, read and write access for all projects and dialogues, and publish access for all dialogues.
 
+.. _permissions-projects-create:
+
 ``projects:create``
 *******************
 Grants access to create new projects. Users with this permission obtain ``project:admin`` access for the projects they create.
+
+.. _permissions-projects-admin:
 
 ``project:admin``
 *****************
 Grants create, archive, read, write and publish access for a given project's dialogues.
 
+.. _permissions-project-dialogues-read:
+
 ``project:dialogues:read``
 **************************
 Grants read access for a given project's dialogues.
+
+.. _permissions-project-dialogues-write:
 
 ``project:dialogues:write``
 ***************************
 Grants write access for a given project's dialogues.
 
+.. _permissions-dialogue-read:
+
 ``dialogue:read``
 *****************
 Grants read access for a given dialogue.
+
+.. _permissions-dialogue-write:
 
 ``dialogue:write``
 ******************
@@ -494,8 +510,8 @@ If the project isn't found, a ``404`` response will be given. The response body'
   along with the generated dialogue ``id`` field and ``url`` field for
   accessing the project description.
 
-  .. TODO mention that the user creating the project is given admin access once
-  we have documented permission levels
+  The authenticated user creating the project is given :ref:`project admin
+  <permissions-project-admin>` access for the newly created project.
 
   .. sourcecode:: http
 
