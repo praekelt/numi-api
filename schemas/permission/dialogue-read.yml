@@ -1,0 +1,15 @@
+$ref: '#/definitions/permission/permission'
+
+properties:
+  properties:
+    type: object
+    properties:
+      project_id:
+        type: string
+        description: |
+          Identifier of the project this permission is for.
+
+      dialogue_id:
+        type: string
+        description: |
+          Identifier of the dialogue this permission is for.
