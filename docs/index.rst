@@ -438,6 +438,14 @@ Projects
        "url": "/projects/2",
      }]
 
+  :query number page:
+    1-based index of the page of projects to show. Defaults to ``1``.
+
+  :query number per_page:
+    Number of projects to show per page. Defaults to ``30``. Maximum is
+    ``100``.
+
+
 .. http:get:: /projects/(str:project_id)
 
   Retrieves the :ref:`description <data-projects>` of the project with id ``project_id``.
@@ -628,13 +636,6 @@ Dialogues
 
   :query boolean has_changes:
     If ``false``, only return dialogues without unpublished changes. If ``true``, only return dialogues with unpublished changes. If omitted, dialogues with published and unpublished changes are retrieved.
-
-  :query number page:
-    1-based index of the page of projects to show. Defaults to ``1``.
-
-  :query number per_page:
-    Number of projects to show per page. Defaults to ``30``. Maximum is
-    ``100``.
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
