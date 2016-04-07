@@ -253,7 +253,7 @@ Symbols
 Revisions
 ~~~~~~~~~
 
-.. literalinclude:: ../schemas/revision.yml
+.. literalinclude:: ../schemas/revision/revision.yml
   :language: yaml
 
 .. _data-revisions-edit:
@@ -261,7 +261,7 @@ Revisions
 Edits
 *****
 
-.. literalinclude:: ../schemas/revision-edit.yml
+.. literalinclude:: ../schemas/revision/edit.yml
   :language: yaml
 
 .. _data-revisions-revert:
@@ -269,7 +269,7 @@ Edits
 Reverts
 *******
 
-.. literalinclude:: ../schemas/revision-revert.yml
+.. literalinclude:: ../schemas/revision/revert.yml
   :language: yaml
 
 .. _data-dialogue-summaries:
