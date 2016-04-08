@@ -186,6 +186,21 @@ For ``POST`` and ``PATCH`` requests, if a client provides read-only fields, the 
 Concepts
 ~~~~~~~~
 
+.. _concepts-users:
+
+Users
+*****
+Users have access to a set of :ref:`projects <concepts-projects>`. Depending on their permission levels, users can view or modify a project and its :ref:`dialogues <concepts-dialogues>`.
+
+.. TODO link to auth once this is documented.
+.. TODO link to permissions once this is documented.
+
+.. _concepts-projects:
+
+Projects
+********
+A project comprises a set of :ref:`dialogues <concepts-dialogues>`. End user state is shared across dialogues under the same project.
+
 .. _concepts-dialogues:
 
 Dialogues
@@ -234,33 +249,49 @@ Symbols
 Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
 
 
+.. _permissions:
+
 Permissions
 ~~~~~~~~~~~
 A user's actions are limited by the permissions they have been granted. Users can be granted the following permissions:
+
+.. _permissions-admin:
 
 ``admin``
 *********
 Grants create, archive, read and write access for all projects and dialogues, and publish access for all dialogues.
 
+.. _permissions-projects-create:
+
 ``projects:create``
 *******************
 Grants access to create new projects. Users with this permission obtain ``project:admin`` access for the projects they create.
+
+.. _permissions-projects-admin:
 
 ``project:admin``
 *****************
 Grants create, archive, read, write and publish access for a given project's dialogues.
 
+.. _permissions-project-dialogues-read:
+
 ``project:dialogues:read``
 **************************
 Grants read access for a given project's dialogues.
+
+.. _permissions-project-dialogues-write:
 
 ``project:dialogues:write``
 ***************************
 Grants write access for a given project's dialogues.
 
+.. _permissions-dialogue-read:
+
 ``dialogue:read``
 *****************
 Grants read access for a given dialogue.
+
+.. _permissions-dialogue-write:
 
 ``dialogue:write``
 ******************
@@ -270,6 +301,22 @@ Grants write access for a given dialogue.
 
 Data Structures
 ---------------
+
+.. _data-projects:
+
+Projects
+~~~~~~~~
+
+.. literalinclude:: ../schemas/project/project.yml
+  :language: yaml
+
+.. _data-project-summaries:
+
+Project Summaries
+~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/project/summary.yml
+  :language: yaml
 
 .. _data-dialogues:
 
@@ -379,7 +426,187 @@ Permissions
 
 .. TODO Projects endpoints
 
-.. _dialogues:
+.. _projects:
+
+Projects
+--------
+
+.. http:get:: /projects/
+
+  Retrieves a :ref:`summary <data-project-summaries>` of projects the authenticated user has access to.
+
+  .. sourcecode:: http
+
+      GET /projects/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "1",
+       "title": "Maternal Health ZA",
+       "url": "/projects/1"
+     }, {
+       "id": "2",
+       "title": "Maternal Health MX",
+       "url": "/projects/2",
+     }]
+
+  :query number page:
+    1-based index of the page of projects to show. Defaults to ``1``.
+
+  :query number per_page:
+    Number of projects to show per page. Defaults to ``30``. Maximum is
+    ``100``.
+
+
+.. http:get:: /projects/(str:project_id)
+
+  Retrieves the :ref:`description <data-projects>` of the project with id ``project_id``.
+
+  .. sourcecode:: http
+
+      GET /projects/23 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "title": "Maternal Health ZA"
+       "url": "/projects/23",
+       "is_archived": false,
+       "dialogues": [{
+         "id": "21",
+         "title": "Service Rating Survey",
+         "url": "/projects/23/dialogues/21",
+         "is_archived": false,
+         "is_published": false,
+         "has_changes": false
+       }]
+     }
+
+If the project isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` of the project given in the request.
+
+  .. sourcecode:: http
+
+     HTTP/1.1 404 Not Found
+     Content-Type: application/json
+
+     {
+       "type": "not_found",
+       "message": "Project 23 not found",
+       "details": {"id": "23"}
+     }
+
+.. http:post:: /projects/
+
+  Creates a new project with the :ref:`project description <data-projects>`
+  given in the request body and returns the created projects's description,
+  along with the generated dialogue ``id`` field and ``url`` field for
+  accessing the project description.
+
+  The authenticated user creating the project is given :ref:`project admin
+  <permissions-project-admin>` access for the newly created project.
+
+  .. sourcecode:: http
+
+     POST /projects/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "title": "Maternal Health ZA",
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 201 Created
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "url": "/projects/23",
+       "title": "Maternal Health ZA",
+       "dialogues": [],
+       "is_archived": false
+     }
+
+.. _projects-put:
+
+.. http:put:: /projects/(str:project_id)
+
+  Replaces the :ref:`description <data-projects>` of the project with id ``project_id`` with the description given in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the projects's description.
+
+  .. sourcecode:: http
+
+     PUT /projects/23 HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "title": "Maternal Health ZA"
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "title": "Maternal Health ZA"
+       "url": "/projects/23",
+       "is_archived": false,
+       "dialogues": [{
+         "id": "21",
+         "title": "Service Rating Survey",
+         "url": "/projects/23/dialogues/21",
+         "is_archived": false,
+         "is_published": false,
+         "has_changes": false
+       }]
+     }
+
+.. _projects-patch:
+
+.. http:patch:: /projects/(str:project_id)/
+
+  Partially updates the :ref:`description <data-projects>` of the project with id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the project's description.
+
+.. sourcecode:: http
+
+   PATCH /projects/23 HTTP/1.1
+   Content-Type: application/json-patch+json
+
+   [{
+     "op": "replace",
+     "path": "/title",
+     "value": "Maternal Health ZA"
+   }]
+
+.. sourcecode:: http
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+
+   {
+     "id": "23",
+     "title": "Maternal Health ZA"
+     "url": "/projects/23",
+     "is_archived": false,
+     "dialogues": [{
+       "id": "21",
+       "title": "Service Rating Survey",
+       "url": "/projects/23/dialogues/21",
+       "is_archived": false,
+       "is_published": false,
+       "has_changes": false
+     }]
+   }
 
 Dialogues
 ---------
