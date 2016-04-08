@@ -577,7 +577,9 @@ Users
      Content-Type: application/json-patch+json
 
      [{
-       "first_name": "Joan"
+       "op": "replace",
+       "path": "/first_name",
+       "value": "Joan"
      }]
 
   .. sourcecode:: http
