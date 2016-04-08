@@ -470,7 +470,7 @@ Users
      Content-Type: application/json
 
      {
-       "id": "1",
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
        "url": "/users/1",
        "email": "foo@bar.org",
        "first_name": "Joan",
@@ -483,8 +483,7 @@ Users
 .. http:get:: /users/
 
   Retrieves the :ref:`summaries <data-user-summaries>` of all users. Only
-  accessible if the authenticated user has :ref:`admin <permissions-admin>`
-  permission.
+  accessible if the authenticated user has :ref:`admin permission <permissions-admin>`.
 
   .. sourcecode:: http
 
@@ -496,7 +495,7 @@ Users
      Content-Type: application/json
 
      [{
-       "id": "1",
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
        "url": "/users/1",
        "email": "foo@bar.org",
        "first_name": "Joan",
@@ -516,7 +515,7 @@ Users
 
   .. sourcecode:: http
 
-      GET /users/1 HTTP/1.1
+      GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
 
   .. sourcecode:: http
 
@@ -524,12 +523,76 @@ Users
      Content-Type: application/json
 
      {
-       "id": "1",
-       "url": "/users/1",
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
        "email": "foo@bar.org",
        "first_name": "Joan",
        "last_name": "Watson"
      }
+
+.. http:put:: /users/(str:user_id)
+
+  Replaces the :ref:`description <data-users>` of the user with id ``user_id``
+  with the description given in the request body and returns the given
+  description, along with the user's ``id`` and the ``url`` for accessing the
+  user's description.
+
+  This operation is only accessible to the authenticated user if their user id is ``user_id``, or if they have :ref:`admin permission <permissions-admin`.
+
+  .. sourcecode:: http
+
+     PUT /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
+.. http:patch:: /users/(str:user_id)
+
+  Partially updates the :ref:`description <data-users>` of the user with id
+  ``user_id`` using the :ref:`instructions <overview-partial-updates>` given in
+  the request body and returns the given user's description, along with the
+  user's ``id`` and the ``url`` for accessing the user's description.
+
+  This operation is only accessible to the authenticated user if their user id is ``user_id``, or if they have :ref:`admin permission <permissions-admin`.
+
+  .. sourcecode:: http
+
+     PATCH /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+     Content-Type: application/json-patch+json
+
+     [{
+       "first_name": "Joan"
+     }]
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
 
 .. _projects:
 
