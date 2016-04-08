@@ -308,6 +308,20 @@ Grants write access for a given dialogue.
 Data Structures
 ---------------
 
+.. _data-users:
+
+Users
+~~~~~
+
+.. literalinclude:: ../schemas/user/user.yml
+  :language: yaml
+
+User Summaries
+~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/user/summary.yml
+  :language: yaml
+
 .. _data-projects:
 
 Projects
