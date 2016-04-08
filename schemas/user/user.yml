@@ -28,10 +28,4 @@ properties:
     description: |
       The user's last name.
 
-  permissions:
-    items:
-      $ref: '#/definitions/permission/permission'
-    description:
-      The user's permissions.
-
 additionalProperties: false

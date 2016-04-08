@@ -500,10 +500,7 @@ Users
        "url": "/users/1",
        "email": "foo@bar.org",
        "first_name": "Joan",
-       "last_name": "Watson",
-       "permissions": [{
-         "type": "admin"
-       }]
+       "last_name": "Watson"
      }]
 
     :query number page:
@@ -531,10 +528,7 @@ Users
        "url": "/users/1",
        "email": "foo@bar.org",
        "first_name": "Joan",
-       "last_name": "Watson",
-       "permissions": [{
-         "type": "admin"
-       }]
+       "last_name": "Watson"
      }
 
 .. _projects:
