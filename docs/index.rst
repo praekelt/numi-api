@@ -252,8 +252,6 @@ Releases
 ********
 A release marks a point in a dialogue's history of revisions. End users will always interact with the most recently published release's corresponding dialogue description.
 
-
-
 .. _permissions:
 
 Permissions
@@ -314,6 +312,8 @@ Users
 
 .. literalinclude:: ../schemas/user/user.yml
   :language: yaml
+
+.. _data-user-summaries:
 
 User Summaries
 ~~~~~~~~~~~~~~
@@ -451,7 +451,91 @@ Permissions
 .. literalinclude:: ../schemas/permission/dialogue-write.yml
   :language: yaml
 
-.. TODO Projects endpoints
+.. _users:
+
+Users
+-----
+
+.. http:get:: /user
+
+  Retrieves the :ref:`description <data-users>` of the authenticated user.
+
+  .. sourcecode:: http
+
+      GET /user HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "1",
+       "url": "/users/1",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson",
+       "permissions": [{
+         "type": "admin"
+       }]
+     }
+
+.. http:get:: /users/
+
+  Retrieves the :ref:`summaries <data-user-summaries>` of all users. Only
+  accessible if the authenticated user has :ref:`admin <permissions-admin>`
+  permission.
+
+  .. sourcecode:: http
+
+      GET /user HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "1",
+       "url": "/users/1",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson",
+       "permissions": [{
+         "type": "admin"
+       }]
+     }]
+
+    :query number page:
+      1-based index of the page of users to show. Defaults to ``1``.
+
+    :query number per_page:
+      Number of users to show per page. Defaults to ``30``. Maximum is ``100``.
+
+.. http:get:: /users/(str:user_id)
+
+  Retrieves the :ref:`description <data-users>` of the user with id
+  ``user_id``.
+
+  .. sourcecode:: http
+
+      GET /users/1 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "1",
+       "url": "/users/1",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson",
+       "permissions": [{
+         "type": "admin"
+       }]
+     }
 
 .. _projects:
 
