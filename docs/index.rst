@@ -186,8 +186,6 @@ For ``POST`` and ``PATCH`` requests, if a client provides read-only fields, the 
 Concepts
 ~~~~~~~~
 
-.. _concepts-users:
-
 Users
 *****
 Users have access to a set of :ref:`projects <concepts-projects>`. Depending on their permission levels, users can view or modify a project and its :ref:`dialogues <concepts-dialogues>`.
@@ -224,6 +222,13 @@ Blocks
 ******
 A block is a single step to follow when interacting with the user. This step may be, for example, a screen asking the user a question, or a step not visible to the user, for example, registering the user with a service.
 
+.. _concepts-symbols:
+
+Symbols
+*******
+Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
+
+
 .. _concepts-revisions:
 
 Revision
@@ -242,11 +247,12 @@ Revert
 ^^^^^^
 Reverts a dialogue's description back to its state at an earlier revision.
 
-.. _concepts-symbols:
+.. _concepts-releases:
 
-Symbols
-*******
-Symbols are used in a :ref:`Dialogue <concepts-dialogues>` data structure as programmatically-usable strings. Their main use is for identifying and referencing sequences, blocks and block types.
+Releases
+********
+A release marks a point in a dialogue's history of revisions. End users will always interact with the most recently published release's corresponding dialogue description.
+
 
 
 .. _permissions:
@@ -267,7 +273,7 @@ Grants create, archive, read and write access for all projects and dialogues, an
 *******************
 Grants access to create new projects. Users with this permission obtain ``project:admin`` access for the projects they create.
 
-.. _permissions-projects-admin:
+.. _permissions-project-admin:
 
 ``project:admin``
 *****************
@@ -376,6 +382,14 @@ Reverts
 *******
 
 .. literalinclude:: ../schemas/revision/revert.yml
+  :language: yaml
+
+.. _data-releases:
+
+Releases
+~~~~~~~~
+
+.. literalinclude:: ../schemas/release.yml
   :language: yaml
 
 .. _data-dialogue-summaries:
@@ -608,6 +622,8 @@ If the project isn't found, a ``404`` response will be given. The response body'
      }]
    }
 
+.. _dialogues:
+
 Dialogues
 ---------
 
@@ -616,7 +632,7 @@ Dialogues
 .. http:get:: /projects/(str:project_id)/dialogues/
 
   Retrieves a :ref:`summary <data-dialogue-summaries>` of every dialogue
-  contained in the project with id ``:project_id``.
+  contained in the project with id ``project_id``.
 
   .. sourcecode:: http
 
@@ -1044,6 +1060,122 @@ It is also possible to create revisions in bulk by providing an array of revisio
 
 .. note
   Created revisions in bulk is done atomically. If one of the given revisions cannot be created, none of the given revisions will be created.
+
+
+Releases
+--------
+
+.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
+
+Retrieves the :ref:`descriptions <data-releases>` of the :ref:`releases
+<concepts-releases>` of dialogue ``dialogue_id`` in the project ``project_id``.
+
+  .. sourcecode:: http
+
+    GET /projects/23/dialogues/21/releases/ HTTP/1.1
+
+  .. sourcecode:: http
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+
+    [{
+      "id": "1",
+      "number": 1,
+      "url": "/projects/23/dialogues/21/releases/1",
+      "revision_id": "7"
+    }]
+
+  :query number page:
+    1-based index of the page of releases to show. Defaults to ``1``.
+  :query number per_page:
+    Number of releases to show per page. Defaults to ``30``. Maximum is
+    ``100``.
+  :query string ordering:
+    The ordering of the returned releases. If multiple ``ordering`` parameters
+    are provided, the returned releases will be sorted by each provided
+    parameter, in the order the parameters were specified. Defaults to
+    ``-number``.
+
+Ordering releases
+~~~~~~~~~~~~~~~~~~
+
++--------------+------------------------------------------------------------+
+| Parameter    | Description                                                |
++==============+============================================================+
+| ``number``   | Return releases in ascending order of release number       |
++--------------+------------------------------------------------------------+
+| ``-number``  | Return releases in descending order of release number      |
++--------------+------------------------------------------------------------+
+| ``created``  | Return releases in ascending order of creation date        |
++--------------+------------------------------------------------------------+
+| ``-created`` | Return releases in descending order of creation date       |
++--------------+------------------------------------------------------------+
+
+.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/(str:release_id)
+
+Retrieves the :ref:`description <data-releases>` for the release with id
+``release_id`` for dialogue ``dialogue_id`` contained in the project with id
+``project_id``.
+
+  .. sourcecode:: http
+
+      GET /projects/23/dialogues/21/releases/44 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+    {
+      "id": "1",
+      "number": 1,
+      "url": "/projects/23/dialogues/21/releases/1",
+      "revision_id": "7",
+      "created": 1460022608855
+    }
+
+If the release isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` and ``dialogue_id`` given in the request.
+
+  .. sourcecode:: http
+
+     HTTP/1.1 404 Not Found
+     Content-Type: application/json
+
+     {
+       "type": "not_found",
+       "message": "Release 44 not found",
+       "details": {
+         "id": "44",
+         "dialogue_id": "21"
+       }
+     }
+
+.. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
+
+Creates a new release for dialogue ``dialogue_id`` under the project with the id ``project_id`` using the :ref:`description <data-releases>` given in the request body and returns the created releases's description, along with the generated release ``id`` field and ``url`` field for accessing the release description.
+
+  .. sourcecode:: http
+
+    POST /projects/23/dialogues/21/releases/ HTTP/1.1
+    Content-Type: application/json
+
+    {
+      "revision_id": "7"
+    }
+
+  .. sourcecode:: http
+
+    HTTP/1.1 201 Created
+    Content-Type: application/json
+
+    {
+      "id": "1",
+      "number": 1,
+      "revision_id": "7",
+      "created": 1460022608855,
+      "url": "/projects/23/dialogues/21/releases/1"
+    }
 
 
 Indices and tables
