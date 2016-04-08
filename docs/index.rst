@@ -188,10 +188,9 @@ Concepts
 
 Users
 *****
-Users have access to a set of :ref:`projects <concepts-projects>`. Depending on their permission levels, users can view or modify a project and its :ref:`dialogues <concepts-dialogues>`.
+Users have access to a set of :ref:`projects <concepts-projects>`. Depending on their :ref:`permissions <permissions>`, users can view or modify a project and its :ref:`dialogues <concepts-dialogues>`.
 
 .. TODO link to auth once this is documented.
-.. TODO link to permissions once this is documented.
 
 .. _concepts-projects:
 
