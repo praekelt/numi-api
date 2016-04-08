@@ -188,10 +188,9 @@ Concepts
 
 Users
 *****
-Users have access to a set of :ref:`projects <concepts-projects>`. Depending on their permission levels, users can view or modify a project and its :ref:`dialogues <concepts-dialogues>`.
+Users have access to a set of :ref:`projects <concepts-projects>`. Depending on their :ref:`permissions <permissions>`, users can view or modify a project and its :ref:`dialogues <concepts-dialogues>`.
 
 .. TODO link to auth once this is documented.
-.. TODO link to permissions once this is documented.
 
 .. _concepts-projects:
 
@@ -253,8 +252,6 @@ Releases
 ********
 A release marks a point in a dialogue's history of revisions. End users will always interact with the most recently published release's corresponding dialogue description.
 
-
-
 .. _permissions:
 
 Permissions
@@ -307,6 +304,22 @@ Grants write access for a given dialogue.
 
 Data Structures
 ---------------
+
+.. _data-users:
+
+Users
+~~~~~
+
+.. literalinclude:: ../schemas/user/user.yml
+  :language: yaml
+
+.. _data-user-summaries:
+
+User Summaries
+~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/user/summary.yml
+  :language: yaml
 
 .. _data-projects:
 
@@ -438,7 +451,243 @@ Permissions
 .. literalinclude:: ../schemas/permission/dialogue-write.yml
   :language: yaml
 
-.. TODO Projects endpoints
+.. _users:
+
+Users
+-----
+
+.. http:get:: /user
+
+  Retrieves the :ref:`description <data-users>` of the authenticated user.
+
+  .. sourcecode:: http
+
+      GET /user HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/1",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson",
+       "permissions": [{
+         "type": "admin"
+       }]
+     }
+
+.. http:get:: /users/
+
+  Retrieves the :ref:`summaries <data-user-summaries>` of all users. Only
+  accessible if the authenticated user has :ref:`admin permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+      GET /user HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/1",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }]
+
+    :query number page:
+      1-based index of the page of users to show. Defaults to ``1``.
+
+    :query number per_page:
+      Number of users to show per page. Defaults to ``30``. Maximum is ``100``.
+
+.. http:get:: /users/(str:user_id)
+
+  Retrieves the :ref:`description <data-users>` of the user with id
+  ``user_id``.
+
+  .. sourcecode:: http
+
+     GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
+.. http:put:: /users/(str:user_id)
+
+  Replaces the :ref:`description <data-users>` of the user with id ``user_id``
+  with the description given in the request body and returns the given
+  description, along with the user's ``id`` and the ``url`` for accessing the
+  user's description.
+
+  This operation is only accessible to the authenticated user if their user id is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     PUT /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
+.. http:patch:: /users/(str:user_id)
+
+  Partially updates the :ref:`description <data-users>` of the user with id
+  ``user_id`` using the :ref:`instructions <overview-partial-updates>` given in
+  the request body and returns the given user's description, along with the
+  user's ``id`` and the ``url`` for accessing the user's description.
+
+  This operation is only accessible to the authenticated user if their user id is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     PATCH /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+     Content-Type: application/json-patch+json
+
+     [{
+       "op": "replace",
+       "path": "/first_name",
+       "value": "Joan"
+     }]
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
+
+Permissions
+-----------
+
+.. http:get:: /users/(str:user_id)/permissions/
+
+  Retrieves the :ref:`permissions <data-permissions>` accessible to the
+  authenticating user for the user with id ``user_id``.
+
+  .. sourcecode:: http
+
+     GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "9a12594f30220f6a91bde8da961505be",
+       "type": "admin"
+     }]
+
+.. http:get:: /users/(str:user_id)/permissions/(str:permission_id)
+
+   Retrieves the :ref:`permission <data-permissions>` with id ``permission_id``
+   for the user with id ``user_id``.
+
+  .. sourcecode:: http
+
+     GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/9a12594f30220f6a91bde8da961505be HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "9a12594f30220f6a91bde8da961505be",
+       "type": "admin"
+     }
+
+.. http:post:: /users/(str:user_id)/permissions/
+
+  Creates a new :ref:`permission <data-permissions>` for the user with id
+  ``user_id`` and returns the created permission.
+
+  .. sourcecode:: http
+
+     POST /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "type": "projects:admin",
+       "details": {
+         "project_id": "23"
+       }
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "2294e0854d66b461eceddbf239f80f04",
+       "type": "projects:admin",
+       "details": {
+         "project_id": "23"
+       }
+     }
+
+.. http:delete:: /users/(str:user_id)/permissions/(str:permission_id)
+
+  Revokes the permission with id ``permission_id`` for the user with id
+  ``user_id`` and returns the revoked permission.
+
+  .. sourcecode:: http
+
+     DELETE /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/2294e0854d66b461eceddbf239f80f04 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "2294e0854d66b461eceddbf239f80f04",
+       "type": "projects:admin",
+       "details": {
+         "project_id": "23"
+       }
+     }
 
 .. _projects:
 
