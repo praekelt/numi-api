@@ -313,6 +313,14 @@ Users
 .. literalinclude:: ../schemas/user/user.yml
   :language: yaml
 
+.. _data-users-new:
+
+New Users
+*********
+
+.. literalinclude:: ../schemas/user/new.yml
+  :language: yaml
+
 .. _data-user-summaries:
 
 User Summaries
