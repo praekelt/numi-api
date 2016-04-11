@@ -516,6 +516,37 @@ Users
     :query number per_page:
       Number of users to show per page. Defaults to ``30``. Maximum is ``100``.
 
+.. http:post:: /users/
+
+  Creates a new user with the :ref:`description <data-users-new>` given in the
+  request body and returns the created user's :ref:`description
+  <data-users-new>`, along with the generated ``id`` field and ``url`` field
+  for accessing the user description.
+
+  .. sourcecode:: http
+
+     POST /projects/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "first_name": "Joan",
+       "last_name": "Watson",
+       "password": "1337"
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 201 Created
+     Content-Type: application/json
+
+     {
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
 .. http:get:: /users/(str:user_id)
 
   Retrieves the :ref:`description <data-users>` of the user with id
