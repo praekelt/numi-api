@@ -830,7 +830,9 @@ If the project isn't found, a ``404`` response will be given. The response body'
          "url": "/projects/23/dialogues/21",
          "is_archived": false,
          "is_published": false,
-         "has_changes": false
+         "has_changes": false,
+         "can_view": true,
+         "can_edit": true
        }]
      }
 
@@ -867,7 +869,9 @@ If the project isn't found, a ``404`` response will be given. The response body'
        "url": "/projects/23/dialogues/21",
        "is_archived": false,
        "is_published": false,
-       "has_changes": false
+       "has_changes": false,
+       "can_view": true,
+       "can_edit": true
      }]
    }
 
@@ -898,17 +902,26 @@ Dialogues
        "url": "/projects/23/dialogues/21",
        "is_archived": false,
        "is_published": false,
-       "has_changes": false
+       "has_changes": false,
+       "can_view": true,
+       "can_edit": true
      }]
 
   :query boolean is_archived:
-    If ``false``, only return unarchived dialogues. If ``true``, only return archived dialogues. If omitted, both archived and unarchived dialogues are retrieved.
+    Filter on whether this dialogue has been archived.
 
   :query boolean is_published:
-    If ``false``, only return unpublished dialogues. If ``true``, only return published dialogues. If omitted, both published and unpublished dialogues are retrieved.
+    Filter on whether this dialogue has been published.
 
   :query boolean has_changes:
-    If ``false``, only return dialogues without unpublished changes. If ``true``, only return dialogues with unpublished changes. If omitted, dialogues with published and unpublished changes are retrieved.
+    Filter on whether this dialogue has unpublished changes or not.
+
+  :query boolean can_view:
+    Filter on whether the user can view this dialogue or not.
+
+  :query boolean can_edit:
+    Filter on whether the user can edit this dialogue or not.
+
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
@@ -929,7 +942,9 @@ Retrieves the :ref:`description <data-dialogues>` of the dialogue with id ``dial
        "sequences": [],
        "is_archived": false,
        "is_published": false,
-       "has_changes": false
+       "has_changes": false,
+       "can_view": true,
+       "can_edit": true
      }
 
 If the dialogue isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` given in the request.
@@ -974,7 +989,9 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
        "sequences": [],
        "is_archived": false,
        "is_published": false,
-       "has_changes": false
+       "has_changes": false,
+       "can_view": true,
+       "can_edit": true
      }
 
 .. _dialogues-put:

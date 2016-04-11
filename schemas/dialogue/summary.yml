@@ -41,4 +41,16 @@ properties:
     description: |
       Flag representing whether this dialogue has unpublished changes.
 
+  can_view:
+    type: boolean
+    readOnly: true
+    description: |
+      Flag representing whether the authenticated user can view this dialogue.
+
+  can_edit:
+    type: boolean
+    readOnly: true
+    description: |
+      Flag representing whether the authenticated user can edit this dialogue.
+
 additionalProperties: false
