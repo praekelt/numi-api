@@ -514,8 +514,8 @@ Users
 
 .. http:post:: /user/password-changes/
 
-  Creates a password change request using the :ref:`details
-  <data-password-changes>` given in the request body.
+  Creates a password change request for the authenticated user using the
+  :ref:`details <data-password-changes>` given in the request body.
 
   .. sourcecode:: http
 
