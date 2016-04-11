@@ -749,7 +749,9 @@ Projects
          "url": "/projects/23/dialogues/21",
          "is_archived": false,
          "is_published": false,
-         "has_changes": false
+         "has_changes": false,
+         "can_view": true,
+         "can_edit": true
        }]
      }
 
@@ -1033,7 +1035,9 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
       "sequences": [],
       "is_archived": false,
       "is_published": false,
-      "has_changes": false
+      "has_changes": false,
+       "can_view": true,
+       "can_edit": true
     }
 
 .. warning::
@@ -1086,7 +1090,9 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
      }],
      "is_archived": false,
      "is_published": false,
-     "has_changes": false
+     "has_changes": false,
+     "can_view": true,
+     "can_edit": true
    }
 
 .. warning::
