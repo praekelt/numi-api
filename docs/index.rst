@@ -321,6 +321,30 @@ New Users
 .. literalinclude:: ../schemas/user/new.yml
   :language: yaml
 
+.. _data-password-changes:
+
+Password changes
+****************
+
+.. literalinclude:: ../schemas/user/password-change.yml
+  :language: yaml
+
+.. _data-password-resets:
+
+Password resets
+***************
+
+.. literalinclude:: ../schemas/user/password-reset.yml
+  :language: yaml
+
+.. _data-confirmations:
+
+Password reset confirmations
+****************************
+
+.. literalinclude:: ../schemas/user/confirmation.yml
+  :language: yaml
+
 .. _data-user-summaries:
 
 User Summaries
@@ -488,6 +512,26 @@ Users
        }]
      }
 
+.. http:post:: /user/password-changes/
+
+  Creates a password change request using the :ref:`details
+  <data-confirmations>` given in the request body.
+
+  .. sourcecode:: http
+
+    POST /user/password-changes/ HTTP/1.1
+    Content-Type: application/json
+
+    {
+      "old_password": "1337",
+      "new_password": "r00t"
+    }
+
+  .. sourcecode:: http
+
+    HTTP/1.1 204 No Content
+    Content-Type: application/json
+
 .. http:get:: /users/
 
   Retrieves the :ref:`summaries <data-user-summaries>` of all users. Only
@@ -633,6 +677,50 @@ Users
        "first_name": "Joan",
        "last_name": "Watson"
      }
+
+.. http:post:: /password-resets/
+
+  Creates a :ref:`password reset request <data-password-request>` for the user
+  with the email address provided in the request body.
+
+  .. sourcecode:: http
+
+    POST /password-resets/ HTTP/1.1
+    Content-Type: application/json
+
+    {
+      "email": "foo@bar.org"
+    }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 204 No Content
+     Content-Type: application/json
+
+.. note::
+  To avoid leaking information on whether a user has a given email address, the
+  API will return a ``204`` response regardless of whether a user matches the
+  given email address or not.
+
+.. http:post:: /confirmations/
+
+  Confirms a password reset using the :ref:`confirmation details
+  <data-confirmation>` given in the request body.
+
+  .. sourcecode:: http
+
+    POST /confirmations/ HTTP/1.1
+    Content-Type: application/json
+
+    {
+      "token": "123abc",
+      "password": "r00t"
+    }
+
+  .. sourcecode:: http
+
+    HTTP/1.1 204 No Content
+    Content-Type: application/json
 
 
 Permissions
