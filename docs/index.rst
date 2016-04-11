@@ -680,7 +680,7 @@ Users
 
 .. http:post:: /password-resets/
 
-  Creates a :ref:`password reset request <data-password-request>` for the user
+  Creates a :ref:`password reset request <data-password-resets>` for the user
   with the email address provided in the request body.
 
   .. sourcecode:: http
@@ -705,7 +705,7 @@ Users
 .. http:post:: /confirmations/
 
   Confirms a password reset using the :ref:`confirmation details
-  <data-confirmation>` given in the request body.
+  <data-confirmations>` given in the request body.
 
   .. sourcecode:: http
 
