@@ -252,6 +252,21 @@ Releases
 ********
 A release marks a point in a dialogue's history of revisions. End users will always interact with the most recently published release's corresponding dialogue description.
 
+.. _concepts-channels:
+
+Channels
+********
+A channel is an address a dialogue can use to interact with end users, for example:
+  - an sms shortcode (e.g. ``2233``)
+  - a USSD starcode (e.g. ``*120*321#``)
+  - a twitter handle (e.g. ``@foo``)
+
+.. _concepts-providers:
+
+Providers
+*********
+A provider is a set of :ref:`channels <concepts-channels>` that corresponds to the service providing the channels. For example, Twitter would be the provider for twitter handles.
+
 .. _permissions:
 
 Permissions
