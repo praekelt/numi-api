@@ -683,6 +683,10 @@ Users
   Creates a :ref:`password reset request <data-password-resets>` for the user
   with the email address provided in the request body.
 
+  If a user with the given email address is found, the user will be sent an
+  email containing a link to be accessed in order to confirm the reset and
+  choose a new password.
+
   .. sourcecode:: http
 
     POST /password-resets/ HTTP/1.1
