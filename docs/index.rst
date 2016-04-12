@@ -466,6 +466,38 @@ Permissions
 .. literalinclude:: ../schemas/permission/dialogue-write.yml
   :language: yaml
 
+.. _data-channels:
+
+Channels
+~~~~~~~~
+
+.. literalinclude:: ../schemas/channel/channel.yml
+  :language: yaml
+
+.. _data-channel-summaries:
+
+Channel Summaries
+~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/channel/summary.yml
+  :language: yaml
+
+.. _data-providers:
+
+Providers
+~~~~~~~~~
+
+.. literalinclude:: ../schemas/provider/provider.yml
+  :language: yaml
+
+.. _data-provider-summaries:
+
+Provider Summaries
+~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/provider/summary.yml
+  :language: yaml
+
 .. _users:
 
 Users

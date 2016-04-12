@@ -1,0 +1,33 @@
+properties:
+  id:
+    type: string
+    readOnly: true
+    description: |
+      The channel's identifier (provided by the API)
+
+  title:
+    type: string
+    readOnly: true
+    description: |
+      The human-readable title of the channel
+
+  type:
+    type: string
+    readOnly: true
+    description: |
+      Programmatically usable string representing the type of this channel. For
+      e.g. `sms`, `ussd`.
+
+  address:
+    type: string
+    readOnly: true
+    description: |
+      The address associated with this channel. For example, ``*120*321#``.
+
+  is_available:
+    type: boolean
+    readOnly: true
+    description: |
+      Flag representing whether or not this channel is available for use.
+
+additionalProperties: false
