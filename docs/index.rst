@@ -918,6 +918,59 @@ If the project isn't found, a ``404`` response will be given. The response body'
      }]
    }
 
+.. http:get:: /projects/(str:project_id)/channels/
+
+  Retrieves the :ref:`descriptions <data-channels>` of the channels accessible
+  to the project with the id ``project_id``.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>` or has permissions associated with project
+  ``project_id``.
+
+  .. sourcecode:: http
+
+     GET /projects/21/channels/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       id: '23',
+       title: '@foo',
+       address: '@foo',
+       type: 'twitter',
+       is_available: true,
+       provider: {
+         id: '21',
+         title: 'Twitter'
+       }
+     }]
+
+.. http:post:: /projects/(str:project_id)/channels/
+
+  Adds access to the channel with the id given in the request body for use in
+  project ``project_id``.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>` or has permissions associated with project
+  ``project_id``.
+
+  .. sourcecode:: http
+
+     POST /projects/21/channels/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "23"
+     }
+
+
 .. _dialogues:
 
 Dialogues
@@ -1508,8 +1561,11 @@ Channels and Providers
 .. http:get:: /channels/(str:channel_id)
 
   Retrieves the :ref:`description <data-channels>` of the channel with the id
-  ``channel_id``. Only accessible if the authenticated user has :ref:`admin
-  permission <permissions-admin>`.
+  ``channel_id``.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>` or has access to a project using the channel
+  ``channel_id``.
 
   .. sourcecode:: http
 
@@ -1534,8 +1590,9 @@ Channels and Providers
 
 .. http:get:: /providers/
 
-  Retrieves the :ref:`summaries <data-provider-summaries>` of all providers. Only
-  accessible if the authenticated user has :ref:`admin permission
+  Retrieves the :ref:`summaries <data-provider-summaries>` of all providers.
+
+  Only accessible if the authenticated user has :ref:`admin permission
   <permissions-admin>`.
 
   .. sourcecode:: http
@@ -1558,8 +1615,11 @@ Channels and Providers
 .. http:get:: /providers/(str:provider_id)
 
   Retrieves the :ref:`description <data-providers>` of the provider with the id
-  ``provider_id``. Only accessible if the authenticated user has :ref:`admin
-  permission <permissions-admin>`.
+  ``provider_id``.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>` or has access to a project using a channel associated
+  with ``provider_id``.
 
   .. sourcecode:: http
 
