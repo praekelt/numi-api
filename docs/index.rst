@@ -1473,6 +1473,115 @@ Creates a new release for dialogue ``dialogue_id`` under the project with the id
       "url": "/projects/23/dialogues/21/releases/1"
     }
 
+.. _channels:
+
+Channels and Providers
+----------------------
+
+.. http:get:: /channels/
+
+  Retrieves the :ref:`descriptions <data-channels>` of all channels. Only
+  accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     GET /channels/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       id: '23',
+       title: '@foo',
+       address: '@foo',
+       type: 'twitter',
+       is_available: true,
+       provider: {
+         id: '21',
+         title: 'Twitter'
+       }
+     }]
+
+.. http:get:: /channels/(str:channel_id)
+
+  Retrieves the :ref:`description <data-channels>` of the channel with the id
+  ``channel_id``. Only accessible if the authenticated user has :ref:`admin
+  permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     GET /channels/21 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       id: '23',
+       title: '@foo',
+       address: '@foo',
+       type: 'twitter',
+       is_available: true,
+       provider: {
+         id: '21',
+         title: 'Twitter'
+       }
+     }
+
+.. http:get:: /providers/
+
+  Retrieves the :ref:`summaries <data-provider-summaries>` of all providers. Only
+  accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     GET /providers/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       id: '21',
+       title: 'Twitter'
+     }, {]
+       id: '22',
+       title: 'MTN Nigeria'
+     }]
+
+.. http:get:: /providers/(str:provider_id)
+
+  Retrieves the :ref:`description <data-providers>` of the provider with the id
+  ``provider_id``. Only accessible if the authenticated user has :ref:`admin
+  permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     GET /providers/21 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       id: '21',
+       title: 'Twitter'
+       channels: [{
+         id: '23',
+         title: '@foo',
+         address: '@foo',
+         type: 'twitter',
+         is_available: true
+       }]
+     }
+
 
 Indices and tables
 ==================
