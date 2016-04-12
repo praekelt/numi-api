@@ -954,8 +954,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
   project ``project_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>` or has permissions associated with project
-  ``project_id``.
+  <permissions-admin>`.
 
   .. sourcecode:: http
 
