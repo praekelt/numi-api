@@ -753,14 +753,14 @@ Users
   API will return a ``204`` response regardless of whether a user matches the
   given email address or not.
 
-.. http:post:: /confirmations/
+.. http:post:: /password-confirmations/
 
   Confirms a password reset using the :ref:`confirmation details
   <data-confirmations>` given in the request body.
 
   .. sourcecode:: http
 
-    POST /confirmations/ HTTP/1.1
+    POST /password-confirmations/ HTTP/1.1
     Content-Type: application/json
 
     {
