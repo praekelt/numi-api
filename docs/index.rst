@@ -1818,6 +1818,91 @@ Channels and Providers
        }]
      }
 
+.. _channels-put:
+
+.. http:put:: /channels/(str:channel_id)
+
+  Replaces the :ref:`description <data-channels>` of the channel with id
+  ``channel_id`` with the description given in the request body and returns the
+  given description, along with the channel's ``id`` and the ``url`` for
+  accessing the channel's description.
+
+  This operation is only accessible to the authenticated user they have
+  :ref:`admin permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     PUT /channels/23 HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "project_id": "17",
+       "url": "/channels/23",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "project_id": "17",
+       "url": "/channels/23",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true
+     }
+
+.. _channels-patch:
+
+.. http:patch:: /channels/(str:channel_id)
+
+  Partially updates the :ref:`description <data-channels>` of the channel with
+  id ``channel_id`` using the :ref:`instructions <overview-partial-updates>`
+  given in the request body and returns the given channel's description, along
+  with the channel's ``id`` and the ``url`` for accessing the channel's
+  description.
+
+  This operation is only accessible to the authenticated user they have
+  :ref:`admin permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     PATCH /channels/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+     Content-Type: application/json-patch+json
+
+     [{
+       "op": "replace",
+       "path": "/project_id",
+       "value": "17"
+     }]
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "project_id": "17",
+       "url": "/channels/23",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true
+     }
+
+Channel access
+~~~~~~~~~~~~~~
+A channel can only be accessible by one project at a time. A channel can be made accessible to a project by setting ``project_id`` to the project's id when :ref:`replacing <channels-put>` or :ref:`partially updating <channels-patch>` the channel description.
+
 
 Indices and tables
 ==================
