@@ -1344,7 +1344,7 @@ Ordering revisions
      }]
 
 .. note::
-  Created revisions in bulk is done atomically. If one of the given revisions cannot be created, none of the given revisions will be created.
+  Creating revisions in bulk is done atomically. If one of the given revisions cannot be created, none of the given revisions will be created.
 
 
 Releases
