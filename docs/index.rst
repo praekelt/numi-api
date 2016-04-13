@@ -1662,8 +1662,8 @@ Creates a new release for dialogue ``dialogue_id`` under the project with the id
 
 .. _channels:
 
-Channels and Providers
-----------------------
+Channels
+--------
 
 .. http:get:: /channels/
 
@@ -1810,6 +1810,9 @@ Channels and Providers
 Channel access
 ~~~~~~~~~~~~~~
 A channel can only be accessible by one project at a time. A channel can be made accessible to a project by setting ``project_id`` to the project's id when :ref:`replacing <channels-put>` or :ref:`partially updating <channels-patch>` the channel description.
+
+Providers
+---------
 
 .. http:get:: /providers/
 
