@@ -11,6 +11,14 @@ properties:
     description: |
       API url for accessing the channel description
 
+  project_id:
+    type:
+      - string
+      - 'null'
+    description: |
+      Identifier for the project currently using this channel. `null` if the
+      channel is not in use by any projects.
+
   title:
     type: string
     readOnly: true

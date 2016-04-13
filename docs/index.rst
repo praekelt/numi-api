@@ -1076,6 +1076,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
      [{
        id: '23',
        url: '/channels/23',
+       project_id: 21,
        title: '@foo',
        address: '@foo',
        type: 'twitter',
@@ -1085,27 +1086,6 @@ If the project isn't found, a ``404`` response will be given. The response body'
          title: 'Twitter'
        }
      }]
-
-.. http:post:: /projects/(str:project_id)/channels/
-
-  Adds access to the channel with the id given in the request body for use in
-  project ``project_id``.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>`.
-
-  .. sourcecode:: http
-
-     POST /projects/21/channels/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "23"
-     }
 
 
 .. _dialogues:
@@ -1703,6 +1683,7 @@ Channels and Providers
      [{
        id: '23',
        url: '/channels/23',
+       project_id: 21,
        title: '@foo',
        address: '@foo',
        type: 'twitter',
@@ -1734,6 +1715,7 @@ Channels and Providers
      {
        id: '23',
        url: '/channels/23',
+       project_id: 21,
        title: '@foo',
        address: '@foo',
        type: 'twitter',
@@ -1743,6 +1725,39 @@ Channels and Providers
          title: 'Twitter'
        }
      }
+
+.. http:put:: /channels/(str:channel_id)
+
+  Replaces the :ref:`description <data-channels>` of the channel with id
+  ``channel_id`` with the description given in the request body and returns the
+  given description, along with the user's ``id`` and the ``url`` for accessing
+  the user's description.
+
+  This operation is only accessible to the authenticated user if their user id is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     PUT /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
+
 
 .. http:get:: /providers/
 
@@ -1795,6 +1810,7 @@ Channels and Providers
        channels: [{
          id: '23',
          url: '/channels/23',
+         project_id: 21,
          title: '@foo',
          address: '@foo',
          type: 'twitter',
