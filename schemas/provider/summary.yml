@@ -1,0 +1,20 @@
+properties:
+  id:
+    type: string
+    readOnly: true
+    description: |
+      The channel's identifier (provided by the API)
+
+  url:
+    type: string
+    readOnly: true
+    description: |
+      API url for accessing the provider description
+
+  title:
+    type: string
+    readOnly: true
+    description: |
+      The human-readable title of the provider
+
+additionalProperties: false

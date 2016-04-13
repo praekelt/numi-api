@@ -252,6 +252,21 @@ Releases
 ********
 A release marks a point in a dialogue's history of revisions. End users will always interact with the most recently published release's corresponding dialogue description.
 
+.. _concepts-channels:
+
+Channels
+********
+A channel is an address a dialogue can use to interact with end users, for example:
+  - an sms shortcode (e.g. ``2233``)
+  - a USSD starcode (e.g. ``*120*321#``)
+  - a twitter handle (e.g. ``@foo``)
+
+.. _concepts-providers:
+
+Providers
+*********
+A provider is a set of :ref:`channels <concepts-channels>` that corresponds to the service providing the channels. For example, Twitter would be the provider for twitter handles.
+
 .. _permissions:
 
 Permissions
@@ -481,6 +496,38 @@ Permissions
 ******************
 
 .. literalinclude:: ../schemas/permission/dialogue-write.yml
+  :language: yaml
+
+.. _data-channels:
+
+Channels
+~~~~~~~~
+
+.. literalinclude:: ../schemas/channel/channel.yml
+  :language: yaml
+
+.. _data-channel-summaries:
+
+Channel Summaries
+~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/channel/summary.yml
+  :language: yaml
+
+.. _data-providers:
+
+Providers
+~~~~~~~~~
+
+.. literalinclude:: ../schemas/provider/provider.yml
+  :language: yaml
+
+.. _data-provider-summaries:
+
+Provider Summaries
+~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/provider/summary.yml
   :language: yaml
 
 .. _users:
@@ -1007,6 +1054,39 @@ If the project isn't found, a ``404`` response will be given. The response body'
        "can_edit": true
      }]
    }
+
+.. http:get:: /projects/(str:project_id)/channels/
+
+  Retrieves the :ref:`descriptions <data-channels>` of the channels accessible
+  to the project with the id ``project_id``.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>` or has permissions associated with project
+  ``project_id``.
+
+  .. sourcecode:: http
+
+     GET /projects/21/channels/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       id: '23',
+       url: '/channels/23',
+       project_id: 21,
+       title: '@foo',
+       address: '@foo',
+       type: 'twitter',
+       is_available: true,
+       provider: {
+         id: '21',
+         title: 'Twitter'
+       }
+     }]
+
 
 .. _dialogues:
 
@@ -1579,6 +1659,219 @@ Creates a new release for dialogue ``dialogue_id`` under the project with the id
       "created": 1460022608855,
       "url": "/projects/23/dialogues/21/releases/1"
     }
+
+.. _channels:
+
+Channels
+--------
+
+.. http:get:: /channels/
+
+  Retrieves the :ref:`descriptions <data-channels>` of all channels. Only
+  accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     GET /channels/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       id: '23',
+       url: '/channels/23',
+       project_id: 21,
+       title: '@foo',
+       address: '@foo',
+       type: 'twitter',
+       is_available: true,
+       provider: {
+         id: '21',
+         title: 'Twitter'
+       }
+     }]
+
+.. http:get:: /channels/(str:channel_id)
+
+  Retrieves the :ref:`description <data-channels>` of the channel with the id
+  ``channel_id``.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>` or has access to a project using the channel
+  ``channel_id``.
+
+  .. sourcecode:: http
+
+     GET /channels/23 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       id: '23',
+       url: '/channels/23',
+       project_id: 21,
+       title: '@foo',
+       address: '@foo',
+       type: 'twitter',
+       is_available: true,
+       provider: {
+         id: '21',
+         title: 'Twitter'
+       }
+     }
+
+.. _channels-put:
+
+.. http:put:: /channels/(str:channel_id)
+
+  Replaces the :ref:`description <data-channels>` of the channel with id
+  ``channel_id`` with the description given in the request body and returns the
+  given description, along with the channel's ``id`` and the ``url`` for
+  accessing the channel's description.
+
+  This operation is only accessible to the authenticated user if they have
+  :ref:`admin permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     PUT /channels/23 HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "project_id": "17",
+       "url": "/channels/23",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "project_id": "17",
+       "url": "/channels/23",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true
+     }
+
+.. _channels-patch:
+
+.. http:patch:: /channels/(str:channel_id)
+
+  Partially updates the :ref:`description <data-channels>` of the channel with
+  id ``channel_id`` using the :ref:`instructions <overview-partial-updates>`
+  given in the request body and returns the given channel's description, along
+  with the channel's ``id`` and the ``url`` for accessing the channel's
+  description.
+
+  This operation is only accessible to the authenticated user if they have
+  :ref:`admin permission <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     PATCH /channels/23 HTTP/1.1
+     Content-Type: application/json-patch+json
+
+     [{
+       "op": "replace",
+       "path": "/project_id",
+       "value": "17"
+     }]
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "project_id": "17",
+       "url": "/channels/23",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true
+     }
+
+Channel access
+~~~~~~~~~~~~~~
+A channel can only be accessible by one project at a time. A channel can be made accessible to a project by setting ``project_id`` to the project's id when :ref:`replacing <channels-put>` or :ref:`partially updating <channels-patch>` the channel description.
+
+Providers
+---------
+
+.. http:get:: /providers/
+
+  Retrieves the :ref:`summaries <data-provider-summaries>` of all providers.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     GET /providers/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "21",
+       "url": "/providers/21",
+       "title": 'Twitter'
+     }, {
+       "id": "22",
+       "url": "/providers/22",
+       "title": "MTN Nigeria"
+     }]
+
+.. http:get:: /providers/(str:provider_id)
+
+  Retrieves the :ref:`description <data-providers>` of the provider with the id
+  ``provider_id``.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>` or has access to a project using a channel associated
+  with ``provider_id``.
+
+  .. sourcecode:: http
+
+     GET /providers/21 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "url": "/providers/21",
+       "title": "Twitter"
+       "channels": [{
+         "id": "23",
+         "url": "/channels/23",
+         "project"_id: 21,
+         "title": "@foo",
+         "address": "@foo",
+         "type": "twitter",
+         "is_available": true
+       }]
+     }
 
 
 Indices and tables
