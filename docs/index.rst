@@ -1778,7 +1778,7 @@ Channels
   with the channel's ``id`` and the ``url`` for accessing the channel's
   description.
 
-  This operation is only accessible to the authenticated user they have
+  This operation is only accessible to the authenticated user if they have
   :ref:`admin permission <permissions-admin>`.
 
   .. sourcecode:: http
