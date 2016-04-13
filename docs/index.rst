@@ -369,7 +369,8 @@ Users
 .. http:get:: /users/
 
   Retrieves the :ref:`summaries <data-user-summary>` of all users. Only
-  accessible if the authenticated user has :ref:`admin permission <permissions-admin>`.
+  accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>`.
 
   .. sourcecode:: http
 
@@ -388,18 +389,18 @@ Users
        "last_name": "Watson"
      }]
 
-    :query number page:
-      1-based index of the page of users to show. Defaults to ``1``.
+  :query number page:
+    1-based index of the page of users to show. Defaults to ``1``.
 
-    :query number per_page:
-      Number of users to show per page. Defaults to ``30``. Maximum is ``100``.
+  :query number per_page:
+    Number of users to show per page. Defaults to ``30``. Maximum is ``100``.
 
 .. http:post:: /users/
 
   Creates a new user with the :ref:`description <data-user-new>` given in the
   request body and returns the created user's :ref:`description
-  <data-user-new>`, along with the generated ``id`` field and ``url`` field
-  for accessing the user description.
+  <data-user-new>`, along with the generated ``id`` field and ``url`` field for
+  accessing the user description.
 
   .. sourcecode:: http
 
@@ -427,8 +428,7 @@ Users
 
 .. http:get:: /users/(str:user_id)
 
-  Retrieves the :ref:`description <data-user>` of the user with id
-  ``user_id``.
+  Retrieves the :ref:`description <data-user>` of the user with id ``user_id``.
 
   .. sourcecode:: http
 
@@ -454,30 +454,31 @@ Users
   description, along with the user's ``id`` and the ``url`` for accessing the
   user's description.
 
-  This operation is only accessible to the authenticated user if their user id is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
+  This operation is only accessible to the authenticated user if their user id
+  is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
 
   .. sourcecode:: http
 
-     PUT /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
-     Content-Type: application/json
+   PUT /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+   Content-Type: application/json
 
-     {
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }
+   {
+     "first_name": "Joan",
+     "last_name": "Watson"
+   }
 
-  .. sourcecode:: http
+.. sourcecode:: http
 
-     HTTP/1.1 200 OK
-     Content-Type: application/json
+   HTTP/1.1 200 OK
+   Content-Type: application/json
 
-     {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }
+   {
+     "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+     "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+     "email": "foo@bar.org",
+     "first_name": "Joan",
+     "last_name": "Watson"
+   }
 
 .. http:patch:: /users/(str:user_id)
 
@@ -486,7 +487,8 @@ Users
   the request body and returns the given user's description, along with the
   user's ``id`` and the ``url`` for accessing the user's description.
 
-  This operation is only accessible to the authenticated user if their user id is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
+  This operation is only accessible to the authenticated user if their user id
+  is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
 
   .. sourcecode:: http
 
@@ -585,8 +587,8 @@ Permissions
 
 .. http:get:: /users/(str:user_id)/permissions/(str:permission_id)
 
-   Retrieves the :ref:`permission <data-permissions>` with id ``permission_id``
-   for the user with id ``user_id``.
+  Retrieves the :ref:`permission <data-permissions>` with id ``permission_id``
+  for the user with id ``user_id``.
 
   .. sourcecode:: http
 
@@ -661,11 +663,12 @@ Projects
 
 .. http:get:: /projects/
 
-  Retrieves a :ref:`summary <data-project-summary>` of projects the authenticated user has access to.
+  Retrieves a :ref:`summary <data-project-summary>` of projects the
+  authenticated user has access to.
 
   .. sourcecode:: http
 
-      GET /projects/ HTTP/1.1
+     GET /projects/ HTTP/1.1
 
   .. sourcecode:: http
 
@@ -692,11 +695,12 @@ Projects
 
 .. http:get:: /projects/(str:project_id)
 
-  Retrieves the :ref:`description <data-project>` of the project with id ``project_id``.
+  Retrieves the :ref:`description <data-project>` of the project with id
+  ``project_id``.
 
   .. sourcecode:: http
 
-      GET /projects/23 HTTP/1.1
+     GET /projects/23 HTTP/1.1
 
   .. sourcecode:: http
 
@@ -720,7 +724,9 @@ Projects
        }]
      }
 
-If the project isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` of the project given in the request.
+  If the project isn't found, a ``404`` response will be given. The response
+  body's ``details`` object contains the ``id`` of the project given in the
+  request.
 
   .. sourcecode:: http
 
@@ -769,7 +775,10 @@ If the project isn't found, a ``404`` response will be given. The response body'
 
 .. http:put:: /projects/(str:project_id)
 
-  Replaces the :ref:`description <data-project>` of the project with id ``project_id`` with the description given in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the projects's description.
+  Replaces the :ref:`description <data-project>` of the project with id
+  ``project_id`` with the description given in the request body and returns the
+  given description, along with the projects's ``id`` and the ``url`` for
+  accessing the projects's description.
 
   .. sourcecode:: http
 
@@ -807,7 +816,10 @@ If the project isn't found, a ``404`` response will be given. The response body'
 
 .. http:patch:: /projects/(str:project_id)/
 
-  Partially updates the :ref:`description <data-project>` of the project with id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the project's description.
+  Partially updates the :ref:`description <data-project>` of the project with
+  id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in
+  the request body and returns the given description, along with the projects's
+  ``id`` and the ``url`` for accessing the project's description.
 
 .. sourcecode:: http
 
@@ -925,7 +937,8 @@ Dialogues
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
-Retrieves the :ref:`description <data-dialogue>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id``.
+  Retrieves the :ref:`description <data-dialogue>` of the dialogue with id
+  ``dialogue_id`` in the project with id ``project_id``.
 
   .. sourcecode:: http
 
@@ -947,7 +960,8 @@ Retrieves the :ref:`description <data-dialogue>` of the dialogue with id ``dialo
        "can_edit": true
      }
 
-If the dialogue isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` given in the request.
+  If the dialogue isn't found, a ``404`` response will be given. The response
+  body's ``details`` object contains the ``id`` given in the request.
 
   .. sourcecode:: http
 
@@ -1004,9 +1018,9 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
   dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
 
   Replacing the dialogue creates a new :ref:`edit revision
-  <concepts-revisions-edit>` with a `JSON patch`_ representing the
-  instructions needed to change the current dialogue description to the new
-  description given in the request body.
+  <concepts-revisions-edit>` with a `JSON patch`_ representing the instructions
+  needed to change the current dialogue description to the new description
+  given in the request body.
 
   .. _JSON Patch: http://tools.ietf.org/html/rfc6902
 
@@ -1045,8 +1059,8 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
 
 .. http:patch:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
-  Partially updates the :ref:`description <data-dialogue>` of the dialogue
-  with id ``dialogue_id`` in the project with id ``project_id`` with the
+  Partially updates the :ref:`description <data-dialogue>` of the dialogue with
+  id ``dialogue_id`` in the project with id ``project_id`` with the
   :ref:`instructions <overview-partial-updates>` in the request body and
   returns the given description, along with the dialogue's ``id`` and the
   ``url`` for accessing the dialogue's description.
@@ -1110,8 +1124,8 @@ Revisions
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
 
-  Retrieves the :ref:`revisions <data-revision>` of dialogue ``dialogue_id``
-  in the project ``project_id``.
+  Retrieves the :ref:`revisions <data-revision>` of dialogue ``dialogue_id`` in
+  the project ``project_id``.
 
   .. sourcecode:: http
 
@@ -1174,15 +1188,15 @@ Ordering revisions
 
 .. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
 
-Creates a new revision for dialogue ``dialogue_id`` under project
-``project_id`` using the :ref:`description <data-revision>` given in
-the request body and returns the created revisions's description, along with
-the generated ``id`` field and ``url`` field for accessing the revision
-description.
+  Creates a new revision for dialogue ``dialogue_id`` under project
+  ``project_id`` using the :ref:`description <data-revision>` given in the
+  request body and returns the created revisions's description, along with the
+  generated ``id`` field and ``url`` field for accessing the revision
+  description.
 
-Creating a new revision updates the dialogue's description. Any new requests
-to :ref:`retrieve <dialogues-get>` the dialogue will return a dialogue
-:ref:`description <data-dialogue>` with the new revision applied.
+  Creating a new revision updates the dialogue's description. Any new requests
+  to :ref:`retrieve <dialogues-get>` the dialogue will return a dialogue
+  :ref:`description <data-dialogue>` with the new revision applied.
 
   .. sourcecode:: http
 
@@ -1238,7 +1252,8 @@ to :ref:`retrieve <dialogues-get>` the dialogue will return a dialogue
        }
      }
 
-It is also possible to create revisions in bulk by providing an array of revisions. In this case, an array of revision descriptions will be returned:
+  It is also possible to create revisions in bulk by providing an array of
+  revisions. In this case, an array of revision descriptions will be returned:
 
   .. sourcecode:: http
 
@@ -1337,8 +1352,9 @@ Releases
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
 
-Retrieves the :ref:`descriptions <data-release>` of the :ref:`releases
-<concepts-releases>` of dialogue ``dialogue_id`` in the project ``project_id``.
+  Retrieves the :ref:`descriptions <data-release>` of the :ref:`releases
+  <concepts-releases>` of dialogue ``dialogue_id`` in the project
+  ``project_id``.
 
   .. sourcecode:: http
 
@@ -1384,9 +1400,9 @@ Ordering releases
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/(str:release_id)
 
-Retrieves the :ref:`description <data-release>` for the release with id
-``release_id`` for dialogue ``dialogue_id`` contained in the project with id
-``project_id``.
+  Retrieves the :ref:`description <data-release>` for the release with id
+  ``release_id`` for dialogue ``dialogue_id`` contained in the project with id
+  ``project_id``.
 
   .. sourcecode:: http
 
@@ -1405,9 +1421,9 @@ Retrieves the :ref:`description <data-release>` for the release with id
       "created": 1460022608855
     }
 
-If the release isn't found, a ``404`` response will be given. The response
-body's ``details`` object contains the ``id`` and ``dialogue_id`` given in the
-request.
+  If the release isn't found, a ``404`` response will be given. The response
+  body's ``details`` object contains the ``id`` and ``dialogue_id`` given in
+  the request.
 
   .. sourcecode:: http
 
@@ -1425,11 +1441,11 @@ request.
 
 .. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
 
-Creates a new release for dialogue ``dialogue_id`` under the project with the
-id ``project_id`` using the :ref:`description <data-release>` given in the
-request body and returns the created releases's description, along with the
-generated release ``id`` field and ``url`` field for accessing the release
-description.
+  Creates a new release for dialogue ``dialogue_id`` under the project with the
+  id ``project_id`` using the :ref:`description <data-release>` given in the
+  request body and returns the created releases's description, along with the
+  generated release ``id`` field and ``url`` field for accessing the release
+  description.
 
   .. sourcecode:: http
 
@@ -1899,7 +1915,6 @@ Provider Summary
 
 .. literalinclude:: ../schemas/provider/summary.yml
   :language: yaml
-
 
 
 Indices and tables
