@@ -1783,7 +1783,7 @@ Channels
 
   .. sourcecode:: http
 
-     PATCH /channels/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+     PATCH /channels/23 HTTP/1.1
      Content-Type: application/json-patch+json
 
      [{
