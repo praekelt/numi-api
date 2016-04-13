@@ -1705,7 +1705,7 @@ Channels and Providers
 
   .. sourcecode:: http
 
-     GET /channels/21 HTTP/1.1
+     GET /channels/23 HTTP/1.1
 
   .. sourcecode:: http
 
@@ -1726,98 +1726,6 @@ Channels and Providers
        }
      }
 
-.. http:put:: /channels/(str:channel_id)
-
-  Replaces the :ref:`description <data-channels>` of the channel with id
-  ``channel_id`` with the description given in the request body and returns the
-  given description, along with the user's ``id`` and the ``url`` for accessing
-  the user's description.
-
-  This operation is only accessible to the authenticated user if their user id is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
-
-  .. sourcecode:: http
-
-     PUT /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
-     Content-Type: application/json
-
-     {
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }
-
-
-.. http:get:: /providers/
-
-  Retrieves the :ref:`summaries <data-provider-summaries>` of all providers.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>`.
-
-  .. sourcecode:: http
-
-     GET /providers/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     [{
-       "id": "21",
-       "url": "/channels/21",
-       "title": 'Twitter'
-     }, {
-       "id": "22",
-       "url": "/channels/22",
-       "title": "MTN Nigeria"
-     }]
-
-.. http:get:: /providers/(str:provider_id)
-
-  Retrieves the :ref:`description <data-providers>` of the provider with the id
-  ``provider_id``.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>` or has access to a project using a channel associated
-  with ``provider_id``.
-
-  .. sourcecode:: http
-
-     GET /providers/21 HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "21",
-       "url": "/channels/21",
-       "title": "Twitter"
-       "channels": [{
-         "id": "23",
-         "url": "/channels/23",
-         "project"_id: 21,
-         "title": "@foo",
-         "address": "@foo",
-         "type": "twitter",
-         "is_available": true
-       }]
-     }
-
 .. _channels-put:
 
 .. http:put:: /channels/(str:channel_id)
@@ -1827,7 +1735,7 @@ Channels and Providers
   given description, along with the channel's ``id`` and the ``url`` for
   accessing the channel's description.
 
-  This operation is only accessible to the authenticated user they have
+  This operation is only accessible to the authenticated user if they have
   :ref:`admin permission <permissions-admin>`.
 
   .. sourcecode:: http
@@ -1902,6 +1810,65 @@ Channels and Providers
 Channel access
 ~~~~~~~~~~~~~~
 A channel can only be accessible by one project at a time. A channel can be made accessible to a project by setting ``project_id`` to the project's id when :ref:`replacing <channels-put>` or :ref:`partially updating <channels-patch>` the channel description.
+
+.. http:get:: /providers/
+
+  Retrieves the :ref:`summaries <data-provider-summaries>` of all providers.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>`.
+
+  .. sourcecode:: http
+
+     GET /providers/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "21",
+       "url": "/providers/21",
+       "title": 'Twitter'
+     }, {
+       "id": "22",
+       "url": "/providers/22",
+       "title": "MTN Nigeria"
+     }]
+
+.. http:get:: /providers/(str:provider_id)
+
+  Retrieves the :ref:`description <data-providers>` of the provider with the id
+  ``provider_id``.
+
+  Only accessible if the authenticated user has :ref:`admin permission
+  <permissions-admin>` or has access to a project using a channel associated
+  with ``provider_id``.
+
+  .. sourcecode:: http
+
+     GET /providers/21 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "21",
+       "url": "/providers/21",
+       "title": "Twitter"
+       "channels": [{
+         "id": "23",
+         "url": "/channels/23",
+         "project"_id: 21,
+         "title": "@foo",
+         "address": "@foo",
+         "type": "twitter",
+         "is_available": true
+       }]
+     }
 
 
 Indices and tables
