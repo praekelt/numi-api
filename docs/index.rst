@@ -317,240 +317,6 @@ Grants read access for a given dialogue.
 ******************
 Grants write access for a given dialogue.
 
-.. _data:
-
-Data Structures
----------------
-
-Users
-~~~~~
-
-.. _data-user:
-
-User
-****
-
-.. literalinclude:: ../schemas/user/user.yml
-  :language: yaml
-
-.. _data-user-summary:
-
-User Summary
-************
-
-.. literalinclude:: ../schemas/user/summary.yml
-  :language: yaml
-
-.. _data-user-new:
-
-New User
-********
-
-.. literalinclude:: ../schemas/user/new.yml
-  :language: yaml
-
-.. _data-password-change:
-
-Password change
-***************
-
-.. literalinclude:: ../schemas/user/password-change.yml
-  :language: yaml
-
-.. _data-password-reset:
-
-Password reset
-**************
-
-.. literalinclude:: ../schemas/user/password-reset.yml
-  :language: yaml
-
-.. _data-password-confirmation:
-
-Password reset confirmations
-****************************
-
-.. literalinclude:: ../schemas/user/confirmation.yml
-  :language: yaml
-
-Projects
-~~~~~~~~
-
-.. _data-project:
-
-Project
-*******
-
-.. literalinclude:: ../schemas/project/project.yml
-  :language: yaml
-
-.. _data-project-summary:
-
-Project Summary
-***************
-
-.. literalinclude:: ../schemas/project/summary.yml
-  :language: yaml
-
-.. _data-dialogues:
-
-Dialogues
-~~~~~~~~~
-
-.. _data-dialogue:
-
-Dialogue
-********
-
-.. literalinclude:: ../schemas/dialogue/dialogue.yml
-  :language: yaml
-
-.. _data-dialogue-summary:
-
-Dialogue Summary
-****************
-
-.. literalinclude:: ../schemas/dialogue/summary.yml
-  :language: yaml
-
-.. _data-sequence:
-
-Sequence
-********
-
-.. literalinclude:: ../schemas/dialogue/sequence.yml
-  :language: yaml
-
-.. _data-block:
-
-Block
-*****
-
-.. note::
-  A block's ``properties`` object is validated against a schema corresponding to the block's type (represented by the ``type`` field).
-
-.. literalinclude:: ../schemas/dialogue/block.yml
-  :language: yaml
-
-.. _data-symbol:
-
-Symbol
-******
-
-.. literalinclude:: ../schemas/dialogue/symbol.yml
-  :language: yaml
-
-Revisions
-~~~~~~~~~
-
-.. _data-revision:
-
-Revision
-********
-
-.. literalinclude:: ../schemas/revision/revision.yml
-  :language: yaml
-
-.. _data-revision-edit:
-
-Edit
-^^^^
-
-.. literalinclude:: ../schemas/revision/edit.yml
-  :language: yaml
-
-.. _data-revision-revert:
-
-Revert
-^^^^^^
-
-.. literalinclude:: ../schemas/revision/revert.yml
-  :language: yaml
-
-Releases
-~~~~~~~~
-
-.. _data-release:
-
-Release
-*******
-
-.. literalinclude:: ../schemas/release.yml
-  :language: yaml
-
-.. _data-permissions:
-
-Permissions
-~~~~~~~~~~~
-
-.. literalinclude:: ../schemas/permission/permission.yml
-  :language: yaml
-
-``project:admin``
-*****************
-
-.. literalinclude:: ../schemas/permission/project-admin.yml
-  :language: yaml
-
-``project:dialogues:read``
-**************************
-
-.. literalinclude:: ../schemas/permission/project-dialogues-read.yml
-  :language: yaml
-
-``project:dialogues:write``
-***************************
-
-.. literalinclude:: ../schemas/permission/project-dialogues-write.yml
-  :language: yaml
-
-``dialogue:read``
-*****************
-
-.. literalinclude:: ../schemas/permission/dialogue-read.yml
-  :language: yaml
-
-``dialogue:write``
-******************
-
-.. literalinclude:: ../schemas/permission/dialogue-write.yml
-  :language: yaml
-
-Channels
-~~~~~~~~
-
-.. _data-channel:
-
-Channel
-*******
-
-.. literalinclude:: ../schemas/channel/channel.yml
-  :language: yaml
-
-.. _data-channel-summary:
-
-Channel Summary
-***************
-
-.. literalinclude:: ../schemas/channel/summary.yml
-  :language: yaml
-
-.. _data-provider:
-
-Providers
-~~~~~~~~~
-
-.. literalinclude:: ../schemas/provider/provider.yml
-  :language: yaml
-
-.. _data-provider-summary:
-
-Provider Summary
-****************
-
-.. literalinclude:: ../schemas/provider/summary.yml
-  :language: yaml
-
 .. _users:
 
 Users
@@ -1899,6 +1665,241 @@ Providers
          "is_available": true
        }]
      }
+
+.. _data:
+
+Data Structures
+---------------
+
+Users
+~~~~~
+
+.. _data-user:
+
+User
+****
+
+.. literalinclude:: ../schemas/user/user.yml
+  :language: yaml
+
+.. _data-user-summary:
+
+User Summary
+************
+
+.. literalinclude:: ../schemas/user/summary.yml
+  :language: yaml
+
+.. _data-user-new:
+
+New User
+********
+
+.. literalinclude:: ../schemas/user/new.yml
+  :language: yaml
+
+.. _data-password-change:
+
+Password change
+***************
+
+.. literalinclude:: ../schemas/user/password-change.yml
+  :language: yaml
+
+.. _data-password-reset:
+
+Password reset
+**************
+
+.. literalinclude:: ../schemas/user/password-reset.yml
+  :language: yaml
+
+.. _data-password-confirmation:
+
+Password reset confirmations
+****************************
+
+.. literalinclude:: ../schemas/user/confirmation.yml
+  :language: yaml
+
+Projects
+~~~~~~~~
+
+.. _data-project:
+
+Project
+*******
+
+.. literalinclude:: ../schemas/project/project.yml
+  :language: yaml
+
+.. _data-project-summary:
+
+Project Summary
+***************
+
+.. literalinclude:: ../schemas/project/summary.yml
+  :language: yaml
+
+.. _data-dialogues:
+
+Dialogues
+~~~~~~~~~
+
+.. _data-dialogue:
+
+Dialogue
+********
+
+.. literalinclude:: ../schemas/dialogue/dialogue.yml
+  :language: yaml
+
+.. _data-dialogue-summary:
+
+Dialogue Summary
+****************
+
+.. literalinclude:: ../schemas/dialogue/summary.yml
+  :language: yaml
+
+.. _data-sequence:
+
+Sequence
+********
+
+.. literalinclude:: ../schemas/dialogue/sequence.yml
+  :language: yaml
+
+.. _data-block:
+
+Block
+*****
+
+.. note::
+  A block's ``properties`` object is validated against a schema corresponding to the block's type (represented by the ``type`` field).
+
+.. literalinclude:: ../schemas/dialogue/block.yml
+  :language: yaml
+
+.. _data-symbol:
+
+Symbol
+******
+
+.. literalinclude:: ../schemas/dialogue/symbol.yml
+  :language: yaml
+
+Revisions
+~~~~~~~~~
+
+.. _data-revision:
+
+Revision
+********
+
+.. literalinclude:: ../schemas/revision/revision.yml
+  :language: yaml
+
+.. _data-revision-edit:
+
+Edit
+^^^^
+
+.. literalinclude:: ../schemas/revision/edit.yml
+  :language: yaml
+
+.. _data-revision-revert:
+
+Revert
+^^^^^^
+
+.. literalinclude:: ../schemas/revision/revert.yml
+  :language: yaml
+
+Releases
+~~~~~~~~
+
+.. _data-release:
+
+Release
+*******
+
+.. literalinclude:: ../schemas/release.yml
+  :language: yaml
+
+.. _data-permissions:
+
+Permissions
+~~~~~~~~~~~
+
+.. literalinclude:: ../schemas/permission/permission.yml
+  :language: yaml
+
+``project:admin``
+*****************
+
+.. literalinclude:: ../schemas/permission/project-admin.yml
+  :language: yaml
+
+``project:dialogues:read``
+**************************
+
+.. literalinclude:: ../schemas/permission/project-dialogues-read.yml
+  :language: yaml
+
+``project:dialogues:write``
+***************************
+
+.. literalinclude:: ../schemas/permission/project-dialogues-write.yml
+  :language: yaml
+
+``dialogue:read``
+*****************
+
+.. literalinclude:: ../schemas/permission/dialogue-read.yml
+  :language: yaml
+
+``dialogue:write``
+******************
+
+.. literalinclude:: ../schemas/permission/dialogue-write.yml
+  :language: yaml
+
+Channels
+~~~~~~~~
+
+.. _data-channel:
+
+Channel
+*******
+
+.. literalinclude:: ../schemas/channel/channel.yml
+  :language: yaml
+
+.. _data-channel-summary:
+
+Channel Summary
+***************
+
+.. literalinclude:: ../schemas/channel/summary.yml
+  :language: yaml
+
+.. _data-provider:
+
+Providers
+~~~~~~~~~
+
+.. literalinclude:: ../schemas/provider/provider.yml
+  :language: yaml
+
+.. _data-provider-summary:
+
+Provider Summary
+****************
+
+.. literalinclude:: ../schemas/provider/summary.yml
+  :language: yaml
+
 
 
 Indices and tables
