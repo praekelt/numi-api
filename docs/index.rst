@@ -75,7 +75,7 @@ Partial update requests should provide instructions for how a resource should be
 Client errors
 ~~~~~~~~~~~~~
 
-All client error responses contain a ``type`, ``message`` and ``details``
+All client error responses contain a ``type``, ``message`` and ``details``
 fields.  ``type`` is a programmitically-usable string representing the type of
 the error, ``message`` is a human-readable string describing the error and
 ``details`` is an object containing data specific to the error type.
@@ -873,16 +873,16 @@ Projects
      Content-Type: application/json
 
      [{
-       id: '23',
-       url: '/channels/23',
-       project_id: 21,
-       title: '@foo',
-       address: '@foo',
-       type: 'twitter',
-       is_available: true,
-       provider: {
-         id: '21',
-         title: 'Twitter'
+       "id": "23",
+       "url": "/channels/23",
+       "project_id": "21",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true,
+       "provider": {
+         "id": "21",
+         "title": "Twitter"
        }
      }]
 
@@ -1343,7 +1343,7 @@ Ordering revisions
        }
      }]
 
-.. note
+.. note::
   Created revisions in bulk is done atomically. If one of the given revisions cannot be created, none of the given revisions will be created.
 
 
@@ -1490,16 +1490,16 @@ Channels
      Content-Type: application/json
 
      [{
-       id: '23',
-       url: '/channels/23',
-       project_id: 21,
-       title: '@foo',
-       address: '@foo',
-       type: 'twitter',
-       is_available: true,
-       provider: {
-         id: '21',
-         title: 'Twitter'
+       "id": "23",
+       "url": "/channels/23",
+       "project_id": "21",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true,
+       "provider": {
+         "id": "21",
+         "title": "Twitter"
        }
      }]
 
@@ -1522,16 +1522,16 @@ Channels
      Content-Type: application/json
 
      {
-       id: '23',
-       url: '/channels/23',
-       project_id: 21,
-       title: '@foo',
-       address: '@foo',
-       type: 'twitter',
-       is_available: true,
-       provider: {
-         id: '21',
-         title: 'Twitter'
+       "id": "23",
+       "url": "/channels/23",
+       "project_id": "21",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true,
+       "provider": {
+         "id": "21",
+         "title": "Twitter"
        }
      }
 
@@ -1642,7 +1642,7 @@ Providers
      [{
        "id": "21",
        "url": "/providers/21",
-       "title": 'Twitter'
+       "title": "Twitter"
      }, {
        "id": "22",
        "url": "/providers/22",
@@ -1674,7 +1674,7 @@ Providers
        "channels": [{
          "id": "23",
          "url": "/channels/23",
-         "project"_id: 21,
+         "project_id": 21,
          "title": "@foo",
          "address": "@foo",
          "type": "twitter",
