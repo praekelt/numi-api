@@ -238,7 +238,9 @@ A revision represents a change or set of changes made to a :ref:`dialogue <conce
 
 Edit
 ^^^^
-Applies a set of changes to a :ref:`dialogue description <data-dialogues>`. For example, changing the content in a :ref:`block <concepts-blocks>` or changing the position of a block in a :ref:`sequence <concepts-sequences>`.
+Applies a set of changes to a :ref:`dialogue description <data-dialogue>`. For
+example, changing the content in a :ref:`block <concepts-blocks>` or changing
+the position of a block in a :ref:`sequence <concepts-sequences>`.
 
 .. _concepts-revisions-revert:
 
@@ -320,39 +322,50 @@ Grants write access for a given dialogue.
 Data Structures
 ---------------
 
-.. _data-users:
-
 Users
 ~~~~~
+
+.. _data-user:
+
+User
+****
 
 .. literalinclude:: ../schemas/user/user.yml
   :language: yaml
 
-.. _data-users-new:
+.. _data-user-summary:
 
-New Users
-*********
+User Summary
+************
+
+.. literalinclude:: ../schemas/user/summary.yml
+  :language: yaml
+
+.. _data-user-new:
+
+New User
+********
 
 .. literalinclude:: ../schemas/user/new.yml
   :language: yaml
 
-.. _data-password-changes:
+.. _data-password-change:
 
-Password changes
-****************
+Password change
+***************
 
 .. literalinclude:: ../schemas/user/password-change.yml
   :language: yaml
 
-.. _data-password-resets:
+.. _data-password-reset:
 
-Password resets
-***************
+Password reset
+**************
 
 .. literalinclude:: ../schemas/user/password-reset.yml
   :language: yaml
 
-.. _data-confirmations:
+.. _data-password-confirmation:
 
 Password reset confirmations
 ****************************
@@ -360,26 +373,21 @@ Password reset confirmations
 .. literalinclude:: ../schemas/user/confirmation.yml
   :language: yaml
 
-.. _data-user-summaries:
-
-User Summaries
-~~~~~~~~~~~~~~
-
-.. literalinclude:: ../schemas/user/summary.yml
-  :language: yaml
-
-.. _data-projects:
-
 Projects
 ~~~~~~~~
+
+.. _data-project:
+
+Project
+*******
 
 .. literalinclude:: ../schemas/project/project.yml
   :language: yaml
 
-.. _data-project-summaries:
+.. _data-project-summary:
 
-Project Summaries
-~~~~~~~~~~~~~~~~~
+Project Summary
+***************
 
 .. literalinclude:: ../schemas/project/summary.yml
   :language: yaml
@@ -389,22 +397,34 @@ Project Summaries
 Dialogues
 ~~~~~~~~~
 
+.. _data-dialogue:
+
+Dialogue
+********
+
 .. literalinclude:: ../schemas/dialogue/dialogue.yml
   :language: yaml
 
-.. _data-sequences:
+.. _data-dialogue-summary:
 
-Sequences
-~~~~~~~~~
+Dialogue Summary
+****************
+
+.. literalinclude:: ../schemas/dialogue/summary.yml
+  :language: yaml
+
+.. _data-sequence:
+
+Sequence
+********
 
 .. literalinclude:: ../schemas/dialogue/sequence.yml
   :language: yaml
 
+.. _data-block:
 
-.. _data-blocks:
-
-Blocks
-~~~~~~
+Block
+*****
 
 .. note::
   A block's ``properties`` object is validated against a schema corresponding to the block's type (represented by the ``type`` field).
@@ -414,50 +434,48 @@ Blocks
 
 .. _data-symbol:
 
-Symbols
-~~~~~~~
+Symbol
+******
 
 .. literalinclude:: ../schemas/dialogue/symbol.yml
   :language: yaml
 
-.. _data-revisions:
-
 Revisions
 ~~~~~~~~~
+
+.. _data-revision:
+
+Revision
+********
 
 .. literalinclude:: ../schemas/revision/revision.yml
   :language: yaml
 
-.. _data-revisions-edit:
+.. _data-revision-edit:
 
-Edits
-*****
+Edit
+^^^^
 
 .. literalinclude:: ../schemas/revision/edit.yml
   :language: yaml
 
-.. _data-revisions-revert:
+.. _data-revision-revert:
 
-Reverts
-*******
+Revert
+^^^^^^
 
 .. literalinclude:: ../schemas/revision/revert.yml
   :language: yaml
 
-.. _data-releases:
-
 Releases
 ~~~~~~~~
 
+.. _data-release:
+
+Release
+*******
+
 .. literalinclude:: ../schemas/release.yml
-  :language: yaml
-
-.. _data-dialogue-summaries:
-
-Dialogue Summaries
-~~~~~~~~~~~~~~~~~~
-
-.. literalinclude:: ../schemas/dialogue/summary.yml
   :language: yaml
 
 .. _data-permissions:
@@ -498,23 +516,26 @@ Permissions
 .. literalinclude:: ../schemas/permission/dialogue-write.yml
   :language: yaml
 
-.. _data-channels:
-
 Channels
 ~~~~~~~~
+
+.. _data-channel:
+
+Channel
+*******
 
 .. literalinclude:: ../schemas/channel/channel.yml
   :language: yaml
 
-.. _data-channel-summaries:
+.. _data-channel-summary:
 
-Channel Summaries
-~~~~~~~~~~~~~~~~~
+Channel Summary
+***************
 
 .. literalinclude:: ../schemas/channel/summary.yml
   :language: yaml
 
-.. _data-providers:
+.. _data-provider:
 
 Providers
 ~~~~~~~~~
@@ -522,10 +543,10 @@ Providers
 .. literalinclude:: ../schemas/provider/provider.yml
   :language: yaml
 
-.. _data-provider-summaries:
+.. _data-provider-summary:
 
-Provider Summaries
-~~~~~~~~~~~~~~~~~~
+Provider Summary
+****************
 
 .. literalinclude:: ../schemas/provider/summary.yml
   :language: yaml
@@ -537,7 +558,7 @@ Users
 
 .. http:get:: /user
 
-  Retrieves the :ref:`description <data-users>` of the authenticated user.
+  Retrieves the :ref:`description <data-user>` of the authenticated user.
 
   .. sourcecode:: http
 
@@ -562,7 +583,7 @@ Users
 .. http:post:: /user/password-changes/
 
   Creates a password change request for the authenticated user using the
-  :ref:`details <data-password-changes>` given in the request body.
+  :ref:`details <data-password-change>` given in the request body.
 
   .. sourcecode:: http
 
@@ -581,7 +602,7 @@ Users
 
 .. http:get:: /users/
 
-  Retrieves the :ref:`summaries <data-user-summaries>` of all users. Only
+  Retrieves the :ref:`summaries <data-user-summary>` of all users. Only
   accessible if the authenticated user has :ref:`admin permission <permissions-admin>`.
 
   .. sourcecode:: http
@@ -609,9 +630,9 @@ Users
 
 .. http:post:: /users/
 
-  Creates a new user with the :ref:`description <data-users-new>` given in the
+  Creates a new user with the :ref:`description <data-user-new>` given in the
   request body and returns the created user's :ref:`description
-  <data-users-new>`, along with the generated ``id`` field and ``url`` field
+  <data-user-new>`, along with the generated ``id`` field and ``url`` field
   for accessing the user description.
 
   .. sourcecode:: http
@@ -640,7 +661,7 @@ Users
 
 .. http:get:: /users/(str:user_id)
 
-  Retrieves the :ref:`description <data-users>` of the user with id
+  Retrieves the :ref:`description <data-user>` of the user with id
   ``user_id``.
 
   .. sourcecode:: http
@@ -662,7 +683,7 @@ Users
 
 .. http:put:: /users/(str:user_id)
 
-  Replaces the :ref:`description <data-users>` of the user with id ``user_id``
+  Replaces the :ref:`description <data-user>` of the user with id ``user_id``
   with the description given in the request body and returns the given
   description, along with the user's ``id`` and the ``url`` for accessing the
   user's description.
@@ -694,7 +715,7 @@ Users
 
 .. http:patch:: /users/(str:user_id)
 
-  Partially updates the :ref:`description <data-users>` of the user with id
+  Partially updates the :ref:`description <data-user>` of the user with id
   ``user_id`` using the :ref:`instructions <overview-partial-updates>` given in
   the request body and returns the given user's description, along with the
   user's ``id`` and the ``url`` for accessing the user's description.
@@ -727,7 +748,7 @@ Users
 
 .. http:post:: /password-resets/
 
-  Creates a :ref:`password reset request <data-password-resets>` for the user
+  Creates a :ref:`password reset request <data-password-reset>` for the user
   with the email address provided in the request body.
 
   If a user with the given email address is found, the user will be sent an
@@ -756,7 +777,7 @@ Users
 .. http:post:: /password-confirmations/
 
   Confirms a password reset using the :ref:`confirmation details
-  <data-confirmations>` given in the request body.
+  <data-password-confirmation>` given in the request body.
 
   .. sourcecode:: http
 
@@ -874,7 +895,7 @@ Projects
 
 .. http:get:: /projects/
 
-  Retrieves a :ref:`summary <data-project-summaries>` of projects the authenticated user has access to.
+  Retrieves a :ref:`summary <data-project-summary>` of projects the authenticated user has access to.
 
   .. sourcecode:: http
 
@@ -905,7 +926,7 @@ Projects
 
 .. http:get:: /projects/(str:project_id)
 
-  Retrieves the :ref:`description <data-projects>` of the project with id ``project_id``.
+  Retrieves the :ref:`description <data-project>` of the project with id ``project_id``.
 
   .. sourcecode:: http
 
@@ -948,7 +969,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
 
 .. http:post:: /projects/
 
-  Creates a new project with the :ref:`project description <data-projects>`
+  Creates a new project with the :ref:`project description <data-project>`
   given in the request body and returns the created projects's description,
   along with the generated dialogue ``id`` field and ``url`` field for
   accessing the project description.
@@ -982,7 +1003,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
 
 .. http:put:: /projects/(str:project_id)
 
-  Replaces the :ref:`description <data-projects>` of the project with id ``project_id`` with the description given in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the projects's description.
+  Replaces the :ref:`description <data-project>` of the project with id ``project_id`` with the description given in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the projects's description.
 
   .. sourcecode:: http
 
@@ -1020,7 +1041,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
 
 .. http:patch:: /projects/(str:project_id)/
 
-  Partially updates the :ref:`description <data-projects>` of the project with id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the project's description.
+  Partially updates the :ref:`description <data-project>` of the project with id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in the request body and returns the given description, along with the projects's ``id`` and the ``url`` for accessing the project's description.
 
 .. sourcecode:: http
 
@@ -1057,7 +1078,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
 
 .. http:get:: /projects/(str:project_id)/channels/
 
-  Retrieves the :ref:`descriptions <data-channels>` of the channels accessible
+  Retrieves the :ref:`descriptions <data-channel>` of the channels accessible
   to the project with the id ``project_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
@@ -1097,7 +1118,7 @@ Dialogues
 
 .. http:get:: /projects/(str:project_id)/dialogues/
 
-  Retrieves a :ref:`summary <data-dialogue-summaries>` of every dialogue
+  Retrieves a :ref:`summary <data-dialogue-summary>` of every dialogue
   contained in the project with id ``project_id``.
 
   .. sourcecode:: http
@@ -1138,7 +1159,7 @@ Dialogues
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
-Retrieves the :ref:`description <data-dialogues>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id``.
+Retrieves the :ref:`description <data-dialogue>` of the dialogue with id ``dialogue_id`` in the project with id ``project_id``.
 
   .. sourcecode:: http
 
@@ -1176,7 +1197,7 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
 .. http:post:: /projects/(str:project_id)/dialogues/
 
   Creates a new dialogue under the project with the id ``project_id`` using the
-  :ref:`dialogue description <data-dialogues>` given in the request body and
+  :ref:`dialogue description <data-dialogue>` given in the request body and
   returns the created dialogue's description, along with the generated dialogue
   ``id`` field and ``url`` field for accessing the dialogue description.
 
@@ -1211,7 +1232,7 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
 
 .. http:put:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
-  Replaces the :ref:`description <data-dialogues>` of the dialogue with id
+  Replaces the :ref:`description <data-dialogue>` of the dialogue with id
   ``dialogue_id`` in the project with id ``project_id`` with the description
   given in the request body and returns the given description, along with the
   dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
@@ -1252,13 +1273,13 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
     }
 
 .. warning::
-  If the ``id`` of a :ref:`sequence <data-sequences>` or :ref:`block <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
+  If the ``id`` of a :ref:`sequence <data-sequence>` or :ref:`block <data-block>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
 
 .. _dialogues-patch:
 
 .. http:patch:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
-  Partially updates the :ref:`description <data-dialogues>` of the dialogue
+  Partially updates the :ref:`description <data-dialogue>` of the dialogue
   with id ``dialogue_id`` in the project with id ``project_id`` with the
   :ref:`instructions <overview-partial-updates>` in the request body and
   returns the given description, along with the dialogue's ``id`` and the
@@ -1307,7 +1328,7 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
    }
 
 .. warning::
-  If the ``id`` of a :ref:`sequence <data-sequences>` or :ref:`block <data-blocks>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
+  If the ``id`` of a :ref:`sequence <data-sequence>` or :ref:`block <data-block>` is changed, the API will regard the changed sequence or block as a new entity. This means all state previously associated to the sequence or block (for example, metrics and translations) will no longer be associated with it.
 
 
 Archiving dialogues
@@ -1323,7 +1344,7 @@ Revisions
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
 
-  Retrieves the :ref:`revisions <data-revisions>` of dialogue ``dialogue_id``
+  Retrieves the :ref:`revisions <data-revision>` of dialogue ``dialogue_id``
   in the project ``project_id``.
 
   .. sourcecode:: http
@@ -1388,14 +1409,14 @@ Ordering revisions
 .. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
 
 Creates a new revision for dialogue ``dialogue_id`` under project
-``project_id`` using the :ref:`description <data-revisions>` given in
+``project_id`` using the :ref:`description <data-revision>` given in
 the request body and returns the created revisions's description, along with
 the generated ``id`` field and ``url`` field for accessing the revision
 description.
 
 Creating a new revision updates the dialogue's description. Any new requests
 to :ref:`retrieve <dialogues-get>` the dialogue will return a dialogue
-:ref:`description <data-dialogues>` with the new revision applied.
+:ref:`description <data-dialogue>` with the new revision applied.
 
   .. sourcecode:: http
 
@@ -1550,7 +1571,7 @@ Releases
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
 
-Retrieves the :ref:`descriptions <data-releases>` of the :ref:`releases
+Retrieves the :ref:`descriptions <data-release>` of the :ref:`releases
 <concepts-releases>` of dialogue ``dialogue_id`` in the project ``project_id``.
 
   .. sourcecode:: http
@@ -1597,7 +1618,7 @@ Ordering releases
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/(str:release_id)
 
-Retrieves the :ref:`description <data-releases>` for the release with id
+Retrieves the :ref:`description <data-release>` for the release with id
 ``release_id`` for dialogue ``dialogue_id`` contained in the project with id
 ``project_id``.
 
@@ -1618,7 +1639,9 @@ Retrieves the :ref:`description <data-releases>` for the release with id
       "created": 1460022608855
     }
 
-If the release isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` and ``dialogue_id`` given in the request.
+If the release isn't found, a ``404`` response will be given. The response
+body's ``details`` object contains the ``id`` and ``dialogue_id`` given in the
+request.
 
   .. sourcecode:: http
 
@@ -1636,7 +1659,11 @@ If the release isn't found, a ``404`` response will be given. The response body'
 
 .. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
 
-Creates a new release for dialogue ``dialogue_id`` under the project with the id ``project_id`` using the :ref:`description <data-releases>` given in the request body and returns the created releases's description, along with the generated release ``id`` field and ``url`` field for accessing the release description.
+Creates a new release for dialogue ``dialogue_id`` under the project with the
+id ``project_id`` using the :ref:`description <data-release>` given in the
+request body and returns the created releases's description, along with the
+generated release ``id`` field and ``url`` field for accessing the release
+description.
 
   .. sourcecode:: http
 
@@ -1667,7 +1694,7 @@ Channels
 
 .. http:get:: /channels/
 
-  Retrieves the :ref:`descriptions <data-channels>` of all channels. Only
+  Retrieves the :ref:`descriptions <data-channel>` of all channels. Only
   accessible if the authenticated user has :ref:`admin permission
   <permissions-admin>`.
 
@@ -1696,7 +1723,7 @@ Channels
 
 .. http:get:: /channels/(str:channel_id)
 
-  Retrieves the :ref:`description <data-channels>` of the channel with the id
+  Retrieves the :ref:`description <data-channel>` of the channel with the id
   ``channel_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
@@ -1730,7 +1757,7 @@ Channels
 
 .. http:put:: /channels/(str:channel_id)
 
-  Replaces the :ref:`description <data-channels>` of the channel with id
+  Replaces the :ref:`description <data-channel>` of the channel with id
   ``channel_id`` with the description given in the request body and returns the
   given description, along with the channel's ``id`` and the ``url`` for
   accessing the channel's description.
@@ -1772,7 +1799,7 @@ Channels
 
 .. http:patch:: /channels/(str:channel_id)
 
-  Partially updates the :ref:`description <data-channels>` of the channel with
+  Partially updates the :ref:`description <data-channel>` of the channel with
   id ``channel_id`` using the :ref:`instructions <overview-partial-updates>`
   given in the request body and returns the given channel's description, along
   with the channel's ``id`` and the ``url`` for accessing the channel's
@@ -1816,7 +1843,7 @@ Providers
 
 .. http:get:: /providers/
 
-  Retrieves the :ref:`summaries <data-provider-summaries>` of all providers.
+  Retrieves the :ref:`summaries <data-provider-summary>` of all providers.
 
   Only accessible if the authenticated user has :ref:`admin permission
   <permissions-admin>`.
@@ -1842,7 +1869,7 @@ Providers
 
 .. http:get:: /providers/(str:provider_id)
 
-  Retrieves the :ref:`description <data-providers>` of the provider with the id
+  Retrieves the :ref:`description <data-provider>` of the provider with the id
   ``provider_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
