@@ -5,6 +5,12 @@ properties:
     description: |
       The channel's identifier (provided by the API)
 
+  url:
+    type: string
+    readOnly: true
+    description: |
+      API url for accessing the channel description
+
   title:
     type: string
     readOnly: true

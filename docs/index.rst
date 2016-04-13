@@ -1075,6 +1075,7 @@ If the project isn't found, a ``404`` response will be given. The response body'
 
      [{
        id: '23',
+       url: '/channels/23',
        title: '@foo',
        address: '@foo',
        type: 'twitter',
@@ -1701,6 +1702,7 @@ Channels and Providers
 
      [{
        id: '23',
+       url: '/channels/23',
        title: '@foo',
        address: '@foo',
        type: 'twitter',
@@ -1731,6 +1733,7 @@ Channels and Providers
 
      {
        id: '23',
+       url: '/channels/23',
        title: '@foo',
        address: '@foo',
        type: 'twitter',
@@ -1759,9 +1762,11 @@ Channels and Providers
 
      [{
        id: '21',
+       url: '/channels/21',
        title: 'Twitter'
      }, {
        id: '22',
+       url: '/channels/22',
        title: 'MTN Nigeria'
      }]
 
@@ -1785,9 +1790,11 @@ Channels and Providers
 
      {
        id: '21',
+       url: '/channels/21',
        title: 'Twitter'
        channels: [{
          id: '23',
+         url: '/channels/23',
          title: '@foo',
          address: '@foo',
          type: 'twitter',
