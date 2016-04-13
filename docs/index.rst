@@ -1776,13 +1776,13 @@ Channels and Providers
      Content-Type: application/json
 
      [{
-       id: '21',
-       url: '/channels/21',
-       title: 'Twitter'
+       "id": "21",
+       "url": "/channels/21",
+       "title": 'Twitter'
      }, {
-       id: '22',
-       url: '/channels/22',
-       title: 'MTN Nigeria'
+       "id": "22",
+       "url": "/channels/22",
+       "title": "MTN Nigeria"
      }]
 
 .. http:get:: /providers/(str:provider_id)
@@ -1804,17 +1804,17 @@ Channels and Providers
      Content-Type: application/json
 
      {
-       id: '21',
-       url: '/channels/21',
-       title: 'Twitter'
-       channels: [{
-         id: '23',
-         url: '/channels/23',
-         project_id: 21,
-         title: '@foo',
-         address: '@foo',
-         type: 'twitter',
-         is_available: true
+       "id": "21",
+       "url": "/channels/21",
+       "title": "Twitter"
+       "channels": [{
+         "id": "23",
+         "url": "/channels/23",
+         "project"_id: 21,
+         "title": "@foo",
+         "address": "@foo",
+         "type": "twitter",
+         "is_available": true
        }]
      }
 
