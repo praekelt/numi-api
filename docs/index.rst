@@ -328,6 +328,38 @@ Users
 .. literalinclude:: ../schemas/user/user.yml
   :language: yaml
 
+.. _data-users-new:
+
+New Users
+*********
+
+.. literalinclude:: ../schemas/user/new.yml
+  :language: yaml
+
+.. _data-password-changes:
+
+Password changes
+****************
+
+.. literalinclude:: ../schemas/user/password-change.yml
+  :language: yaml
+
+.. _data-password-resets:
+
+Password resets
+***************
+
+.. literalinclude:: ../schemas/user/password-reset.yml
+  :language: yaml
+
+.. _data-confirmations:
+
+Password reset confirmations
+****************************
+
+.. literalinclude:: ../schemas/user/confirmation.yml
+  :language: yaml
+
 .. _data-user-summaries:
 
 User Summaries
@@ -527,6 +559,26 @@ Users
        }]
      }
 
+.. http:post:: /user/password-changes/
+
+  Creates a password change request for the authenticated user using the
+  :ref:`details <data-password-changes>` given in the request body.
+
+  .. sourcecode:: http
+
+    POST /user/password-changes/ HTTP/1.1
+    Content-Type: application/json
+
+    {
+      "old_password": "1337",
+      "new_password": "r00t"
+    }
+
+  .. sourcecode:: http
+
+    HTTP/1.1 204 No Content
+    Content-Type: application/json
+
 .. http:get:: /users/
 
   Retrieves the :ref:`summaries <data-user-summaries>` of all users. Only
@@ -554,6 +606,37 @@ Users
 
     :query number per_page:
       Number of users to show per page. Defaults to ``30``. Maximum is ``100``.
+
+.. http:post:: /users/
+
+  Creates a new user with the :ref:`description <data-users-new>` given in the
+  request body and returns the created user's :ref:`description
+  <data-users-new>`, along with the generated ``id`` field and ``url`` field
+  for accessing the user description.
+
+  .. sourcecode:: http
+
+     POST /projects/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "first_name": "Joan",
+       "last_name": "Watson",
+       "password": "1337"
+     }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 201 Created
+     Content-Type: application/json
+
+     {
+       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
+       "email": "foo@bar.org",
+       "first_name": "Joan",
+       "last_name": "Watson"
+     }
 
 .. http:get:: /users/(str:user_id)
 
@@ -641,6 +724,54 @@ Users
        "first_name": "Joan",
        "last_name": "Watson"
      }
+
+.. http:post:: /password-resets/
+
+  Creates a :ref:`password reset request <data-password-resets>` for the user
+  with the email address provided in the request body.
+
+  If a user with the given email address is found, the user will be sent an
+  email containing a link to be accessed in order to confirm the reset and
+  choose a new password.
+
+  .. sourcecode:: http
+
+    POST /password-resets/ HTTP/1.1
+    Content-Type: application/json
+
+    {
+      "email": "foo@bar.org"
+    }
+
+  .. sourcecode:: http
+
+     HTTP/1.1 204 No Content
+     Content-Type: application/json
+
+.. note::
+  To avoid leaking information on whether a user has a given email address, the
+  API will return a ``204`` response regardless of whether a user matches the
+  given email address or not.
+
+.. http:post:: /confirmations/
+
+  Confirms a password reset using the :ref:`confirmation details
+  <data-confirmations>` given in the request body.
+
+  .. sourcecode:: http
+
+    POST /confirmations/ HTTP/1.1
+    Content-Type: application/json
+
+    {
+      "token": "123abc",
+      "password": "r00t"
+    }
+
+  .. sourcecode:: http
+
+    HTTP/1.1 204 No Content
+    Content-Type: application/json
 
 
 Permissions
@@ -796,7 +927,9 @@ Projects
          "url": "/projects/23/dialogues/21",
          "is_archived": false,
          "is_published": false,
-         "has_changes": false
+         "has_changes": false,
+         "can_view": true,
+         "can_edit": true
        }]
      }
 
@@ -877,7 +1010,9 @@ If the project isn't found, a ``404`` response will be given. The response body'
          "url": "/projects/23/dialogues/21",
          "is_archived": false,
          "is_published": false,
-         "has_changes": false
+         "has_changes": false,
+         "can_view": true,
+         "can_edit": true
        }]
      }
 
@@ -914,7 +1049,9 @@ If the project isn't found, a ``404`` response will be given. The response body'
        "url": "/projects/23/dialogues/21",
        "is_archived": false,
        "is_published": false,
-       "has_changes": false
+       "has_changes": false,
+       "can_view": true,
+       "can_edit": true
      }]
    }
 
@@ -997,17 +1134,26 @@ Dialogues
        "url": "/projects/23/dialogues/21",
        "is_archived": false,
        "is_published": false,
-       "has_changes": false
+       "has_changes": false,
+       "can_view": true,
+       "can_edit": true
      }]
 
   :query boolean is_archived:
-    If ``false``, only return unarchived dialogues. If ``true``, only return archived dialogues. If omitted, both archived and unarchived dialogues are retrieved.
+    Filter on whether this dialogue has been archived.
 
   :query boolean is_published:
-    If ``false``, only return unpublished dialogues. If ``true``, only return published dialogues. If omitted, both published and unpublished dialogues are retrieved.
+    Filter on whether this dialogue has been published.
 
   :query boolean has_changes:
-    If ``false``, only return dialogues without unpublished changes. If ``true``, only return dialogues with unpublished changes. If omitted, dialogues with published and unpublished changes are retrieved.
+    Filter on whether this dialogue has unpublished changes or not.
+
+  :query boolean can_view:
+    Filter on whether the user can view this dialogue or not.
+
+  :query boolean can_edit:
+    Filter on whether the user can edit this dialogue or not.
+
 
 .. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
 
@@ -1028,7 +1174,9 @@ Retrieves the :ref:`description <data-dialogues>` of the dialogue with id ``dial
        "sequences": [],
        "is_archived": false,
        "is_published": false,
-       "has_changes": false
+       "has_changes": false,
+       "can_view": true,
+       "can_edit": true
      }
 
 If the dialogue isn't found, a ``404`` response will be given. The response body's ``details`` object contains the ``id`` given in the request.
@@ -1073,7 +1221,9 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
        "sequences": [],
        "is_archived": false,
        "is_published": false,
-       "has_changes": false
+       "has_changes": false,
+       "can_view": true,
+       "can_edit": true
      }
 
 .. _dialogues-put:
@@ -1115,7 +1265,9 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
       "sequences": [],
       "is_archived": false,
       "is_published": false,
-      "has_changes": false
+      "has_changes": false,
+       "can_view": true,
+       "can_edit": true
     }
 
 .. warning::
@@ -1168,7 +1320,9 @@ If the dialogue isn't found, a ``404`` response will be given. The response body
      }],
      "is_archived": false,
      "is_published": false,
-     "has_changes": false
+     "has_changes": false,
+     "can_view": true,
+     "can_edit": true
    }
 
 .. warning::

@@ -1,0 +1,9 @@
+token:
+  type: 'string'
+  description: |
+    Token emailed to the user for the password reset.
+
+password:
+  type: 'string'
+  description: |
+    The user's new password.
