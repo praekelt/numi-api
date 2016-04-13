@@ -1,0 +1,7 @@
+$ref: '#/definitions/user/user'
+
+properties:
+  password:
+    type: string
+    description: |
+      The new user's password.
