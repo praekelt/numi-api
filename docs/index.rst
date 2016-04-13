@@ -1760,7 +1760,7 @@ Channels and Providers
      [{
        id: '21',
        title: 'Twitter'
-     }, {]
+     }, {
        id: '22',
        title: 'MTN Nigeria'
      }]
