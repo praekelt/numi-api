@@ -8,10 +8,19 @@ function conj(a, b) {
 }
 
 
+function trap(type, fn) {
+  return e => {
+    if (e instanceof type) return fn(e);
+    else throw e;
+  };
+}
+
+
 function read(filename) {
   return load(open(filename).toString());
 }
 
 
-exports.read = read;
 exports.conj = conj;
+exports.trap = trap;
+exports.read = read;
