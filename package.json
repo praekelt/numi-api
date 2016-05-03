@@ -1,0 +1,25 @@
+{
+  "name": "numi-api",
+  "version": "0.0.0",
+  "description": "Numi's api",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/praekelt/numi-api.git"
+  },
+  "keywords": [
+    "numi"
+  ],
+  "author": "Praekelt Foundation",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/praekelt/numi-api/issues"
+  },
+  "homepage": "https://github.com/praekelt/numi-api#readme"
+}
