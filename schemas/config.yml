@@ -1,0 +1,7 @@
+type: object
+properties:
+  port:
+    type: number
+    default: 2332
+    description: |
+      The port that the API should listen on
