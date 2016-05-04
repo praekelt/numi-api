@@ -1,11 +1,8 @@
 const o = require('koa-compose');
-const route = require('koa-route');
+const { post } = require('koa-route');
 const schemas = require('src/schemas');
-const users = require('src/api').users;
-const methods = require('src/middleware/api/methods');
-const create = methods.create;
-const post = route.post;
-const next = require('src/middleware/util/next');
+const { users } = require('src/api');
+const { create } = require('src/middleware/api/methods');
 
 
 module.exports = [

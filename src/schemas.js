@@ -1,5 +1,5 @@
 const resolve = require('path').resolve;
-const read = require('src/utils').read;
+const { read } = require('src/utils');
 const schemas = require('schemas');
 
 

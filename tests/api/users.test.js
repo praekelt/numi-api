@@ -1,7 +1,6 @@
 const expect = require('chai').expect;
 const users = require('src/api').users;
-const errors = require('src/errors');
-const NotImplementedError = errors.NotImplementedError;
+const { NotImplementedError } = require('src/errors');
 
 
 describe('api.users', () => {

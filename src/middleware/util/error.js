@@ -1,4 +1,4 @@
-const trap = require('src/utils').trap;
+const { trap } = require('src/utils');
 
 
 function error(type, fn) {

@@ -1,9 +1,7 @@
 const Koa = require('koa');
 const request = require('supertest');
-const errorTypes = require('src/errors');
-const errors = require('src/middleware/api/errors');
-const NotImplementedError = errorTypes.NotImplementedError;
-const notImplemented = errors.notImplemented;
+const { NotImplementedError } = require('src/errors');
+const { notImplemented } = require('src/middleware/api/errors');
 
 
 describe('middleware/api/errors', () => {

@@ -1,6 +1,6 @@
 const extend = require('lodash/extend');
-const open = require('fs').readFileSync;
-const load = require('js-yaml').safeLoad;
+const { readFileSync: open } = require('fs');
+const { safeLoad: load } = require('js-yaml');
 
 
 function conj(a, b) {

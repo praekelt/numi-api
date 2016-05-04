@@ -1,4 +1,4 @@
-const NotImplementedError = require('src/errors').NotImplementedError;
+const { NotImplementedError } = require('src/errors');
 
 
 function create() {

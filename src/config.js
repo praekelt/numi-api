@@ -1,8 +1,6 @@
 const defaults = require('json-schema-defaults');
 const schemas = require('src/schemas');
-const utils = require('src/utils');
-const conj = utils.conj;
-const read = utils.read;
+const { conj, read } = require('src/utils');
 
 
 // TODO validate config
