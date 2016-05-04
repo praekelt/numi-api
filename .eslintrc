@@ -2,7 +2,7 @@
 
 extends: airbnb
 env:
-  node: true,
+  node: true
 rules:
   no-eq-null: 2
   no-unused-vars:
