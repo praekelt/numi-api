@@ -35,7 +35,7 @@ describe('middleware/util/schema', () => {
     });
   });
 
-  describe('ignoreReadOnly', () => {
+  describe('omitReadOnly', () => {
     it('should ignore read only fields given in the request body');
   });
 
