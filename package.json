@@ -27,6 +27,7 @@
   "homepage": "https://github.com/praekelt/numi-api#readme",
   "dependencies": {
     "ajv": "^4.0.5",
+    "decamelize": "^1.2.0",
     "js-yaml": "^3.6.0",
     "json-schema-defaults": "^0.1.1",
     "koa": "^2.0.0",

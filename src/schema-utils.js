@@ -3,6 +3,7 @@ const keys = require('lodash/keys');
 const filter = require('lodash/filter');
 const omitBy = require('lodash/omitBy');
 const merge = require('lodash/merge');
+const decamelize = require('decamelize');
 const Validator = require('ajv');
 const { ValidationError } = require('src/errors');
 
@@ -57,7 +58,7 @@ function parseReadOnlyError({name, path}) {
 
 function parseValidationError(e) {
   return {
-    type: e.keyword,
+    type: decamelize(e.keyword, '_'),
     path: e.dataPath,
     message: e.message,
     details: e.params,
