@@ -19,6 +19,8 @@ function validate(schema) {
 }
 
 
-exports.setDefaults = setDefaults;
-exports.ignoreReadOnly = ignoreReadOnly;
-exports.validate = validate;
+module.exports = {
+  setDefaults,
+  ignoreReadOnly,
+  validate
+};

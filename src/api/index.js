@@ -1,1 +1,6 @@
-exports.users = require('src/api/users');
+const users = require('src/api/users');
+
+
+module.exports = {
+  users
+};

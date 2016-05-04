@@ -11,4 +11,6 @@ function notImplemented(ctx, e) {
 }
 
 
-exports.notImplemented = error(NotImplementedError, notImplemented);
+module.exports = {
+  notImplemented: error(NotImplementedError, notImplemented)
+};

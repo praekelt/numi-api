@@ -42,8 +42,10 @@ function remove() {
 }
 
 
-exports.create = create;
-exports.read = read;
-exports.update = update;
-exports.patch = patch;
-exports.remove = remove;
+module.exports = {
+  create,
+  read,
+  update,
+  patch,
+  remove
+};

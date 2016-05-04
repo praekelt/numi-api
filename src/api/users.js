@@ -6,4 +6,6 @@ function create() {
 }
 
 
-exports.create = create;
+module.exports = {
+  create
+};

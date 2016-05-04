@@ -21,6 +21,8 @@ function read(filename) {
 }
 
 
-exports.conj = conj;
-exports.trap = trap;
-exports.read = read;
+module.exports = {
+  conj,
+  trap,
+  read
+};
