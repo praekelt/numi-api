@@ -1,9 +1,18 @@
-module.exports = read => ({
+const { read } = require('src/utils');
+const { resolve } = require('path');
+
+
+function readConfig(path) {
+  return read(resolve(__dirname, path));
+}
+
+
+module.exports = {
   definitions: {
-    config: read('./config.yml'),
+    config: readConfig('./config.yml'),
     user: {
-      user: read('./user/user.yml'),
-      new: read('./user/new.yml')
+      user: readConfig('./user/user.yml'),
+      new: readConfig('./user/new.yml')
     }
   }
-});
+};

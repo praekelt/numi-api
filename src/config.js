@@ -1,5 +1,5 @@
 const defaults = require('json-schema-defaults');
-const schemas = require('src/schemas');
+const schemas = require('schemas');
 const { conj, read } = require('src/utils');
 
 function readConfig() {

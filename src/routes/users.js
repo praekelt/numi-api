@@ -1,6 +1,6 @@
 const o = require('koa-compose');
 const { post } = require('koa-route');
-const schemas = require('src/schemas');
+const schemas = require('schemas');
 const { users } = require('src/api');
 const { create } = require('src/middleware/api/methods');
 
