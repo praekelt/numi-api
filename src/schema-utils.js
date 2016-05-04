@@ -20,18 +20,22 @@ function omitReadOnly(schema, d) {
 
 
 function validate(schema, d) {
+  const errors = []
+    .concat(validationErrors(schema, d))
+    .concat(readOnlyErrors(schema, d));
+
+  if (errors.length) throw new ValidationError(errors);
+}
+
+
+function validationErrors(schema, d) {
   const validator = new Validator({
     allErrors: true,
     jsonPointers: true
   });
 
   validator.validate(schema, d);
-
-  const errors = (validator.errors || [])
-    .map(parseValidationError)
-    .concat(readOnlyErrors(schema, d));
-
-  if (errors.length) throw new ValidationError(errors);
+  return (validator.errors || []).map(parseValidationError);
 }
 
 
