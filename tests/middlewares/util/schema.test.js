@@ -2,7 +2,8 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const request = require('supertest');
 const {
-  setDefaults
+  setDefaults,
+  omitReadOnly
 } = require('src/middleware/util/schema');
 
 
@@ -52,7 +53,27 @@ describe('middleware/util/schema', () => {
   });
 
   describe('omitReadOnly', () => {
-    it('should ignore read only fields given in the request body');
+    it('should omit read only fields given in the request body', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(omitReadOnly({
+          type: 'object',
+          properties: {
+            foo: {readOnly: true},
+            bar: {}
+          }
+        }))
+        .use(ctx => { ctx.body = ctx.request.body; });
+
+      request(app.listen())
+        .post('/')
+        .send({
+          foo: 21,
+          bar: 23
+        })
+        .expect({bar: 23})
+        .end(done);
+    });
   });
 
   describe('validate', () => {
