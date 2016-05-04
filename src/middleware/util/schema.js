@@ -1,9 +1,13 @@
+const schemaDefaults = require('json-schema-defaults');
 const next = require('src/middleware/util/next');
+const { conj } = require('src/utils');
 
 
 function setDefaults(schema) {
-  // TODO
-  return next;
+  return (ctx, next) => {
+    ctx.request.body = conj(schemaDefaults(schema), ctx.request.body);
+    return next();
+  };
 }
 
 
