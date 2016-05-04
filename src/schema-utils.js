@@ -1,6 +1,8 @@
 const schemaDefaults = require('json-schema-defaults');
 const omitBy = require('lodash/omitBy');
 const merge = require('lodash/merge');
+const Validator = require('ajv');
+const { ValidationError } = require('src/errors');
 
 
 function defaults(schema, d) {
@@ -14,6 +16,30 @@ function omitReadOnly(schema, d) {
 }
 
 
+function validate(schema, d) {
+  const validator = new Validator({
+    allErrors: true,
+    jsonPointers: true
+  });
+
+  validator.validate(schema, d);
+
+  const errors = (validator.errors || []).map(parseValidationError);
+  if (errors.length) throw new ValidationError(errors);
+}
+
+
+function parseValidationError(e) {
+  return {
+    type: e.keyword,
+    path: e.dataPath,
+    message: e.message,
+    details: e.params,
+    schemaPath: e.schemaPath
+  };
+}
+
+
 function propertyIsReadOnly(schema, k) {
   const prop = schema.properties[k];
   return prop && prop.readOnly;
@@ -22,5 +48,6 @@ function propertyIsReadOnly(schema, k) {
 
 module.exports = {
   defaults,
-  omitReadOnly
+  omitReadOnly,
+  validate
 };

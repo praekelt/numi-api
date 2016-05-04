@@ -1,7 +1,10 @@
 const { expect } = require('chai');
+const { captureError } = require('tests/utils');
+const { ValidationError } = require('src/errors');
 const {
   defaults,
-  omitReadOnly
+  omitReadOnly,
+  validate
 } = require('src/schema-utils');
 
 
@@ -55,6 +58,46 @@ describe('schema-utils', () => {
         bar: 23
       }))
       .to.deep.equal({bar: 23});
+    });
+  });
+
+  describe('validate', () => {
+    it('should validate against the schema', () => {
+      expect(validate({type: 'number'}, 23))
+        .to.not.throw;
+
+      const e = captureError(() => validate({
+        type: 'object',
+        properties: {
+          foo: {
+            type: 'object',
+            properties: {
+              bar: {
+                type: 'number'
+              }
+            }
+          }
+        },
+        required: ['foo', 'bar']
+      }, {
+        foo: {bar: 'rar'}
+      }));
+
+      expect(e).to.be.instanceof(ValidationError);
+
+      expect(e.errors).to.deep.equal([{
+        type: 'required',
+        path: '',
+        schemaPath: '#/required',
+        details: {missingProperty: 'bar'},
+        message: "should have required property 'bar'"
+      }, {
+        type: 'type',
+        path: '/foo/bar',
+        schemaPath: '#/properties/foo/properties/bar/type',
+        details: {type: 'number'},
+        message: "should be number"
+      }]);
     });
   });
 });
