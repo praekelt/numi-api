@@ -13,7 +13,7 @@ function ignoreReadOnly(schema) {
 }
 
 
-function validateBody(schema) {
+function validate(schema) {
   // TODO
   return next;
 }
@@ -21,4 +21,4 @@ function validateBody(schema) {
 
 exports.setDefaults = setDefaults;
 exports.ignoreReadOnly = ignoreReadOnly;
-exports.validateBody = validateBody;
+exports.validate = validate;

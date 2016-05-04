@@ -1,13 +1,13 @@
 const o = require('koa-compose');
 const schema = require('src/middleware/util/schema');
 const next = require('src/middleware/util/next');
-const validateBody = schema.validateBody;
+const validate = schema.validate;
 const setDefaults = schema.setDefaults;
 
 
 function create(schema) {
   return o([
-    validateBody(schema),
+    validate(schema),
     setDefaults(schema)
   ]);
 }
@@ -21,7 +21,7 @@ function read() {
 function update(schema) {
   return o([
     ignoreReadOnly(schema),
-    validateBody(schema),
+    validate(schema),
     setDefaults(schema)
   ]);
 }
@@ -29,7 +29,7 @@ function update(schema) {
 
 function patch(schema) {
   return o([
-    validateBody(schema),
+    validate(schema),
     setDefaults(schema)
   ]);
 }

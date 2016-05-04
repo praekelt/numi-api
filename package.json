@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "NODE_PATH=. node src/index.js",
-    "test": "NODE_ENV=test NODE_PATH=. mocha tests/**/*.test.js"
+    "test": "NODE_ENV=test NODE_PATH=. mocha -R spec 'tests/**/*.test.js'"
   },
   "repository": {
     "type": "git",
