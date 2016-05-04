@@ -6,9 +6,9 @@ const NotImplementedError = errorTypes.NotImplementedError;
 const notImplemented = errors.notImplemented;
 
 
-describe("middleware/api/errors", () => {
-  describe("notImplemented", () => {
-    it("should handle NotImplementedErrors", done => {
+describe('middleware/api/errors', () => {
+  describe('notImplemented', () => {
+    it('should handle NotImplementedErrors', done => {
       const app = new Koa()
         .use(notImplemented)
         .use(() => { throw new NotImplementedError(); });

@@ -4,9 +4,9 @@ const errors = require('src/errors');
 const NotImplementedError = errors.NotImplementedError;
 
 
-describe("api.users", () => {
-  describe("create", () => {
-    it("should throw a NotImplementedError", () => {
+describe('api.users', () => {
+  describe('create', () => {
+    it('should throw a NotImplementedError', () => {
       expect(() => users.create())
         .to.throw(NotImplementedError);
     });

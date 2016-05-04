@@ -1,11 +1,10 @@
-'use strict';
 const expect = require('chai').expect;
 const utils = require('src/utils');
 
 
-describe("utils", () => {
-  describe("conj", () => {
-    it("should conjoin the given objects", () => {
+describe('utils', () => {
+  describe('conj', () => {
+    it('should conjoin the given objects', () => {
       expect(utils.conj({
         a: 23,
         b: 2
@@ -21,33 +20,33 @@ describe("utils", () => {
     });
   });
 
-  describe("trap", () => {
-    it("should handle errors of the given type", () => {
+  describe('trap', () => {
+    it('should handle errors of the given type', () => {
       class FooError extends Error {}
       class BarError extends FooError {}
       const trapped = [];
 
-      const e1 = new FooError();
-      const e2 = new BarError();
+      const err1 = new FooError();
+      const err2 = new BarError();
 
       const fn = utils.trap(FooError, e => trapped.push(e));
-      fn(e1);
-      fn(e2);
+      fn(err1);
+      fn(err2);
 
-      expect(trapped).to.deep.equal([e1, e2]);
+      expect(trapped).to.deep.equal([err1, err2]);
     });
 
 
-    it("should throw errors that are not of the given type", () => {
+    it('should throw errors that are not of the given type', () => {
       class FooError extends Error {}
       class BarError extends Error {}
       const trapped = [];
 
-      const e = new BarError();
+      const err = new BarError();
       const fn = utils.trap(FooError, e => trapped.push(e));
 
-      expect(() => fn(e))
-        .to.throw(e);
+      expect(() => fn(err))
+        .to.throw(err);
 
       expect(trapped).to.be.empty;
     });

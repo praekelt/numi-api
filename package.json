@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "NODE_PATH=. node src/index.js",
-    "test": "NODE_ENV=test NODE_PATH=. mocha -R spec 'tests/**/*.test.js'"
+    "test": "NODE_ENV=test NODE_PATH=. mocha -R spec 'tests/**/*.test.js'",
+    "lint": "NODE_PATH=. eslint 'src/**/*.test.js' 'tests/**/*.test.js'"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^2.9.0",
+    "eslint-config-airbnb": "^8.0.0",
+    "eslint-plugin-import": "^1.6.1",
+    "eslint-plugin-jsx-a11y": "^1.0.4",
+    "eslint-plugin-react": "^5.0.1",
     "mocha": "^2.4.5",
     "supertest": "^1.2.0"
   }
