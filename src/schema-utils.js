@@ -3,8 +3,9 @@ const keys = require('lodash/keys');
 const filter = require('lodash/filter');
 const omitBy = require('lodash/omitBy');
 const merge = require('lodash/merge');
-const decamelize = require('decamelize');
+const mapKeys = require('lodash/mapKeys');
 const Validator = require('ajv');
+const snakeCase = require('snake-case');
 const { ValidationError } = require('src/errors');
 
 
@@ -62,10 +63,10 @@ function parseReadOnlyError({name, path}) {
 
 function parseValidationError(e) {
   return {
-    type: decamelize(e.keyword, '_'),
+    type: snakeCase(e.keyword),
     path: e.dataPath,
     message: e.message,
-    details: e.params,
+    details: mapKeys(e.params, (v, k) => snakeCase(k)),
     schema_path: e.schemaPath
   };
 }

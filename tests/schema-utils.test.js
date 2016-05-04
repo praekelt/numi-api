@@ -89,7 +89,7 @@ describe('schema-utils', () => {
         type: 'required',
         path: '',
         schema_path: '#/required',
-        details: {missingProperty: 'bar'},
+        details: {missing_property: 'bar'},
         message: "should have required property 'bar'"
       }, {
         type: 'type',
