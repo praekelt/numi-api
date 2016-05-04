@@ -15,7 +15,14 @@ describe('middleware/util/schema', () => {
           type: 'object',
           properties: {
             foo: {default: 23},
-            bar: {default: 21}
+            bar: {default: 21},
+            quux: {
+              type: 'object',
+              properties: {
+                corge: {default: 2},
+                grault: {default: 3}
+              }
+            }
           }
         }))
         .use(ctx => { ctx.body = ctx.request.body; });
@@ -24,12 +31,21 @@ describe('middleware/util/schema', () => {
         .post('/')
         .send({
           foo: 'rar',
-          baz: 2
+          baz: 1,
+          quux: {
+            corge: 4,
+            garply: 5
+          }
         })
         .expect({
           foo: 'rar',
           bar: 21,
-          baz: 2
+          baz: 1,
+          quux: {
+            corge: 4,
+            grault: 3,
+            garply: 5
+          }
         })
         .end(done);
     });

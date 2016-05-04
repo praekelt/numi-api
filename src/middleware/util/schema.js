@@ -1,11 +1,11 @@
 const schemaDefaults = require('json-schema-defaults');
 const next = require('src/middleware/util/next');
-const { conj } = require('src/utils');
+const merge = require('lodash/merge');
 
 
 function setDefaults(schema) {
   return (ctx, next) => {
-    ctx.request.body = conj(schemaDefaults(schema), ctx.request.body);
+    ctx.request.body = merge({}, schemaDefaults(schema), ctx.request.body);
     return next();
   };
 }
