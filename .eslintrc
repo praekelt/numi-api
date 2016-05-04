@@ -27,3 +27,9 @@ rules:
     - 2
     - props: false
   no-else-return: 0
+  no-shadow: 0
+  no-use-before-define: 0
+  object-shadow: 0
+  object-curly-spacing: 0
+  brace-style: 0
+  quotes: 0
