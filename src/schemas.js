@@ -3,9 +3,9 @@ const { read } = require('src/utils');
 const schemas = require('schemas');
 
 
-module.exports = schemas(readSchema);
-
-
 function readSchema(filename) {
   return read(resolve(__dirname, '..', 'schemas', filename));
 }
+
+
+module.exports = schemas(readSchema);

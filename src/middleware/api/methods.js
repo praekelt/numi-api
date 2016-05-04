@@ -1,6 +1,10 @@
 const o = require('koa-compose');
-const { validate, setDefaults } = require('src/middleware/util/schema');
 const next = require('src/middleware/util/next');
+const {
+  ignoreReadOnly,
+  setDefaults,
+  validate
+} = require('src/middleware/util/schema');
 
 
 function create(schema) {
