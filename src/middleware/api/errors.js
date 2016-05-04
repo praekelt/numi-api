@@ -1,5 +1,5 @@
-const trap = require('src/utils').trap;
 const errors = require('src/errors');
+const error = require('src/middleware/util/error');
 const NotImplementedError = errors.NotImplementedError;
 
 
@@ -9,12 +9,6 @@ function notImplemented(ctx, e) {
   ctx.body = {
     type: 'not_implemented'
   };
-}
-
-
-function error(type, fn) {
-  return (ctx, next) => next()
-    .catch(trap(type, e => fn(ctx, e)));
 }
 
 

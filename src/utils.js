@@ -17,7 +17,7 @@ function trap(type, fn) {
 
 
 function read(filename) {
-  return load(open(filename).toString());
+  return load(open(filename));
 }
 
 

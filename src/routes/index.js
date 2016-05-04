@@ -1,10 +1,5 @@
-const route = require('koa-route');
-const post = route.post;
-const users = require('src/api').users;
+const users = require('src/routes/users');
 
 
-module.exports = [
-  post('/users/', (ctx) => {
-    return users.create(ctx.request.body);
-  })
-];
+module.exports = []
+  .concat(users);
