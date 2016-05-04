@@ -88,15 +88,38 @@ describe('schema-utils', () => {
       expect(e.errors).to.deep.equal([{
         type: 'required',
         path: '',
-        schemaPath: '#/required',
+        schema_path: '#/required',
         details: {missingProperty: 'bar'},
         message: "should have required property 'bar'"
       }, {
         type: 'type',
         path: '/foo/bar',
-        schemaPath: '#/properties/foo/properties/bar/type',
+        schema_path: '#/properties/foo/properties/bar/type',
         details: {type: 'number'},
         message: "should be number"
+      }]);
+    });
+
+    it('should validate read only properties', () => {
+      const e = captureError(() => validate({
+        type: 'object',
+        properties: {
+          foo: {readOnly: true},
+          bar: {}
+        }
+      }, {
+        foo: 21,
+        bar: 23
+      }));
+
+      expect(e).to.be.instanceof(ValidationError);
+
+      expect(e.errors).to.deep.equal([{
+        type: 'read_only',
+        path: '/foo',
+        schema_path: null,
+        details: {},
+        message: "read only property 'foo' given"
       }]);
     });
   });

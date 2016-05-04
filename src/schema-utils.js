@@ -1,4 +1,6 @@
 const schemaDefaults = require('json-schema-defaults');
+const keys = require('lodash/keys');
+const filter = require('lodash/filter');
 const omitBy = require('lodash/omitBy');
 const merge = require('lodash/merge');
 const Validator = require('ajv');
@@ -24,8 +26,32 @@ function validate(schema, d) {
 
   validator.validate(schema, d);
 
-  const errors = (validator.errors || []).map(parseValidationError);
+  const errors = (validator.errors || [])
+    .map(parseValidationError)
+    .concat(readOnlyErrors(schema, d));
+
   if (errors.length) throw new ValidationError(errors);
+}
+
+
+function readOnlyErrors(schema, d) {
+  // TODO support for values other than single-level object properties
+  return filter(keys(d), k => propertyIsReadOnly(schema, k))
+  .map(k => parseReadOnlyError({
+    name: k,
+    path: `/${k}`
+  }));
+}
+
+
+function parseReadOnlyError({name, path}) {
+  return {
+    type: 'read_only',
+    path,
+    message: `read only property '${name}' given`,
+    details: {},
+    schema_path: null
+  };
 }
 
 
@@ -35,7 +61,7 @@ function parseValidationError(e) {
     path: e.dataPath,
     message: e.message,
     details: e.params,
-    schemaPath: e.schemaPath
+    schema_path: e.schemaPath
   };
 }
 
