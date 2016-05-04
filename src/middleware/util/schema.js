@@ -1,5 +1,4 @@
 const utils = require('src/schema-utils');
-const next = require('src/middleware/util/next');
 
 
 function setDefaults(schema) {
@@ -19,7 +18,10 @@ function omitReadOnly(schema) {
 
 
 function validate(schema) {
-  return next;
+  return (ctx, next) => {
+    utils.validate(schema, ctx.request.body);
+    return next();
+  };
 }
 
 

@@ -1,9 +1,12 @@
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const request = require('supertest');
+const error = require('src/middleware/util/error');
+const { ValidationError } = require('src/errors');
 const {
   setDefaults,
-  omitReadOnly
+  omitReadOnly,
+  validate
 } = require('src/middleware/util/schema');
 
 
@@ -77,6 +80,44 @@ describe('middleware/util/schema', () => {
   });
 
   describe('validate', () => {
-    it('should validate the request body');
+    it('should validate the request body', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(error(ValidationError, (ctx, e) => {
+          ctx.body = e.errors;
+        }))
+        .use(validate({
+          type: 'object',
+          properties: {
+            foo: {
+              type: 'object',
+              properties: {
+                bar: {
+                  type: 'number'
+                }
+              }
+            }
+          },
+          required: ['foo', 'bar']
+        }));
+
+      request(app.listen())
+        .post('/')
+        .send({foo: {bar: 'rar'}})
+        .expect([{
+          type: 'required',
+          path: '',
+          schema_path: '#/required',
+          details: {missing_property: 'bar'},
+          message: "should have required property 'bar'"
+        }, {
+          type: 'type',
+          path: '/foo/bar',
+          schema_path: '#/properties/foo/properties/bar/type',
+          details: {type: 'number'},
+          message: "should be number"
+        }])
+        .end(done);
+    });
   });
 });
