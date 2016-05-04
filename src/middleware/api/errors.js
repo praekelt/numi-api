@@ -1,8 +1,11 @@
-const { NotImplementedError } = require('src/errors');
 const error = require('src/middleware/util/error');
+const {
+  NotImplementedError,
+  ValidationError
+} = require('src/errors');
 
 
-function notImplemented(ctx, e) {
+function notImplementedError(ctx, e) {
   ctx.status = 501;
 
   ctx.body = {
@@ -11,6 +14,18 @@ function notImplemented(ctx, e) {
 }
 
 
+function validationError(ctx, e) {
+  ctx.status = 422;
+
+  ctx.body = {
+    type: 'validation_error',
+    message: "Invalid request",
+    details: {errors: e.errors}
+  };
+}
+
+
 module.exports = {
-  notImplemented: error(NotImplementedError, notImplemented)
+  notImplementedError: error(NotImplementedError, notImplementedError),
+  validationError: error(ValidationError, validationError)
 };
