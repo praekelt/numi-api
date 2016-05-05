@@ -36,6 +36,7 @@ describe('utils', () => {
       expect(trapped).to.deep.equal([err1, err2]);
     });
 
+
     it('should throw errors that are not of the given type', () => {
       class FooError extends Error {}
       class BarError extends Error {}
