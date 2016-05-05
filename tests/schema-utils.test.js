@@ -3,7 +3,7 @@ describe('middleware/util/schema', () => {
     it('should set defaults on the request body');
   });
 
-  describe('ignoreReadOnly', () => {
+  describe('omitReadOnly', () => {
     it('should ignore read only fields given in the request body');
   });
 

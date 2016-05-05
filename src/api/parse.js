@@ -2,7 +2,7 @@ const o = require('lodash/flow');
 const identity = require('lodash/identity');
 
 const {
-  ignoreReadOnly,
+  omitReadOnly,
   setDefaults,
   validate
 } = require('src/schema-utils');
@@ -16,7 +16,7 @@ const create = o([
 const read = identity;
 
 const update = o([
-  ignoreReadOnly,
+  omitReadOnly,
   validate,
   setDefaults
 ]);

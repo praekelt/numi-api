@@ -1,7 +1,7 @@
 const o = require('koa-compose');
 const next = require('src/middleware/util/next');
 const {
-  ignoreReadOnly,
+  omitReadOnly,
   setDefaults,
   validate
 } = require('src/middleware/util/schema');
@@ -22,7 +22,7 @@ function read() {
 
 function update(schema) {
   return o([
-    ignoreReadOnly(schema),
+    omitReadOnly(schema),
     validate(schema),
     setDefaults(schema)
   ]);
