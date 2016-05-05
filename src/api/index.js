@@ -6,6 +6,7 @@ const dialogues = require('src/api/dialogues');
 const revisions = require('src/api/revisions');
 const releases = require('src/api/releases');
 const channels = require('src/api/channels');
+const providers = require('src/api/providers');
 
 
 module.exports = {
@@ -16,5 +17,6 @@ module.exports = {
   dialogues,
   revisions,
   releases,
-  channels
+  channels,
+  providers
 };
