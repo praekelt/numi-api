@@ -1,3 +1,6 @@
+const each = require('lodash/each');
+
+
 function captureError(fn) {
   try {
     fn();
@@ -10,6 +13,14 @@ function captureError(fn) {
 }
 
 
+function restore(obj) {
+  each(obj, v => {
+    if (v && v.toString() === 'stub') v.restore();
+  });
+}
+
+
 module.exports = {
-  captureError
+  captureError,
+  restore
 };

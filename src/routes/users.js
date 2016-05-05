@@ -8,6 +8,6 @@ const { create } = require('src/middleware/api/methods');
 module.exports = [
   post('/users/', o([
     create(schemas.definitions.user.new),
-    ctx => users.create(ctx.request.body)
+    ctx => { ctx.body = users.create(ctx.request.body); }
   ]))
 ];
