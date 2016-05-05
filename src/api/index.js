@@ -3,6 +3,7 @@ const password = require('src/api/password');
 const permissions = require('src/api/permissions');
 const projects = require('src/api/projects');
 const dialogues = require('src/api/dialogues');
+const revisions = require('src/api/revisions');
 
 
 module.exports = {
@@ -10,5 +11,6 @@ module.exports = {
   password,
   permissions,
   projects,
-  dialogues
+  dialogues,
+  revisions
 };
