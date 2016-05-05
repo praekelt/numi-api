@@ -1,4 +1,3 @@
-const o = require('koa-compose');
 const { post } = require('koa-route');
 const { create } = require('src/api').users;
 
