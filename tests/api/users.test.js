@@ -1,5 +1,5 @@
-const expect = require('chai').expect;
-const users = require('src/api').users;
+const { expect } = require('chai');
+const { users } = require('src/api');
 const { NotImplementedError } = require('src/errors');
 
 
