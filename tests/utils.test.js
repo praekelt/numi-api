@@ -51,4 +51,21 @@ describe('utils', () => {
       expect(trapped).to.be.empty;
     });
   });
+
+  describe("effect", () => {
+    it('should call the function, then return the input value', () => {
+      const calls = [];
+
+      function fn(v) {
+        return Promise.resolve().then(() => calls.push(v));
+      }
+
+      return Promise.resolve(23)
+        .then(utils.effect(fn))
+        .then(v => {
+          expect(v).to.equal(23);
+          expect(calls).to.deep.equal([23]);
+        });
+    });
+  });
 });
