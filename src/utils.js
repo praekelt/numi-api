@@ -8,6 +8,13 @@ function conj(a, b) {
 }
 
 
+function effect(fn) {
+  return (v) => Promise.resolve(v)
+    .then(fn)
+    .then(() => v);
+}
+
+
 function trap(type, fn) {
   return e => {
     if (e instanceof type) return fn(e);
@@ -24,5 +31,6 @@ function read(filename) {
 module.exports = {
   conj,
   trap,
-  read
+  read,
+  effect
 };

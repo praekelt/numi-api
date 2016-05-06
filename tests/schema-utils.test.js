@@ -59,6 +59,17 @@ describe('schema-utils', () => {
       }))
       .to.deep.equal({bar: 23});
     });
+
+    it('should pass through objects for schema without properties', () => {
+      expect(omitReadOnly({}, {
+        foo: 21,
+        bar: 23
+      }))
+      .to.deep.equal({
+        foo: 21,
+        bar: 23
+      });
+    });
   });
 
   describe('validate', () => {

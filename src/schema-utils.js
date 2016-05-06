@@ -73,6 +73,7 @@ function parseValidationError(e) {
 
 
 function propertyIsReadOnly(schema, k) {
+  if (!schema.properties) return false;
   const prop = schema.properties[k];
   return prop && prop.readOnly;
 }
