@@ -4,7 +4,14 @@ properties:
       - revert
 
   properties:
-    revision_id:
-      type: string
-      description: |
-        Identifier of the revision to revert to.
+    properties:
+      revision_id:
+        type: string
+        description: |
+          Identifier of the revision to revert to.
+    required:
+      - revision_id
+
+required:
+  - type
+  - properties

@@ -1,6 +1,3 @@
-required:
-  - title
-
 properties:
   id:
     type: string
@@ -32,5 +29,8 @@ properties:
       $ref: '#/definitions/dialogue/summary'
     description: |
       A summary of each dialogue contained in this project.
+
+required:
+  - title
 
 additionalProperties: false

@@ -1,7 +1,3 @@
-required:
-  - id
-  - type
-
 properties:
   id:
     $ref: '#/definitions/dialogue/symbol'
@@ -24,5 +20,9 @@ properties:
     description: |
       Properties relevant to the block's type. For example, a block that asks
       the user a question may have a `question` property here.
+
+required:
+  - id
+  - type
 
 additionalProperties: false

@@ -1,6 +1,3 @@
-required:
-  - type
-
 properties:
   id:
     type: string
@@ -26,6 +23,10 @@ properties:
     default: {}
     description: |
       Properties relevant to the permission type.
+
+required:
+  - type
+  - properties
 
 anyOf:
   - $ref: '#/definitions/permission/admin'

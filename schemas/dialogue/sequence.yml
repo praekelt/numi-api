@@ -1,8 +1,3 @@
-required:
-  - id
-  - title
-  - blocks
-
 properties:
   id:
     $ref: '#/definitions/dialogue/symbol'
@@ -20,5 +15,10 @@ properties:
       $ref: '#/definitions/dialogue/block'
     description: |
       The sequence's set of blocks
+
+required:
+  - id
+  - title
+  - blocks
 
 additionalProperties: false

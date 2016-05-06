@@ -10,3 +10,10 @@ properties:
         type: string
         description: |
           Identifier of the project this permission is for.
+
+    required:
+      - project_id
+
+required:
+  - type
+  - properties

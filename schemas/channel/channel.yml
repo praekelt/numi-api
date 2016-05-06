@@ -50,4 +50,7 @@ properties:
     description: |
       Summary of the provider that associated with this channel.
 
+required:
+  - project_id
+
 additionalProperties: false

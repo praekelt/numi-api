@@ -15,4 +15,10 @@ properties:
         type: string
         description: |
           Identifier of the dialogue this permission is for.
+    required:
+      - project_id
+      - dialogue_id
 
+required:
+  - type
+  - properties

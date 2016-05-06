@@ -28,4 +28,8 @@ properties:
     description: |
       The user's last name.
 
+required:
+  - first_name
+  - last_name
+
 additionalProperties: false
