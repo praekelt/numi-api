@@ -15,7 +15,7 @@ properties:
       have been registered with a particular instance of the API.
 
   title:
-    type: text
+    type: string
     description: |
       A human-readable title describing the block.
 
