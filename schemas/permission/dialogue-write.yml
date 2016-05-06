@@ -1,6 +1,8 @@
-$ref: '#/definitions/permission/permission'
-
 properties:
+  type:
+    enum:
+      - dialogue:write
+
   properties:
     type: object
     properties:

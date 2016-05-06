@@ -26,3 +26,12 @@ properties:
     default: {}
     description: |
       Properties relevant to the permission type.
+
+anyOf:
+  - $ref: '#/definitions/permission/admin'
+  - $ref: '#/definitions/permission/projects-admin'
+  - $ref: '#/definitions/permission/project-admin'
+  - $ref: '#/definitions/permission/project-dialogues-read'
+  - $ref: '#/definitions/permission/project-dialogues-write'
+  - $ref: '#/definitions/permission/dialogue-read'
+  - $ref: '#/definitions/permission/dialogue-write'
