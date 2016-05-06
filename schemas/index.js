@@ -24,13 +24,13 @@ module.exports = deref({
     },
     permission: {
       permission: readSchema('./permission/permission.yml'),
-      dialogues_read: readSchema('./permission/dialogues_read.yml'),
-      dialogues_write: readSchema('./permission/dialogues_write.yml'),
-      project_admin: readSchema('./permission/project_admin.yml'),
+      dialogue_read: readSchema('./permission/dialogue-read.yml'),
+      dialogue_write: readSchema('./permission/dialogue-write.yml'),
+      project_admin: readSchema('./permission/project-admin.yml'),
       project_dialogues_read: readSchema(
-        './permission/project_dialogues_read.yml'),
+        './permission/project-dialogues-read.yml'),
       project_dialogues_write: readSchema(
-          './permission/project_dialogues_write.yml')
+        './permission/project-dialogues-write.yml')
     },
     project: {
       project: readSchema('./project/project.yml'),
