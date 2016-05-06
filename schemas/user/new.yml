@@ -1,7 +1,8 @@
 allOf:
   - $ref: '#/definitions/user/user'
 
-  - properties:
+  - type: object
+    properties:
       password:
         type: string
         description: |

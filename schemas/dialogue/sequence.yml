@@ -1,3 +1,5 @@
+type: object
+
 properties:
   id:
     $ref: '#/definitions/dialogue/symbol'

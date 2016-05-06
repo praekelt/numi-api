@@ -1,9 +1,12 @@
+type: object
+
 properties:
   type:
     enum:
       - revert
 
   properties:
+    type: object
     properties:
       revision_id:
         type: string
