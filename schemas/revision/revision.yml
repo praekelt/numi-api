@@ -52,3 +52,7 @@ properties:
     description: |
       Details describing this revision. Intended to be used for
       display purposes.
+
+anyOf:
+  - $ref: '#/definitions/revision/edit'
+  - $ref: '#/definitions/revision/revert'

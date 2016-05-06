@@ -1,6 +1,8 @@
-$ref: '#/definitions/revision/revision'
-
 properties:
+  type:
+    enum:
+      - edit
+
   properties:
     edit_type:
       type: string

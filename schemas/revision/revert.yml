@@ -1,6 +1,8 @@
-$ref: '#/definitions/revision/revision'
-
 properties:
+  type:
+    enum:
+      - revert
+
   properties:
     revision_id:
       type: string
