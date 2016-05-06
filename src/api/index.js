@@ -1,3 +1,4 @@
+const user = require('src/api/user');
 const users = require('src/api/users');
 const password = require('src/api/password');
 const permissions = require('src/api/permissions');
@@ -10,6 +11,7 @@ const providers = require('src/api/providers');
 
 
 module.exports = {
+  user,
   users,
   password,
   permissions,
