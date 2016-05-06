@@ -1,4 +1,4 @@
-function setDefaults(schema, d) {
+function defaults(schema, d) {
   // TODO
   return d;
 }
@@ -12,12 +12,11 @@ function omitReadOnly(schema, d) {
 
 function validate(schema, d) {
   // TODO
-  return d;
 }
 
 
 module.exports = {
-  setDefaults,
+  defaults,
   omitReadOnly,
   validate
 };
