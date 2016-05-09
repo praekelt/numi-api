@@ -1,14 +1,23 @@
-$ref: '#/definitions/revision/revision'
+type: object
 
 properties:
-  properties:
-    edit_type:
-      type: string
-      description: |
-        Programmatically usable string representing the type of edit done in
-        this revision.
+  type:
+    enum:
+      - edit
 
-    patch:
-      $ref: 'http://json.schemastore.org/json-patch'
-      description: |
-        JSON patch representing the changes made in this revision
+  properties:
+    properties:
+      edit_type:
+        type: string
+        description: |
+          Programmatically usable string representing the type of edit done in
+          this revision.
+
+      patch:
+        $ref: 'http://json.schemastore.org/json-patch'
+        description: |
+          JSON patch representing the changes made in this revision
+
+required:
+  - type
+  - properties

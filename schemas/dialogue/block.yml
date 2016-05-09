@@ -1,6 +1,4 @@
-required:
-  - id
-  - type
+type: object
 
 properties:
   id:
@@ -15,7 +13,7 @@ properties:
       have been registered with a particular instance of the API.
 
   title:
-    type: text
+    type: string
     description: |
       A human-readable title describing the block.
 
@@ -24,5 +22,9 @@ properties:
     description: |
       Properties relevant to the block's type. For example, a block that asks
       the user a question may have a `question` property here.
+
+required:
+  - id
+  - type
 
 additionalProperties: false

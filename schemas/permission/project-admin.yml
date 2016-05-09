@@ -1,6 +1,10 @@
-$ref: '#/definitions/permission/permission'
+type: object
 
 properties:
+  type:
+    enum:
+      - project:admin
+
   properties:
     type: object
     properties:
@@ -8,3 +12,10 @@ properties:
         type: string
         description: |
           Identifier of the project this permission is for.
+
+    required:
+      - project_id
+
+required:
+  - type
+  - properties

@@ -1,6 +1,10 @@
-$ref: '#/definitions/permission/permission'
+type: object
 
 properties:
+  type:
+    enum:
+      - project:dialogues:write
+
   properties:
     type: object
     properties:
@@ -8,4 +12,9 @@ properties:
         type: string
         description: |
           Identifier of the project this permission is for.
+    required:
+      - project_id
 
+required:
+  - type
+  - properties
