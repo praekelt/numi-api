@@ -45,18 +45,19 @@ function readOnlyErrors(schema, d) {
   return filter(keys(d), k => propertyIsReadOnly(schema, k))
   .map(k => parseReadOnlyError({
     name: k,
-    path: `/${k}`
+    path: `/${k}`,
+    schemaPath: `#/${k}/readOnly`
   }));
 }
 
 
-function parseReadOnlyError({name, path}) {
+function parseReadOnlyError({name, path, schemaPath}) {
   return {
     type: 'read_only',
     path,
     message: `read only property '${name}' given`,
     details: {},
-    schema_path: null
+    schema_path: schemaPath
   };
 }
 
