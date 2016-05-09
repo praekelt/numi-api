@@ -1,5 +1,4 @@
-required:
-  - patch
+type: object
 
 properties:
   id:
@@ -52,3 +51,12 @@ properties:
     description: |
       Details describing this revision. Intended to be used for
       display purposes.
+
+required:
+  - created
+  - type
+  - properties
+
+anyOf:
+  - $ref: '#/definitions/revision/edit'
+  - $ref: '#/definitions/revision/revert'

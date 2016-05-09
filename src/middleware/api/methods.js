@@ -8,7 +8,10 @@ function create(schema, fn) {
     .then(effect(d => validate(schema, d)))
     .then(d => defaults(schema, d))
     .then(d => fn(...args, d))
-    .then(res => { ctx.body = res; })
+    .then(res => {
+      ctx.status = 201;
+      ctx.body = res;
+    })
     .then(() => next()));
 }
 

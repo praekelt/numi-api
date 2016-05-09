@@ -128,8 +128,8 @@ describe('schema-utils', () => {
       expect(e.errors).to.deep.equal([{
         type: 'read_only',
         path: '/foo',
-        schema_path: null,
         details: {},
+        schema_path: '#/foo/readOnly',
         message: "read only property 'foo' given"
       }]);
     });

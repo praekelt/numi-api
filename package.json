@@ -36,8 +36,7 @@
     "koa-logger": "^2.0.0",
     "koa-route": "^3.1.0",
     "lodash": "^4.11.2",
-    "snake-case": "^1.1.2",
-    "tv4": "^1.2.7"
+    "snake-case": "^1.1.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",

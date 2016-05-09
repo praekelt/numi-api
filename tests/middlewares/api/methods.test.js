@@ -36,6 +36,18 @@ describe('middlewares/api/methods', () => {
         })
         .end(done);
     });
+
+    it('should set the status code to 201', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.post('/:a/:b', create({}, () => ({}))));
+
+      request(app.listen())
+        .post('/2/3')
+        .send({foo: 23})
+        .expect(201)
+        .end(done);
+    });
   });
 
   describe('read', () => {
@@ -139,7 +151,7 @@ describe('middlewares/api/methods', () => {
   });
 
   describe('remove', () => {
-    it('should use the apy call result as the response body', done => {
+    it('should use the api call result as the response body', done => {
       const app = new Koa()
         .use(_.delete('/:a/:b', remove((a, b) => Promise.resolve({
           a,

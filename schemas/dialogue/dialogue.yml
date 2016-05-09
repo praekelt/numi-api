@@ -1,6 +1,4 @@
-required:
-  - title
-  - sequences
+type: object
 
 properties:
   id:
@@ -62,5 +60,9 @@ properties:
     readOnly: true
     description: |
       Flag representing whether the authenticated user can edit this dialogue.
+
+required:
+  - title
+  - sequences
 
 additionalProperties: false
