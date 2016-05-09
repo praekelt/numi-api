@@ -26,14 +26,17 @@
   },
   "homepage": "https://github.com/praekelt/numi-api#readme",
   "dependencies": {
+    "ajv": "^4.0.5",
     "js-yaml": "^3.6.0",
     "json-schema-defaults": "^0.1.1",
+    "json-schema-deref-sync": "^0.3.1",
     "koa": "^2.0.0",
     "koa-bodyparser": "^3.0.0",
     "koa-compose": "^3.1.0",
     "koa-logger": "^2.0.0",
     "koa-route": "^3.1.0",
-    "lodash": "^4.11.2"
+    "lodash": "^4.11.2",
+    "snake-case": "^1.1.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",

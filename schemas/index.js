@@ -1,5 +1,6 @@
 const { read } = require('src/utils');
 const { resolve } = require('path');
+const deref = require('json-schema-deref-sync');
 
 
 function readConfig(path) {
@@ -7,7 +8,7 @@ function readConfig(path) {
 }
 
 
-module.exports = {
+module.exports = deref({
   definitions: {
     config: readConfig('./config.yml'),
     user: {
@@ -15,4 +16,4 @@ module.exports = {
       new: readConfig('./user/new.yml')
     }
   }
-};
+});
