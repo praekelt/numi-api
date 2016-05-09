@@ -36,6 +36,18 @@ describe('middlewares/api/methods', () => {
         })
         .end(done);
     });
+
+    it('should set the status code to 201', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.post('/:a/:b', create({}, () => ({}))));
+
+      request(app.listen())
+        .post('/2/3')
+        .send({foo: 23})
+        .expect(201)
+        .end(done);
+    });
   });
 
   describe('read', () => {
