@@ -151,7 +151,7 @@ describe('middlewares/api/methods', () => {
   });
 
   describe('remove', () => {
-    it('should use the apy call result as the response body', done => {
+    it('should use the api call result as the response body', done => {
       const app = new Koa()
         .use(_.delete('/:a/:b', remove((a, b) => Promise.resolve({
           a,
