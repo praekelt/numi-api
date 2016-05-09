@@ -1,6 +1,10 @@
-$ref: '#/definitions/permission/permission'
+type: object
 
 properties:
+  type:
+    enum:
+      - dialogue:read
+
   properties:
     type: object
     properties:
@@ -13,3 +17,11 @@ properties:
         type: string
         description: |
           Identifier of the dialogue this permission is for.
+
+    required:
+      - project_id
+      - dialogue_id
+
+required:
+  - type
+  - properties

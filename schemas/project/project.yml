@@ -1,5 +1,4 @@
-required:
-  - title
+type: object
 
 properties:
   id:
@@ -32,5 +31,8 @@ properties:
       $ref: '#/definitions/dialogue/summary'
     description: |
       A summary of each dialogue contained in this project.
+
+required:
+  - title
 
 additionalProperties: false

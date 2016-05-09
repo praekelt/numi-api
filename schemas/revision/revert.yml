@@ -1,8 +1,20 @@
-$ref: '#/definitions/revision/revision'
+type: object
 
 properties:
+  type:
+    enum:
+      - revert
+
   properties:
-    revision_id:
-      type: string
-      description: |
-        Identifier of the revision to revert to.
+    type: object
+    properties:
+      revision_id:
+        type: string
+        description: |
+          Identifier of the revision to revert to.
+    required:
+      - revision_id
+
+required:
+  - type
+  - properties
