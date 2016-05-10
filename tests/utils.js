@@ -1,6 +1,3 @@
-const each = require('lodash/each');
-
-
 function captureError(fn) {
   try {
     fn();
