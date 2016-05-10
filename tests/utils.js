@@ -13,14 +13,6 @@ function captureError(fn) {
 }
 
 
-function restore(obj) {
-  each(obj, v => {
-    if (v && v.toString() === 'stub') v.restore();
-  });
-}
-
-
 module.exports = {
-  captureError,
-  restore
+  captureError
 };
