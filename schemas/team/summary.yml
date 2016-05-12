@@ -23,7 +23,7 @@ properties:
     type: array
     readOnly: true
     items:
-      $ref: '#/definitions/team/summary'
+      $ref: '#/definitions/user/summary'
     description: |
       Summaries of users that are part of this team.
 
