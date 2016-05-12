@@ -368,13 +368,11 @@ Users
 
 .. http:get:: /users/
 
-  Retrieves the :ref:`summaries <data-user-summary>` of all users. Only
-  accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>`.
+  Retrieves the :ref:`summaries <data-user-summary>` of all users.
 
   .. sourcecode:: http
 
-      GET /user HTTP/1.1
+      GET /users/ HTTP/1.1
 
   .. sourcecode:: http
 
@@ -395,37 +393,6 @@ Users
   :query number per_page:
     Number of users to show per page. Defaults to ``30``. Maximum is ``100``.
 
-.. http:post:: /users/
-
-  Creates a new user with the :ref:`description <data-user-new>` given in the
-  request body and returns the created user's :ref:`description
-  <data-user-new>`, along with the generated ``id`` field and ``url`` field for
-  accessing the user description.
-
-  .. sourcecode:: http
-
-     POST /projects/ HTTP/1.1
-     Content-Type: application/json
-
-     {
-       "first_name": "Joan",
-       "last_name": "Watson",
-       "password": "1337"
-     }
-
-  .. sourcecode:: http
-
-     HTTP/1.1 201 Created
-     Content-Type: application/json
-
-     {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }
-
 .. http:get:: /users/(str:user_id)
 
   Retrieves the :ref:`description <data-user>` of the user with id ``user_id``.
@@ -433,73 +400,6 @@ Users
   .. sourcecode:: http
 
      GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }
-
-.. http:put:: /users/(str:user_id)
-
-  Replaces the :ref:`description <data-user>` of the user with id ``user_id``
-  with the description given in the request body and returns the given
-  description, along with the user's ``id`` and the ``url`` for accessing the
-  user's description.
-
-  This operation is only accessible to the authenticated user if their user id
-  is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
-
-  .. sourcecode:: http
-
-   PUT /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
-   Content-Type: application/json
-
-   {
-     "first_name": "Joan",
-     "last_name": "Watson"
-   }
-
-.. sourcecode:: http
-
-   HTTP/1.1 200 OK
-   Content-Type: application/json
-
-   {
-     "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-     "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-     "email": "foo@bar.org",
-     "first_name": "Joan",
-     "last_name": "Watson"
-   }
-
-.. http:patch:: /users/(str:user_id)
-
-  Partially updates the :ref:`description <data-user>` of the user with id
-  ``user_id`` using the :ref:`instructions <overview-partial-updates>` given in
-  the request body and returns the given user's description, along with the
-  user's ``id`` and the ``url`` for accessing the user's description.
-
-  This operation is only accessible to the authenticated user if their user id
-  is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
-
-  .. sourcecode:: http
-
-     PATCH /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
-     Content-Type: application/json-patch+json
-
-     [{
-       "op": "replace",
-       "path": "/first_name",
-       "value": "Joan"
-     }]
 
   .. sourcecode:: http
 
@@ -1704,14 +1604,6 @@ User Summary
 ************
 
 .. literalinclude:: ../schemas/user/summary.yml
-  :language: yaml
-
-.. _data-user-new:
-
-New User
-********
-
-.. literalinclude:: ../schemas/user/new.yml
   :language: yaml
 
 .. _data-password-change:
