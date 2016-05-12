@@ -1,27 +1,22 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function create(d) {
+function create(userId, d) {
   throw new NotImplementedError();
 }
 
 
-function getAll(params) {
+function getAll(userId, params) {
   throw new NotImplementedError();
 }
 
 
-function get(id) {
+function get(userId, id) {
   throw new NotImplementedError();
 }
 
 
-function update(id, d) {
-  throw new NotImplementedError();
-}
-
-
-function patch(id, d) {
+function remove(userId, id) {
   throw new NotImplementedError();
 }
 
@@ -30,6 +25,5 @@ module.exports = {
   create,
   getAll,
   get,
-  update,
-  patch
+  remove
 };

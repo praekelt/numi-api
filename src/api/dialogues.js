@@ -1,27 +1,27 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function create(d) {
+function create(projectId, d) {
   throw new NotImplementedError();
 }
 
 
-function getAll(params) {
+function getAll(projectId, params) {
   throw new NotImplementedError();
 }
 
 
-function get(id) {
+function get(projectId, id) {
   throw new NotImplementedError();
 }
 
 
-function update(id, d) {
+function update(projectId, id, d) {
   throw new NotImplementedError();
 }
 
 
-function patch(id, d) {
+function patch(projectId, id, d) {
   throw new NotImplementedError();
 }
 

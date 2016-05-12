@@ -1,40 +1,40 @@
 const { expect } = require('chai');
-const { users } = require('src/api');
+const { dialogues } = require('src/api');
 const { NotImplementedError } = require('src/errors');
 
 
-describe('api.users', () => {
+describe('api.dialogues', () => {
   describe('create', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => users.create())
+      expect(() => dialogues.create())
         .to.throw(NotImplementedError);
     });
   });
 
   describe('getAll', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => users.getAll())
+      expect(() => dialogues.getAll())
         .to.throw(NotImplementedError);
     });
   });
 
   describe('get', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => users.get())
+      expect(() => dialogues.get())
         .to.throw(NotImplementedError);
     });
   });
 
   describe('update', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => users.update())
+      expect(() => dialogues.update())
         .to.throw(NotImplementedError);
     });
   });
 
   describe('patch', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => users.patch())
+      expect(() => dialogues.patch())
         .to.throw(NotImplementedError);
     });
   });

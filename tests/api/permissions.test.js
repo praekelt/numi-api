@@ -1,40 +1,33 @@
 const { expect } = require('chai');
-const { users } = require('src/api');
+const { permissions } = require('src/api');
 const { NotImplementedError } = require('src/errors');
 
 
-describe('api.users', () => {
+describe('api.permissions', () => {
   describe('create', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => users.create())
+      expect(() => permissions.create())
         .to.throw(NotImplementedError);
     });
   });
 
   describe('getAll', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => users.getAll())
+      expect(() => permissions.getAll())
         .to.throw(NotImplementedError);
     });
   });
 
   describe('get', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => users.get())
+      expect(() => permissions.get())
         .to.throw(NotImplementedError);
     });
   });
 
-  describe('update', () => {
+  describe('remove', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => users.update())
-        .to.throw(NotImplementedError);
-    });
-  });
-
-  describe('patch', () => {
-    it('should throw a NotImplementedError', () => {
-      expect(() => users.patch())
+      expect(() => permissions.remove())
         .to.throw(NotImplementedError);
     });
   });
