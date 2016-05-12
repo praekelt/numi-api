@@ -324,7 +324,7 @@ Users
 
 .. http:get:: /user
 
-  Retrieves the :ref:`description <data-user>` of the authenticated user.
+  Retrieves the :ref:`summary <data-auth-user-summary>` of the authenticated user.
 
   .. sourcecode:: http
 
@@ -1604,6 +1604,14 @@ User Summary
 ************
 
 .. literalinclude:: ../schemas/user/summary.yml
+  :language: yaml
+
+.. _data-auth-user-summary:
+
+Authenticated User Summary
+**************************
+
+.. literalinclude:: ../schemas/user/auth-user-summary.yml
   :language: yaml
 
 .. _data-password-change:
