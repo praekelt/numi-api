@@ -462,6 +462,65 @@ Users
     HTTP/1.1 204 No Content
     Content-Type: application/json
 
+.. _teams:
+
+Teams
+-----
+
+.. http:get:: /teams/
+
+  Retrieves the :ref:`summaries <data-team-summary>` of all teams that the
+  authenticated user has access to.
+
+  .. sourcecode:: http
+
+     GET /teams/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "23",
+       "url": "/teams/23",
+       "title": "Service Designers",
+       "members": [{
+         "id": "1",
+         "url": "/users/1",
+         "first_name": "Sarima"
+       }]
+     }]
+
+  :query number page:
+    1-based index of the page of teams to show. Defaults to ``1``.
+
+  :query number per_page:
+    Number of teams to show per page. Defaults to ``30``. Maximum is ``100``.
+
+.. http:get:: /teams/(str:team_id)
+
+  Retrieves the :ref:`description <data-team>` of the team with id ``team_id``.
+
+  .. sourcecode:: http
+
+     GET /teams/23 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": "23",
+       "url": "/teams/23",
+       "title": "Service Designers",
+       "members": [{
+         "id": "1",
+         "url": "/users/1",
+         "first_name": "Sarima"
+       }]
+     }
 
 Permissions
 -----------
