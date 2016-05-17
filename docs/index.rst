@@ -349,122 +349,6 @@ Users
        }]
      }
 
-.. http:post:: /user/password-changes/
-
-  Creates a password change request for the authenticated user using the
-  :ref:`details <data-password-change>` given in the request body.
-
-  .. sourcecode:: http
-
-    POST /user/password-changes/ HTTP/1.1
-    Content-Type: application/json
-
-    {
-      "old_password": "1337",
-      "new_password": "r00t"
-    }
-
-  .. sourcecode:: http
-
-    HTTP/1.1 204 No Content
-    Content-Type: application/json
-
-.. http:get:: /users/
-
-  Retrieves the :ref:`summaries <data-user-summary>` of all users.
-
-  .. sourcecode:: http
-
-      GET /users/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     [{
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/1",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }]
-
-  :query number page:
-    1-based index of the page of users to show. Defaults to ``1``.
-
-  :query number per_page:
-    Number of users to show per page. Defaults to ``30``. Maximum is ``100``.
-
-.. http:get:: /users/(str:user_id)
-
-  Retrieves the :ref:`description <data-user>` of the user with id ``user_id``.
-
-  .. sourcecode:: http
-
-     GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }
-
-.. http:post:: /password-resets/
-
-  Creates a :ref:`password reset request <data-password-reset>` for the user
-  with the email address provided in the request body.
-
-  If a user with the given email address is found, the user will be sent an
-  email containing a link to be accessed in order to confirm the reset and
-  choose a new password.
-
-  .. sourcecode:: http
-
-    POST /password-resets/ HTTP/1.1
-    Content-Type: application/json
-
-    {
-      "email": "foo@bar.org"
-    }
-
-  .. sourcecode:: http
-
-     HTTP/1.1 204 No Content
-     Content-Type: application/json
-
-.. note::
-  To avoid leaking information on whether a user has a given email address, the
-  API will return a ``204`` response regardless of whether a user matches the
-  given email address or not.
-
-.. http:post:: /password-confirmations/
-
-  Confirms a password reset using the :ref:`confirmation details
-  <data-password-confirmation>` given in the request body.
-
-  .. sourcecode:: http
-
-    POST /password-confirmations/ HTTP/1.1
-    Content-Type: application/json
-
-    {
-      "token": "123abc",
-      "password": "r00t"
-    }
-
-  .. sourcecode:: http
-
-    HTTP/1.1 204 No Content
-    Content-Type: application/json
-
 .. _teams:
 
 Teams
@@ -1650,14 +1534,6 @@ Data Structures
 Users
 ~~~~~
 
-.. _data-user:
-
-User
-****
-
-.. literalinclude:: ../schemas/user/user.yml
-  :language: yaml
-
 .. _data-user-summary:
 
 User Summary
@@ -1672,30 +1548,6 @@ Authenticated User Summary
 **************************
 
 .. literalinclude:: ../schemas/user/auth-user-summary.yml
-  :language: yaml
-
-.. _data-password-change:
-
-Password change
-***************
-
-.. literalinclude:: ../schemas/user/password-change.yml
-  :language: yaml
-
-.. _data-password-reset:
-
-Password reset
-**************
-
-.. literalinclude:: ../schemas/user/password-reset.yml
-  :language: yaml
-
-.. _data-password-confirmation:
-
-Password reset confirmations
-****************************
-
-.. literalinclude:: ../schemas/user/confirmation.yml
   :language: yaml
 
 Projects

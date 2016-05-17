@@ -15,12 +15,8 @@ module.exports = deref({
     config: readSchema('./config.yml'),
     release: readSchema('./release.yml'),
     user: {
-      user: readSchema('./user/user.yml'),
-      new: readSchema('./user/new.yml'),
       summary: readSchema('./user/summary.yml'),
-      password_change: readSchema('./user/password-change.yml'),
-      password_reset: readSchema('./user/password-reset.yml'),
-      password_confirmation: readSchema('./user/password-confirmation.yml')
+      authUserSummary: readSchema('./user/auth-user-summary.yml')
     },
     permission: {
       permission: readSchema('./permission/permission.yml')
