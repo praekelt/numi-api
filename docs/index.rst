@@ -288,9 +288,12 @@ A provider is a set of :ref:`channels <concepts-channels>` that corresponds to t
 Permissions
 ~~~~~~~~~~~
 
-Numi builds on the permissions provided by `seed-auth-api`_. Permissions provided by seed-auth-api are granted to teams outside of this API. The following permissions are obtainable via this API:
+.. note::
+  Numi builds on the permissions provided by `seed-auth-api`_. The permissions provided by seed-auth-api (for example, ``admin`` and ``org:admin``), are granted outside of this API.
 
 .. _seed-auth-api: https://seed-auth-api.readthedocs.io
+
+The following permissions are obtainable via this API:
 
 .. _permissions-project-admin:
 
