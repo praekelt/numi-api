@@ -376,7 +376,15 @@ Teams
          "id": "1",
          "url": "/users/1",
          "first_name": "Sarima"
-       }]
+       }],
+       "permissions": [{
+         "type": "project:admin",
+         "object_id": 21
+       }],
+       "organization": {
+         "id": 2,
+         "title": "MH"
+       }
      }]
 
   :query number page:
@@ -406,7 +414,15 @@ Teams
          "id": "1",
          "url": "/users/1",
          "first_name": "Sarima"
-       }]
+       }],
+       "permissions": [{
+         "type": "project:admin",
+         "object_id": 21
+       }],
+       "organization": {
+         "id": 2,
+         "title": "MH"
+       }
      }
 
 Permissions
@@ -608,7 +624,15 @@ Projects
          "id": "1",
          "url": "/users/1",
          "first_name": "Sarima"
-       }]
+       }],
+       "permissions": [{
+         "type": "project:admin",
+         "object_id": 21
+       }],
+       "organization": {
+         "id": 2,
+         "title": "MH"
+       }
      }]
 
 .. http:post:: /projects/
