@@ -603,8 +603,8 @@ Projects
 
 .. http:get:: /projects/(str:project_id)/teams/
 
-  Retrieves the :ref:`summaries <data-team-summary>` of all teams that have
-  access to the project with in ``project_id``.
+  Retrieves the :ref:`summaries <data-team-summary>` of all teams with
+  permissions related to the project with id ``project_id``.
 
   This operation is only accessible to the authenticated user if they have
   :ref:`admin permission <permissions>` or :ref:`project admin
@@ -874,6 +874,46 @@ Dialogues
        "message": "Dialogue 21 not found",
        "details": {"id": "21"}
      }
+
+.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/teams/
+
+  Retrieves the :ref:`summaries <data-team-summary>` of all teams with
+  permissions related to the dialogue with id ``dialogue_id`` contained in the
+  project with id ``project_id``.
+
+  This operation is only accessible to the authenticated user if they have
+  :ref:`admin permission <permissions>`, :ref:`project admin
+  <permissions-project-admin>` permission for the project that contains the
+  relevant dialogue.
+
+  .. sourcecode:: http
+
+     GET /projects/3/dialogues/21/teams/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "23",
+       "url": "/teams/23",
+       "title": "Service Designers",
+       "members": [{
+         "id": "1",
+         "url": "/users/1",
+         "first_name": "Sarima"
+       }],
+       "permissions": [{
+         "id": 44,
+         "type": "project:admin",
+         "object_id": 21
+       }],
+       "organization": {
+         "id": 2,
+         "title": "MH"
+       }
+     }]
 
 .. http:post:: /projects/(str:project_id)/dialogues/
 
