@@ -186,11 +186,23 @@ For ``POST`` and ``PATCH`` requests, if a client provides read-only fields, the 
 Concepts
 ~~~~~~~~
 
+.. _concepts-users:
+
 Users
 *****
-Users have access to a set of :ref:`projects <concepts-projects>`. Depending on their :ref:`permissions <permissions>`, users can view or modify a project and its :ref:`dialogues <concepts-dialogues>`.
+Users have access to a set of :ref:`projects <concepts-projects>` based on the permisions of the :ref:`teams <concepts-teams>` they are members of. The projects that users have access to may span multiple :ref:`organisations <concepts-orgs>`.
 
-.. TODO link to auth once this is documented.
+.. _concepts-teams:
+
+Teams
+*****
+A team comprises a set of :ref:`users <concepts-users>`. Each team has a set of :ref:`permissions <concepts-permissions>` defining the actions its members are permitted to carry out.
+
+.. _concepts-orgs:
+
+Organizations
+*************
+Organisations comprise a set of :ref:`projects <concepts-projects>`, :ref:`teams <concepts-teams>` and :ref:`user <concepts-users>`\s. Users can be members of zero or more organisations.
 
 .. _concepts-projects:
 
@@ -273,25 +285,16 @@ A provider is a set of :ref:`channels <concepts-channels>` that corresponds to t
 
 Permissions
 ~~~~~~~~~~~
-A user's actions are limited by the permissions they have been granted. Users can be granted the following permissions:
 
-.. _permissions-admin:
+Numi builds on the permissions provided by `seed-auth-api`_. Permissions provided by seed-auth-api are granted to teams outside of this API. The following permissions are obtainable via this API:
 
-``admin``
-*********
-Grants create, archive, read and write access for all projects and dialogues, and publish access for all dialogues.
-
-.. _permissions-projects-create:
-
-``projects:create``
-*******************
-Grants access to create new projects. Users with this permission obtain ``project:admin`` access for the projects they create.
+.. _seed-auth-api: https://seed-auth-api.rtfd.io
 
 .. _permissions-project-admin:
 
 ``project:admin``
 *****************
-Grants create, archive, read, write and publish access for a given project's dialogues.
+  Grants create, archive, read, write and publish access for a given project's dialogues.
 
 .. _permissions-project-dialogues-read:
 
@@ -522,8 +525,10 @@ Teams
        }]
      }
 
-Permissions
------------
+Collaborators
+-------------
+
+.. http:get:: /projects/(str:project_id)/collaborators/
 
 .. http:get:: /users/(str:user_id)/permissions/
 
@@ -541,7 +546,8 @@ Permissions
 
      [{
        "id": "9a12594f30220f6a91bde8da961505be",
-       "type": "admin"
+       "type": "admin",
+       "object_id": 23
      }]
 
 .. http:get:: /users/(str:user_id)/permissions/(str:permission_id)
@@ -560,7 +566,8 @@ Permissions
 
      {
        "id": "9a12594f30220f6a91bde8da961505be",
-       "type": "admin"
+       "type": "admin",
+       "object_id": 23
      }
 
 .. http:post:: /users/(str:user_id)/permissions/
@@ -575,9 +582,7 @@ Permissions
 
      {
        "type": "projects:admin",
-       "details": {
-         "project_id": "23"
-       }
+       "object_id": 23
      }
 
   .. sourcecode:: http
@@ -588,9 +593,7 @@ Permissions
      {
        "id": "2294e0854d66b461eceddbf239f80f04",
        "type": "projects:admin",
-       "details": {
-         "project_id": "23"
-       }
+       "object_id": 23
      }
 
 .. http:delete:: /users/(str:user_id)/permissions/(str:permission_id)
@@ -610,9 +613,7 @@ Permissions
      {
        "id": "2294e0854d66b461eceddbf239f80f04",
        "type": "projects:admin",
-       "details": {
-         "project_id": "23"
-       }
+       "object_id": 23
      }
 
 .. _projects:
@@ -1808,36 +1809,6 @@ Permissions
 ~~~~~~~~~~~
 
 .. literalinclude:: ../schemas/permission/permission.yml
-  :language: yaml
-
-``project:admin``
-*****************
-
-.. literalinclude:: ../schemas/permission/project-admin.yml
-  :language: yaml
-
-``project:dialogues:read``
-**************************
-
-.. literalinclude:: ../schemas/permission/project-dialogues-read.yml
-  :language: yaml
-
-``project:dialogues:write``
-***************************
-
-.. literalinclude:: ../schemas/permission/project-dialogues-write.yml
-  :language: yaml
-
-``dialogue:read``
-*****************
-
-.. literalinclude:: ../schemas/permission/dialogue-read.yml
-  :language: yaml
-
-``dialogue:write``
-******************
-
-.. literalinclude:: ../schemas/permission/dialogue-write.yml
   :language: yaml
 
 Channels

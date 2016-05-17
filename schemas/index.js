@@ -23,14 +23,7 @@ module.exports = deref({
       password_confirmation: readSchema('./user/password-confirmation.yml')
     },
     permission: {
-      permission: readSchema('./permission/permission.yml'),
-      dialogue_read: readSchema('./permission/dialogue-read.yml'),
-      dialogue_write: readSchema('./permission/dialogue-write.yml'),
-      project_admin: readSchema('./permission/project-admin.yml'),
-      project_dialogues_read: readSchema(
-        './permission/project-dialogues-read.yml'),
-      project_dialogues_write: readSchema(
-        './permission/project-dialogues-write.yml')
+      permission: readSchema('./permission/permission.yml')
     },
     project: {
       project: readSchema('./project/project.yml'),
