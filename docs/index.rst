@@ -581,6 +581,36 @@ Projects
        "details": {"id": "23"}
      }
 
+.. http:get:: /projects/(str:project_id)/teams/
+
+  Retrieves the :ref:`summaries <data-team-summary>` of all teams that have
+  access to the project with in ``project_id``.
+
+  This operation is only accessible to the authenticated user if they have
+  :ref:`admin permission <permissions>` or :ref:`project admin
+  <permissions-project-admin>` permission for the project with id
+  ``project_id``.
+
+  .. sourcecode:: http
+
+     GET /projects/21/teams/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "23",
+       "url": "/teams/23",
+       "title": "Service Designers",
+       "members": [{
+         "id": "1",
+         "url": "/users/1",
+         "first_name": "Sarima"
+       }]
+     }]
+
 .. http:post:: /projects/
 
   Creates a new project with the :ref:`project description <data-project>`
