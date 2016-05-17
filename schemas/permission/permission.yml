@@ -26,11 +26,6 @@ properties:
     description: |
       Identifies the type of this permission.
 
-  namespace:
-    type: string
-    description: |
-      The namespace this permission belongs to.
-
   metadata:
     type: object
     default: {}
@@ -39,4 +34,3 @@ properties:
 
 required:
   - type
-  - namespace
