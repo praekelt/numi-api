@@ -618,8 +618,8 @@ Projects
   along with the generated dialogue ``id`` field and ``url`` field for
   accessing the project description.
 
-  The authenticated user creating the project is given :ref:`project admin
-  <permissions-project-admin>` access for the newly created project.
+  This operation is only accessible to the authenticated user if they have
+  :ref:`admin permission <permissions>`.
 
   .. sourcecode:: http
 
