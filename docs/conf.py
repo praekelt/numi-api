@@ -55,8 +55,8 @@ copyright = u'2016, Praekelt Foundation'
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-#
-package = json.loads(open('../package.json'))
+
+package = json.loads(open('../package.json').read())
 version = re.sub(r'.[^.]*$', '', package['version'])
 release = package['version']
 
