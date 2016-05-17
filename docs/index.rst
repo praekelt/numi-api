@@ -409,19 +409,17 @@ Teams
        }]
      }
 
-Collaborators
--------------
+Permissions
+-----------
 
-.. http:get:: /projects/(str:project_id)/collaborators/
-
-.. http:get:: /users/(str:user_id)/permissions/
+.. http:get:: /team/(str:team_id)/permissions/
 
   Retrieves the :ref:`permissions <data-permissions>` accessible to the
-  authenticating user for the user with id ``user_id``.
+  authenticating user for the team with id ``team_id``.
 
   .. sourcecode:: http
 
-     GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/ HTTP/1.1
+     GET /teams/21/permissions/ HTTP/1.1
 
   .. sourcecode:: http
 
@@ -429,19 +427,19 @@ Collaborators
      Content-Type: application/json
 
      [{
-       "id": "9a12594f30220f6a91bde8da961505be",
+       "id": "21",
        "type": "admin",
        "object_id": 23
      }]
 
-.. http:get:: /users/(str:user_id)/permissions/(str:permission_id)
+.. http:get:: /teams/(str:team_id)/permissions/(str:permission_id)
 
   Retrieves the :ref:`permission <data-permissions>` with id ``permission_id``
-  for the user with id ``user_id``.
+  for the team with id ``team_id``.
 
   .. sourcecode:: http
 
-     GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/9a12594f30220f6a91bde8da961505be HTTP/1.1
+     GET /teams/21/permissions/182 HTTP/1.1
 
   .. sourcecode:: http
 
@@ -449,19 +447,19 @@ Collaborators
      Content-Type: application/json
 
      {
-       "id": "9a12594f30220f6a91bde8da961505be",
+       "id": 182,
        "type": "admin",
-       "object_id": 23
+       "object_id": 44
      }
 
-.. http:post:: /users/(str:user_id)/permissions/
+.. http:post:: /teams/(str:team_id)/permissions/
 
-  Creates a new :ref:`permission <data-permissions>` for the user with id
-  ``user_id`` and returns the created permission.
+  Creates a new :ref:`permission <data-permissions>` for the team with id
+  ``team_id`` and returns the created permission.
 
   .. sourcecode:: http
 
-     POST /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/ HTTP/1.1
+     POST /teams/21/permissions/ HTTP/1.1
      Content-Type: application/json
 
      {
@@ -475,19 +473,19 @@ Collaborators
      Content-Type: application/json
 
      {
-       "id": "2294e0854d66b461eceddbf239f80f04",
+       "id": 182,
        "type": "projects:admin",
        "object_id": 23
      }
 
-.. http:delete:: /users/(str:user_id)/permissions/(str:permission_id)
+.. http:delete:: /teams/(str:team_id)/permissions/(str:permission_id)
 
-  Revokes the permission with id ``permission_id`` for the user with id
-  ``user_id`` and returns the revoked permission.
+  Revokes the permission with id ``permission_id`` for the team with id
+  ``team_id`` and returns the revoked permission.
 
   .. sourcecode:: http
 
-     DELETE /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/2294e0854d66b461eceddbf239f80f04 HTTP/1.1
+     DELETE /teams/21/permissions/182 HTTP/1.1
 
   .. sourcecode:: http
 
@@ -495,7 +493,7 @@ Collaborators
      Content-Type: application/json
 
      {
-       "id": "2294e0854d66b461eceddbf239f80f04",
+       "id": 182,
        "type": "projects:admin",
        "object_id": 23
      }
