@@ -345,6 +345,8 @@ Users
        "first_name": "Joan",
        "last_name": "Watson",
        "permissions": [{
+         "id": 44,
+         "object_id": 21,
          "type": "admin"
        }]
      }
@@ -378,6 +380,7 @@ Teams
          "first_name": "Sarima"
        }],
        "permissions": [{
+         "id": 44,
          "type": "project:admin",
          "object_id": 21
        }],
@@ -416,6 +419,7 @@ Teams
          "first_name": "Sarima"
        }],
        "permissions": [{
+         "id": 44,
          "type": "project:admin",
          "object_id": 21
        }],
@@ -626,6 +630,7 @@ Projects
          "first_name": "Sarima"
        }],
        "permissions": [{
+         "id": 44,
          "type": "project:admin",
          "object_id": 21
        }],
