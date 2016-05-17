@@ -27,4 +27,18 @@ properties:
     description: |
       Summaries of users that are part of this team.
 
+  organization:
+    $ref: '#/definitions/organization/summary'
+    readOnly: true
+    description: |
+      Summary of the organization that owns this team.
+
+  permissions:
+    type: array
+    readOnly: true
+    items:
+      $ref: '#/definitions/permissions/permission'
+    description: |
+      The permissions granted to this team.
+
 additionalProperties: false
