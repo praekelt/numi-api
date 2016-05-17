@@ -196,7 +196,7 @@ Users have access to a set of :ref:`projects <concepts-projects>` based on the p
 
 Teams
 *****
-A team comprises a set of :ref:`users <concepts-users>`. Each team has a set of :ref:`permissions <concepts-permissions>` defining the actions its members are permitted to carry out.
+A team comprises a set of :ref:`users <concepts-users>`. Each team has a set of :ref:`permissions <permissions>` defining the actions its members are permitted to carry out.
 
 .. _concepts-orgs:
 
@@ -288,7 +288,7 @@ Permissions
 
 Numi builds on the permissions provided by `seed-auth-api`_. Permissions provided by seed-auth-api are granted to teams outside of this API. The following permissions are obtainable via this API:
 
-.. _seed-auth-api: https://seed-auth-api.rtfd.io
+.. _seed-auth-api: https://seed-auth-api.readthedocs.io
 
 .. _permissions-project-admin:
 
@@ -331,7 +331,7 @@ Users
 
   .. sourcecode:: http
 
-      GET /user HTTP/1.1
+     GET /user HTTP/1.1
 
   .. sourcecode:: http
 
@@ -704,7 +704,7 @@ Projects
   to the project with the id ``project_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>` or has permissions associated with project
+  <permissions>` or has permissions associated with project
   ``project_id``.
 
   .. sourcecode:: http
@@ -1257,13 +1257,13 @@ Ordering releases
      HTTP/1.1 200 OK
      Content-Type: application/json
 
-    {
-      "id": "1",
-      "number": 1,
-      "url": "/projects/23/dialogues/21/releases/1",
-      "revision_id": "7",
-      "created": 1460022608855
-    }
+     {
+       "id": "1",
+       "number": 1,
+       "url": "/projects/23/dialogues/21/releases/1",
+       "revision_id": "7",
+       "created": 1460022608855
+     }
 
   If the release isn't found, a ``404`` response will be given. The response
   body's ``details`` object contains the ``id`` and ``dialogue_id`` given in
@@ -1322,7 +1322,7 @@ Channels
 
   Retrieves the :ref:`descriptions <data-channel>` of all channels. Only
   accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>`.
+  <permissions>`.
 
   .. sourcecode:: http
 
@@ -1353,7 +1353,7 @@ Channels
   ``channel_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>` or has access to a project using the channel
+  <permissions>` or has access to a project using the channel
   ``channel_id``.
 
   .. sourcecode:: http
@@ -1389,7 +1389,7 @@ Channels
   accessing the channel's description.
 
   This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions-admin>`.
+  :ref:`admin permission <permissions>`.
 
   .. sourcecode:: http
 
@@ -1432,7 +1432,7 @@ Channels
   description.
 
   This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions-admin>`.
+  :ref:`admin permission <permissions>`.
 
   .. sourcecode:: http
 
@@ -1472,7 +1472,7 @@ Providers
   Retrieves the :ref:`summaries <data-provider-summary>` of all providers.
 
   Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>`.
+  <permissions>`.
 
   .. sourcecode:: http
 
@@ -1499,7 +1499,7 @@ Providers
   ``provider_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>` or has access to a project using a channel associated
+  <permissions>` or has access to a project using a channel associated
   with ``provider_id``.
 
   .. sourcecode:: http
@@ -1548,6 +1548,25 @@ Authenticated User Summary
 **************************
 
 .. literalinclude:: ../schemas/user/auth-user-summary.yml
+  :language: yaml
+
+Teams
+~~~~~
+
+.. _data-team:
+
+Team
+****
+
+.. literalinclude:: ../schemas/team/team.yml
+  :language: yaml
+
+.. _data-team-summary:
+
+Team Summary
+************
+
+.. literalinclude:: ../schemas/team/summary.yml
   :language: yaml
 
 Projects

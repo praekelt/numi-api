@@ -21,6 +21,10 @@ module.exports = deref({
     permission: {
       permission: readSchema('./permission/permission.yml')
     },
+    team: {
+      team: readSchema('./team/team.yml'),
+      summary: readSchema('./team/summary.yml')
+    },
     project: {
       project: readSchema('./project/project.yml'),
       summary: readSchema('./project/summary.yml')
