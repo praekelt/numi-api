@@ -325,37 +325,6 @@ Grants read access for a given dialogue.
 ******************
 Grants write access for a given dialogue.
 
-.. _users:
-
-Users
------
-
-.. http:get:: /user
-
-  Retrieves the :ref:`summary <data-auth-user-summary>` of the authenticated user.
-
-  .. sourcecode:: http
-
-     GET /user HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/1",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson",
-       "permissions": [{
-         "id": 44,
-         "object_id": 21,
-         "type": "admin"
-       }]
-     }
-
 .. _teams:
 
 Teams
@@ -436,6 +405,26 @@ Teams
 
 Permissions
 -----------
+
+.. http:get:: /user/permissions/
+
+  Retrieves the :ref:`permissions <permissions>` granted to the authenticated
+  user.
+
+  .. sourcecode:: http
+
+     GET /user HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": 44,
+       "object_id": 21,
+       "type": "project:dialogues:write"
+     }]
 
 .. http:get:: /team/(str:team_id)/permissions/
 
