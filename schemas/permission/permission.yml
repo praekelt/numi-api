@@ -21,6 +21,7 @@ properties:
     enum:
       - project:admin
       - project:dialogues:read
+      - project:dialogues:write
       - dialogue:read
       - dialogue:write
     description: |
