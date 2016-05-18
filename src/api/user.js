@@ -1,17 +1,11 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function get() {
-  throw new NotImplementedError();
-}
-
-
-function changePassword(d) {
+function getPermissions() {
   throw new NotImplementedError();
 }
 
 
 module.exports = {
-  get,
-  changePassword
+  getPermissions
 };

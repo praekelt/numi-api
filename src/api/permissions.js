@@ -1,22 +1,22 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function create(userId, d) {
+function create(teamId, d) {
   throw new NotImplementedError();
 }
 
 
-function getAll(userId, params) {
+function getAll(teamId, params) {
   throw new NotImplementedError();
 }
 
 
-function get(userId, id) {
+function get(teamId, id) {
   throw new NotImplementedError();
 }
 
 
-function remove(userId, id) {
+function remove(teamId, id) {
   throw new NotImplementedError();
 }
 

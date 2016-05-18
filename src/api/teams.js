@@ -1,17 +1,17 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function reset(d) {
+function getAll(params) {
   throw new NotImplementedError();
 }
 
 
-function confirm(d) {
+function get(id) {
   throw new NotImplementedError();
 }
 
 
 module.exports = {
-  reset,
-  confirm
+  getAll,
+  get
 };

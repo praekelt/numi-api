@@ -11,17 +11,22 @@ function getAll(projectId, params) {
 }
 
 
-function get(projectId, id) {
+function get(id) {
   throw new NotImplementedError();
 }
 
 
-function update(projectId, id, d) {
+function getTeams(id) {
   throw new NotImplementedError();
 }
 
 
-function patch(projectId, id, d) {
+function update(id, d) {
+  throw new NotImplementedError();
+}
+
+
+function patch(id, d) {
   throw new NotImplementedError();
 }
 
@@ -30,6 +35,7 @@ module.exports = {
   create,
   getAll,
   get,
+  getTeams,
   update,
   patch
 };

@@ -25,6 +25,13 @@ describe('api.projects', () => {
     });
   });
 
+  describe('getTeams', () => {
+    it('should throw a NotImplementedError', () => {
+      expect(() => projects.getTeams())
+        .to.throw(NotImplementedError);
+    });
+  });
+
   describe('getChannels', () => {
     it('should throw a NotImplementedError', () => {
       expect(() => projects.getChannels())

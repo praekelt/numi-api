@@ -4,16 +4,9 @@ const { NotImplementedError } = require('src/errors');
 
 
 describe('api.user', () => {
-  describe('get', () => {
+  describe('getPermissions', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => user.get())
-        .to.throw(NotImplementedError);
-    });
-  });
-
-  describe('changePassword', () => {
-    it('should throw a NotImplementedError', () => {
-      expect(() => user.changePassword())
+      expect(() => user.getPermissions())
         .to.throw(NotImplementedError);
     });
   });
