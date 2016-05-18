@@ -6,11 +6,11 @@ const { create, read } = require('src/middleware/api/methods');
 
 module.exports = [
   _.post(
-    '/projects/:project_id/dialogue/:dialogue_id/releases/',
+    '/dialogue/:dialogue_id/releases/',
     create(schema, releases.create)),
 
   _.get(
-    '/projects/:project_id/dialogue/:dialogue_id/releases/',
+    '/dialogue/:dialogue_id/releases/',
     read(releases.getAll, () => ({
       page: 1,
       per_page: 100,
@@ -18,7 +18,7 @@ module.exports = [
     }))),
 
   _.get(
-    '/projects/:project_id/dialogue/:dialogue_id/releases/:id',
+    '/releases/:id',
     read(releases.get, () => ({
       page: 1,
       per_page: 100,

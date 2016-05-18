@@ -14,14 +14,18 @@ module.exports = [
     read(dialogues.getAll)),
 
   _.get(
-    '/projects/:project_id/dialogues/:id',
+    '/dialogues/:id',
     read(dialogues.get)),
 
+  _.get(
+    '/dialogues/:id/teams/',
+    read(dialogues.getTeams)),
+
   _.put(
-    '/projects/:project_id/dialogues/:id',
+    '/dialogues/:id',
     update(schemas.dialogue, dialogues.update)),
 
   _.patch(
-    '/projects/:project_id/dialogues/:id',
+    '/dialogues/:id',
     patch(schemas.dialogue, dialogues.patch))
 ];
