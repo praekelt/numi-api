@@ -413,7 +413,7 @@ Permissions
 
   .. sourcecode:: http
 
-     GET /user HTTP/1.1
+     GET /user/permissions/ HTTP/1.1
 
   .. sourcecode:: http
 
