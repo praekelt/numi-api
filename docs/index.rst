@@ -190,7 +190,7 @@ Concepts
 
 Users
 *****
-Users have access to a set of :ref:`projects <concepts-projects>` based on the permisions of the :ref:`teams <concepts-teams>` they are members of. The projects that users have access to may span multiple :ref:`organisations <concepts-orgs>`.
+Users have access to a set of :ref:`projects <concepts-projects>` based on the permisions of the :ref:`teams <concepts-teams>` they are members of. The projects that users have access to may span multiple :ref:`organizations <concepts-orgs>`.
 
 .. _concepts-teams:
 
@@ -204,10 +204,10 @@ Organizations
 *************
 Organisations comprise a set of :ref:`projects <concepts-projects>`, :ref:`teams <concepts-teams>` and :ref:`user <concepts-users>`\s.
 
-The relations between organisations and other entities is as follows:
+The relations between organizations and other entities is as follows:
   - Each project is owned by exactly one organization.
   - Each team is owned by exactly one organization.
-  - Users may be members of zero or more organisations.
+  - Users may be members of zero or more organizations.
 
 .. _concepts-projects:
 
