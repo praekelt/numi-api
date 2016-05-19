@@ -1,0 +1,16 @@
+type: object
+
+properties:
+  id:
+    type: string
+    readOnly: true
+    description: |
+      The organization's identifier
+
+  title:
+    type: string
+    readOnly: true
+    description: |
+      The human-readable title of the organization
+
+additionalProperties: false

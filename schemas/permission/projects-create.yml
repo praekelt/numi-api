@@ -1,9 +1,0 @@
-type: object
-
-properties:
-  type:
-    enum:
-      - projects:create
-
-required:
-  - type

@@ -186,11 +186,28 @@ For ``POST`` and ``PATCH`` requests, if a client provides read-only fields, the 
 Concepts
 ~~~~~~~~
 
+.. _concepts-users:
+
 Users
 *****
-Users have access to a set of :ref:`projects <concepts-projects>`. Depending on their :ref:`permissions <permissions>`, users can view or modify a project and its :ref:`dialogues <concepts-dialogues>`.
+Users have access to a set of :ref:`projects <concepts-projects>` based on the permisions of the :ref:`teams <concepts-teams>` they are members of. The projects that users have access to may span multiple :ref:`organizations <concepts-orgs>`.
 
-.. TODO link to auth once this is documented.
+.. _concepts-teams:
+
+Teams
+*****
+A team comprises a set of :ref:`users <concepts-users>`. Each team has a set of :ref:`permissions <permissions>` defining the actions its members are permitted to carry out.
+
+.. _concepts-orgs:
+
+Organizations
+*************
+Organisations comprise a set of :ref:`projects <concepts-projects>`, :ref:`teams <concepts-teams>` and :ref:`user <concepts-users>`\s.
+
+The relations between organizations and other entities is as follows:
+  - Each project is owned by exactly one organization.
+  - Each team is owned by exactly one organization.
+  - Users may be members of zero or more organizations.
 
 .. _concepts-projects:
 
@@ -273,25 +290,19 @@ A provider is a set of :ref:`channels <concepts-channels>` that corresponds to t
 
 Permissions
 ~~~~~~~~~~~
-A user's actions are limited by the permissions they have been granted. Users can be granted the following permissions:
 
-.. _permissions-admin:
+.. note::
+  Numi builds on the permissions provided by `seed-auth-api`_. The permissions provided by seed-auth-api (for example, ``admin`` and ``org:admin``), are granted outside of this API.
 
-``admin``
-*********
-Grants create, archive, read and write access for all projects and dialogues, and publish access for all dialogues.
+.. _seed-auth-api: https://seed-auth-api.readthedocs.io
 
-.. _permissions-projects-create:
-
-``projects:create``
-*******************
-Grants access to create new projects. Users with this permission obtain ``project:admin`` access for the projects they create.
+The following permissions are obtainable via this API:
 
 .. _permissions-project-admin:
 
 ``project:admin``
 *****************
-Grants create, archive, read, write and publish access for a given project's dialogues.
+  Grants create, archive, read, write and publish access for a given project's dialogues.
 
 .. _permissions-project-dialogues-read:
 
@@ -317,64 +328,19 @@ Grants read access for a given dialogue.
 ******************
 Grants write access for a given dialogue.
 
-.. _users:
+.. _teams:
 
-Users
+Teams
 -----
 
-.. http:get:: /user
+.. http:get:: /teams/
 
-  Retrieves the :ref:`description <data-user>` of the authenticated user.
-
-  .. sourcecode:: http
-
-      GET /user HTTP/1.1
+  Retrieves the :ref:`summaries <data-team-summary>` of all teams that the
+  authenticated user has access to.
 
   .. sourcecode:: http
 
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/1",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson",
-       "permissions": [{
-         "type": "admin"
-       }]
-     }
-
-.. http:post:: /user/password-changes/
-
-  Creates a password change request for the authenticated user using the
-  :ref:`details <data-password-change>` given in the request body.
-
-  .. sourcecode:: http
-
-    POST /user/password-changes/ HTTP/1.1
-    Content-Type: application/json
-
-    {
-      "old_password": "1337",
-      "new_password": "r00t"
-    }
-
-  .. sourcecode:: http
-
-    HTTP/1.1 204 No Content
-    Content-Type: application/json
-
-.. http:get:: /users/
-
-  Retrieves the :ref:`summaries <data-user-summary>` of all users. Only
-  accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>`.
-
-  .. sourcecode:: http
-
-      GET /user HTTP/1.1
+     GET /teams/ HTTP/1.1
 
   .. sourcecode:: http
 
@@ -382,57 +348,38 @@ Users
      Content-Type: application/json
 
      [{
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/1",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
+       "id": "23",
+       "url": "/teams/23",
+       "title": "Service Designers",
+       "members": [{
+         "id": "1",
+         "url": "/users/1",
+         "first_name": "Sarima"
+       }],
+       "permissions": [{
+         "id": 44,
+         "type": "project:admin",
+         "object_id": 21
+       }],
+       "organization": {
+         "id": 2,
+         "title": "MH"
+       }
      }]
 
   :query number page:
-    1-based index of the page of users to show. Defaults to ``1``.
+    1-based index of the page of teams to show. Defaults to ``1``.
 
   :query number per_page:
-    Number of users to show per page. Defaults to ``30``. Maximum is ``100``.
+    Number of teams to show per page. Defaults to ``30``. Maximum is ``100``.
 
-.. http:post:: /users/
+.. http:get:: /teams/(str:team_id)
 
-  Creates a new user with the :ref:`description <data-user-new>` given in the
-  request body and returns the created user's :ref:`description
-  <data-user-new>`, along with the generated ``id`` field and ``url`` field for
-  accessing the user description.
+  Retrieves the :ref:`description <data-team>` of the team with id ``team_id``.
 
   .. sourcecode:: http
 
-     POST /projects/ HTTP/1.1
-     Content-Type: application/json
-
-     {
-       "first_name": "Joan",
-       "last_name": "Watson",
-       "password": "1337"
-     }
-
-  .. sourcecode:: http
-
-     HTTP/1.1 201 Created
-     Content-Type: application/json
-
-     {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }
-
-.. http:get:: /users/(str:user_id)
-
-  Retrieves the :ref:`description <data-user>` of the user with id ``user_id``.
-
-  .. sourcecode:: http
-
-     GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
+     GET /teams/23 HTTP/1.1
 
   .. sourcecode:: http
 
@@ -440,140 +387,36 @@ Users
      Content-Type: application/json
 
      {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
+       "id": "23",
+       "url": "/teams/23",
+       "title": "Service Designers",
+       "members": [{
+         "id": "1",
+         "url": "/users/1",
+         "first_name": "Sarima"
+       }],
+       "permissions": [{
+         "id": 44,
+         "type": "project:admin",
+         "object_id": 21
+       }],
+       "organization": {
+         "id": 2,
+         "title": "MH"
+       }
      }
-
-.. http:put:: /users/(str:user_id)
-
-  Replaces the :ref:`description <data-user>` of the user with id ``user_id``
-  with the description given in the request body and returns the given
-  description, along with the user's ``id`` and the ``url`` for accessing the
-  user's description.
-
-  This operation is only accessible to the authenticated user if their user id
-  is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
-
-  .. sourcecode:: http
-
-   PUT /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
-   Content-Type: application/json
-
-   {
-     "first_name": "Joan",
-     "last_name": "Watson"
-   }
-
-.. sourcecode:: http
-
-   HTTP/1.1 200 OK
-   Content-Type: application/json
-
-   {
-     "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-     "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-     "email": "foo@bar.org",
-     "first_name": "Joan",
-     "last_name": "Watson"
-   }
-
-.. http:patch:: /users/(str:user_id)
-
-  Partially updates the :ref:`description <data-user>` of the user with id
-  ``user_id`` using the :ref:`instructions <overview-partial-updates>` given in
-  the request body and returns the given user's description, along with the
-  user's ``id`` and the ``url`` for accessing the user's description.
-
-  This operation is only accessible to the authenticated user if their user id
-  is ``user_id``, or if they have :ref:`admin permission <permissions-admin>`.
-
-  .. sourcecode:: http
-
-     PATCH /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427 HTTP/1.1
-     Content-Type: application/json-patch+json
-
-     [{
-       "op": "replace",
-       "path": "/first_name",
-       "value": "Joan"
-     }]
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "url": "/users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427",
-       "email": "foo@bar.org",
-       "first_name": "Joan",
-       "last_name": "Watson"
-     }
-
-.. http:post:: /password-resets/
-
-  Creates a :ref:`password reset request <data-password-reset>` for the user
-  with the email address provided in the request body.
-
-  If a user with the given email address is found, the user will be sent an
-  email containing a link to be accessed in order to confirm the reset and
-  choose a new password.
-
-  .. sourcecode:: http
-
-    POST /password-resets/ HTTP/1.1
-    Content-Type: application/json
-
-    {
-      "email": "foo@bar.org"
-    }
-
-  .. sourcecode:: http
-
-     HTTP/1.1 204 No Content
-     Content-Type: application/json
-
-.. note::
-  To avoid leaking information on whether a user has a given email address, the
-  API will return a ``204`` response regardless of whether a user matches the
-  given email address or not.
-
-.. http:post:: /password-confirmations/
-
-  Confirms a password reset using the :ref:`confirmation details
-  <data-password-confirmation>` given in the request body.
-
-  .. sourcecode:: http
-
-    POST /password-confirmations/ HTTP/1.1
-    Content-Type: application/json
-
-    {
-      "token": "123abc",
-      "password": "r00t"
-    }
-
-  .. sourcecode:: http
-
-    HTTP/1.1 204 No Content
-    Content-Type: application/json
-
 
 Permissions
 -----------
 
-.. http:get:: /users/(str:user_id)/permissions/
+.. http:get:: /user/permissions/
 
-  Retrieves the :ref:`permissions <data-permissions>` accessible to the
-  authenticating user for the user with id ``user_id``.
+  Retrieves the :ref:`permissions <permissions>` granted to the authenticated
+  user.
 
   .. sourcecode:: http
 
-     GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/ HTTP/1.1
+     GET /user/permissions/ HTTP/1.1
 
   .. sourcecode:: http
 
@@ -581,45 +424,39 @@ Permissions
      Content-Type: application/json
 
      [{
-       "id": "9a12594f30220f6a91bde8da961505be",
-       "type": "admin"
+       "id": 44,
+       "object_id": 21,
+       "type": "project:dialogues:write"
      }]
 
-.. http:get:: /users/(str:user_id)/permissions/(str:permission_id)
+.. http:get:: /team/(str:team_id)/permissions/
+
+  Retrieves the :ref:`permissions <data-permissions>` accessible to the
+  authenticating user for the team with id ``team_id``.
+
+  .. sourcecode:: http
+
+     GET /teams/21/permissions/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "21",
+       "type": "admin",
+       "object_id": 23
+     }]
+
+.. http:get:: /teams/(str:team_id)/permissions/(str:permission_id)
 
   Retrieves the :ref:`permission <data-permissions>` with id ``permission_id``
-  for the user with id ``user_id``.
+  for the team with id ``team_id``.
 
   .. sourcecode:: http
 
-     GET /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/9a12594f30220f6a91bde8da961505be HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "9a12594f30220f6a91bde8da961505be",
-       "type": "admin"
-     }
-
-.. http:post:: /users/(str:user_id)/permissions/
-
-  Creates a new :ref:`permission <data-permissions>` for the user with id
-  ``user_id`` and returns the created permission.
-
-  .. sourcecode:: http
-
-     POST /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/ HTTP/1.1
-     Content-Type: application/json
-
-     {
-       "type": "projects:admin",
-       "details": {
-         "project_id": "23"
-       }
-     }
+     GET /teams/21/permissions/182 HTTP/1.1
 
   .. sourcecode:: http
 
@@ -627,21 +464,25 @@ Permissions
      Content-Type: application/json
 
      {
-       "id": "2294e0854d66b461eceddbf239f80f04",
-       "type": "projects:admin",
-       "details": {
-         "project_id": "23"
-       }
+       "id": 182,
+       "type": "admin",
+       "object_id": 44
      }
 
-.. http:delete:: /users/(str:user_id)/permissions/(str:permission_id)
+.. http:post:: /teams/(str:team_id)/permissions/
 
-  Revokes the permission with id ``permission_id`` for the user with id
-  ``user_id`` and returns the revoked permission.
+  Creates a new :ref:`permission <data-permissions>` for the team with id
+  ``team_id`` and returns the created permission.
 
   .. sourcecode:: http
 
-     DELETE /users/0a2d19e0-bb10-4b84-98cc-52a82b6ed427/permissions/2294e0854d66b461eceddbf239f80f04 HTTP/1.1
+     POST /teams/21/permissions/ HTTP/1.1
+     Content-Type: application/json
+
+     {
+       "type": "projects:admin",
+       "object_id": 23
+     }
 
   .. sourcecode:: http
 
@@ -649,11 +490,29 @@ Permissions
      Content-Type: application/json
 
      {
-       "id": "2294e0854d66b461eceddbf239f80f04",
+       "id": 182,
        "type": "projects:admin",
-       "details": {
-         "project_id": "23"
-       }
+       "object_id": 23
+     }
+
+.. http:delete:: /teams/(str:team_id)/permissions/(str:permission_id)
+
+  Revokes the permission with id ``permission_id`` for the team with id
+  ``team_id`` and returns the revoked permission.
+
+  .. sourcecode:: http
+
+     DELETE /teams/21/permissions/182 HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     {
+       "id": 182,
+       "type": "projects:admin",
+       "object_id": 23
      }
 
 .. _projects:
@@ -739,6 +598,45 @@ Projects
        "details": {"id": "23"}
      }
 
+.. http:get:: /projects/(str:project_id)/teams/
+
+  Retrieves the :ref:`summaries <data-team-summary>` of all teams with
+  permissions related to the project with id ``project_id``.
+
+  This operation is only accessible to the authenticated user if they have
+  :ref:`admin permission <permissions>` or :ref:`project admin
+  <permissions-project-admin>` permission for the project with id
+  ``project_id``.
+
+  .. sourcecode:: http
+
+     GET /projects/21/teams/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "23",
+       "url": "/teams/23",
+       "title": "Service Designers",
+       "members": [{
+         "id": "1",
+         "url": "/users/1",
+         "first_name": "Sarima"
+       }],
+       "permissions": [{
+         "id": 44,
+         "type": "project:admin",
+         "object_id": 21
+       }],
+       "organization": {
+         "id": 2,
+         "title": "MH"
+       }
+     }]
+
 .. http:post:: /projects/
 
   Creates a new project with the :ref:`project description <data-project>`
@@ -746,8 +644,8 @@ Projects
   along with the generated dialogue ``id`` field and ``url`` field for
   accessing the project description.
 
-  The authenticated user creating the project is given :ref:`project admin
-  <permissions-project-admin>` access for the newly created project.
+  This operation is only accessible to the authenticated user if they have
+  :ref:`admin permission <permissions>`.
 
   .. sourcecode:: http
 
@@ -860,7 +758,7 @@ Projects
   to the project with the id ``project_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>` or has permissions associated with project
+  <permissions>` or has permissions associated with project
   ``project_id``.
 
   .. sourcecode:: http
@@ -973,6 +871,46 @@ Dialogues
        "message": "Dialogue 21 not found",
        "details": {"id": "21"}
      }
+
+.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/teams/
+
+  Retrieves the :ref:`summaries <data-team-summary>` of all teams with
+  permissions related to the dialogue with id ``dialogue_id`` contained in the
+  project with id ``project_id``.
+
+  This operation is only accessible to the authenticated user if they have
+  :ref:`admin permission <permissions>`, :ref:`project admin
+  <permissions-project-admin>` permission for the project that contains the
+  relevant dialogue.
+
+  .. sourcecode:: http
+
+     GET /projects/3/dialogues/21/teams/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "23",
+       "url": "/teams/23",
+       "title": "Service Designers",
+       "members": [{
+         "id": "1",
+         "url": "/users/1",
+         "first_name": "Sarima"
+       }],
+       "permissions": [{
+         "id": 44,
+         "type": "project:admin",
+         "object_id": 21
+       }],
+       "organization": {
+         "id": 2,
+         "title": "MH"
+       }
+     }]
 
 .. http:post:: /projects/(str:project_id)/dialogues/
 
@@ -1413,13 +1351,13 @@ Ordering releases
      HTTP/1.1 200 OK
      Content-Type: application/json
 
-    {
-      "id": "1",
-      "number": 1,
-      "url": "/projects/23/dialogues/21/releases/1",
-      "revision_id": "7",
-      "created": 1460022608855
-    }
+     {
+       "id": "1",
+       "number": 1,
+       "url": "/projects/23/dialogues/21/releases/1",
+       "revision_id": "7",
+       "created": 1460022608855
+     }
 
   If the release isn't found, a ``404`` response will be given. The response
   body's ``details`` object contains the ``id`` and ``dialogue_id`` given in
@@ -1478,7 +1416,7 @@ Channels
 
   Retrieves the :ref:`descriptions <data-channel>` of all channels. Only
   accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>`.
+  <permissions>`.
 
   .. sourcecode:: http
 
@@ -1509,7 +1447,7 @@ Channels
   ``channel_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>` or has access to a project using the channel
+  <permissions>` or has access to a project using the channel
   ``channel_id``.
 
   .. sourcecode:: http
@@ -1545,7 +1483,7 @@ Channels
   accessing the channel's description.
 
   This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions-admin>`.
+  :ref:`admin permission <permissions>`.
 
   .. sourcecode:: http
 
@@ -1588,7 +1526,7 @@ Channels
   description.
 
   This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions-admin>`.
+  :ref:`admin permission <permissions>`.
 
   .. sourcecode:: http
 
@@ -1628,7 +1566,7 @@ Providers
   Retrieves the :ref:`summaries <data-provider-summary>` of all providers.
 
   Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>`.
+  <permissions>`.
 
   .. sourcecode:: http
 
@@ -1655,7 +1593,7 @@ Providers
   ``provider_id``.
 
   Only accessible if the authenticated user has :ref:`admin permission
-  <permissions-admin>` or has access to a project using a channel associated
+  <permissions>` or has access to a project using a channel associated
   with ``provider_id``.
 
   .. sourcecode:: http
@@ -1690,14 +1628,6 @@ Data Structures
 Users
 ~~~~~
 
-.. _data-user:
-
-User
-****
-
-.. literalinclude:: ../schemas/user/user.yml
-  :language: yaml
-
 .. _data-user-summary:
 
 User Summary
@@ -1706,36 +1636,31 @@ User Summary
 .. literalinclude:: ../schemas/user/summary.yml
   :language: yaml
 
-.. _data-user-new:
+.. _data-auth-user-summary:
 
-New User
-********
+Authenticated User Summary
+**************************
 
-.. literalinclude:: ../schemas/user/new.yml
+.. literalinclude:: ../schemas/user/auth-user-summary.yml
   :language: yaml
 
-.. _data-password-change:
+Teams
+~~~~~
 
-Password change
-***************
+.. _data-team:
 
-.. literalinclude:: ../schemas/user/password-change.yml
+Team
+****
+
+.. literalinclude:: ../schemas/team/team.yml
   :language: yaml
 
-.. _data-password-reset:
+.. _data-team-summary:
 
-Password reset
-**************
+Team Summary
+************
 
-.. literalinclude:: ../schemas/user/password-reset.yml
-  :language: yaml
-
-.. _data-password-confirmation:
-
-Password reset confirmations
-****************************
-
-.. literalinclude:: ../schemas/user/confirmation.yml
+.. literalinclude:: ../schemas/team/summary.yml
   :language: yaml
 
 Projects
@@ -1849,36 +1774,6 @@ Permissions
 ~~~~~~~~~~~
 
 .. literalinclude:: ../schemas/permission/permission.yml
-  :language: yaml
-
-``project:admin``
-*****************
-
-.. literalinclude:: ../schemas/permission/project-admin.yml
-  :language: yaml
-
-``project:dialogues:read``
-**************************
-
-.. literalinclude:: ../schemas/permission/project-dialogues-read.yml
-  :language: yaml
-
-``project:dialogues:write``
-***************************
-
-.. literalinclude:: ../schemas/permission/project-dialogues-write.yml
-  :language: yaml
-
-``dialogue:read``
-*****************
-
-.. literalinclude:: ../schemas/permission/dialogue-read.yml
-  :language: yaml
-
-``dialogue:write``
-******************
-
-.. literalinclude:: ../schemas/permission/dialogue-write.yml
   :language: yaml
 
 Channels

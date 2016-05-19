@@ -15,22 +15,17 @@ module.exports = deref({
     config: readSchema('./config.yml'),
     release: readSchema('./release.yml'),
     user: {
-      user: readSchema('./user/user.yml'),
-      new: readSchema('./user/new.yml'),
-      summary: readSchema('./user/summary.yml'),
-      password_change: readSchema('./user/password-change.yml'),
-      password_reset: readSchema('./user/password-reset.yml'),
-      password_confirmation: readSchema('./user/password-confirmation.yml')
+      summary: readSchema('./user/summary.yml')
     },
     permission: {
-      permission: readSchema('./permission/permission.yml'),
-      dialogue_read: readSchema('./permission/dialogue-read.yml'),
-      dialogue_write: readSchema('./permission/dialogue-write.yml'),
-      project_admin: readSchema('./permission/project-admin.yml'),
-      project_dialogues_read: readSchema(
-        './permission/project-dialogues-read.yml'),
-      project_dialogues_write: readSchema(
-        './permission/project-dialogues-write.yml')
+      permission: readSchema('./permission/permission.yml')
+    },
+    organization: {
+      summary: readSchema('./organization/summary.yml')
+    },
+    team: {
+      team: readSchema('./team/team.yml'),
+      summary: readSchema('./team/summary.yml')
     },
     project: {
       project: readSchema('./project/project.yml'),
