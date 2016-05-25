@@ -202,7 +202,7 @@ A team comprises a set of :ref:`users <concepts-users>`. Each team has a set of 
 
 Organizations
 *************
-Organisations comprise a set of :ref:`projects <concepts-projects>`, :ref:`teams <concepts-teams>` and :ref:`user <concepts-users>`\s.
+Organisations comprise a set of :ref:`projects <concepts-projects>`, :ref:`teams <concepts-teams>` and :ref:`users <concepts-users>`.
 
 The relations between organizations and other entities is as follows:
   - Each project is owned by exactly one organization.
