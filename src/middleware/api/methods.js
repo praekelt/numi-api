@@ -1,6 +1,10 @@
 const last = require('lodash/last');
 const { conj, effect } = require('src/utils');
-const { omitReadOnly, defaults, validate } = require('src/schema-utils');
+const {
+  omitReadOnly,
+  defaults,
+  validate
+} = require('@praekelt/json-schema-utils');
 
 
 function create(schema, fn) {
