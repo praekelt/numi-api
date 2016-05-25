@@ -21,6 +21,11 @@ function getChannels(id) {
 }
 
 
+function getTeams(id) {
+  throw new NotImplementedError();
+}
+
+
 function update(id, d) {
   throw new NotImplementedError();
 }
@@ -36,6 +41,7 @@ module.exports = {
   getAll,
   get,
   getChannels,
+  getTeams,
   update,
   patch
 };

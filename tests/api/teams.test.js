@@ -1,19 +1,19 @@
 const { expect } = require('chai');
-const { password } = require('src/api');
+const { teams } = require('src/api');
 const { NotImplementedError } = require('src/errors');
 
 
-describe('api.password', () => {
-  describe('reset', () => {
+describe('api.teams', () => {
+  describe('getAll', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => password.reset())
+      expect(() => teams.getAll())
         .to.throw(NotImplementedError);
     });
   });
 
-  describe('confirm', () => {
+  describe('get', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => password.confirm())
+      expect(() => teams.get())
         .to.throw(NotImplementedError);
     });
   });
