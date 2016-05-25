@@ -202,7 +202,7 @@ A team comprises a set of :ref:`users <concepts-users>`. Each team has a set of 
 
 Organizations
 *************
-Organisations comprise a set of :ref:`projects <concepts-projects>`, :ref:`teams <concepts-teams>` and :ref:`user <concepts-users>`\s.
+Organisations comprise a set of :ref:`projects <concepts-projects>`, :ref:`teams <concepts-teams>` and :ref:`users <concepts-users>`.
 
 The relations between organizations and other entities is as follows:
   - Each project is owned by exactly one organization.
@@ -809,7 +809,7 @@ Dialogues
      [{
        "id": "21",
        "title": "Service Rating Survey",
-       "url": "/projects/23/dialogues/21",
+       "url": "/dialogues/21",
        "is_archived": false,
        "is_published": false,
        "has_changes": false,
@@ -833,14 +833,14 @@ Dialogues
     Filter on whether the user can edit this dialogue or not.
 
 
-.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
+.. http:get:: /dialogues/(str:dialogue_id)
 
   Retrieves the :ref:`description <data-dialogue>` of the dialogue with id
-  ``dialogue_id`` in the project with id ``project_id``.
+  ``dialogue_id``.
 
   .. sourcecode:: http
 
-      GET /projecs/23/dialogues/21 HTTP/1.1
+      GET /dialogues/21 HTTP/1.1
 
   .. sourcecode:: http
 
@@ -872,11 +872,10 @@ Dialogues
        "details": {"id": "21"}
      }
 
-.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/teams/
+.. http:get:: /dialogues/(str:dialogue_id)/teams/
 
   Retrieves the :ref:`summaries <data-team-summary>` of all teams with
-  permissions related to the dialogue with id ``dialogue_id`` contained in the
-  project with id ``project_id``.
+  permissions related to the dialogue with id ``dialogue_id``.
 
   This operation is only accessible to the authenticated user if they have
   :ref:`admin permission <permissions>`, :ref:`project admin
@@ -885,7 +884,7 @@ Dialogues
 
   .. sourcecode:: http
 
-     GET /projects/3/dialogues/21/teams/ HTTP/1.1
+     GET /dialogues/21/teams/ HTTP/1.1
 
   .. sourcecode:: http
 
@@ -936,7 +935,7 @@ Dialogues
 
      {
        "id": "21",
-       "url": "/projects/23/dialogues/21",
+       "url": "/dialogues/21",
        "title": "Service Rating Survey",
        "sequences": [],
        "is_archived": false,
@@ -948,12 +947,12 @@ Dialogues
 
 .. _dialogues-put:
 
-.. http:put:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
+.. http:put:: /dialogues/(str:dialogue_id)
 
   Replaces the :ref:`description <data-dialogue>` of the dialogue with id
-  ``dialogue_id`` in the project with id ``project_id`` with the description
-  given in the request body and returns the given description, along with the
-  dialogue's ``id`` and the ``url`` for accessing the dialogue's description.
+  ``dialogue_id`` with the description given in the request body and returns
+  the given description, along with the dialogue's ``id`` and the ``url`` for
+  accessing the dialogue's description.
 
   Replacing the dialogue creates a new :ref:`edit revision
   <concepts-revisions-edit>` with a `JSON patch`_ representing the instructions
@@ -964,7 +963,7 @@ Dialogues
 
   .. sourcecode:: http
 
-    POST /projects/23/dialogues/21 HTTP/1.1
+    PUT /dialogues/21 HTTP/1.1
     Content-Type: application/json
 
     {
@@ -980,7 +979,7 @@ Dialogues
 
     {
       "id": "21",
-      "url": "/projects/23/dialogues/21",
+      "url": "/dialogues/21",
       "title": "Service Rating Survey",
       "sequences": [],
       "is_archived": false,
@@ -995,20 +994,19 @@ Dialogues
 
 .. _dialogues-patch:
 
-.. http:patch:: /projects/(str:project_id)/dialogues/(str:dialogue_id)
+.. http:patch:: /dialogues/(str:dialogue_id)
 
   Partially updates the :ref:`description <data-dialogue>` of the dialogue with
-  id ``dialogue_id`` in the project with id ``project_id`` with the
-  :ref:`instructions <overview-partial-updates>` in the request body and
-  returns the given description, along with the dialogue's ``id`` and the
-  ``url`` for accessing the dialogue's description.
+  id ``dialogue_id`` with the :ref:`instructions <overview-partial-updates>` in
+  the request body and returns the given description, along with the dialogue's
+  ``id`` and the ``url`` for accessing the dialogue's description.
 
   Partially updating the dialogue creates a new :ref:`edit revision
   <concepts-revisions-edit>` using the provided patch instructions.
 
 .. sourcecode:: http
 
-   PATCH /projects/23/dialogues/21 HTTP/1.1
+   PATCH /dialogues/21 HTTP/1.1
    Content-Type: application/json-patch+json
 
    [{
@@ -1031,7 +1029,7 @@ Dialogues
 
    {
      "id": "21",
-     "url": "/projects/23/dialogues/21",
+     "url": "/dialogues/21",
      "title": "Service Rating Survey",
      "sequences": [{
        "id": "start",
@@ -1060,14 +1058,13 @@ A dialogue can be archived by setting ``is_archived`` to ``true`` when :ref:`rep
 Revisions
 ---------
 
-.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
+.. http:get:: /dialogues/(str:dialogue_id)/revisions/
 
-  Retrieves the :ref:`revisions <data-revision>` of dialogue ``dialogue_id`` in
-  the project ``project_id``.
+  Retrieves the :ref:`revisions <data-revision>` of dialogue ``dialogue_id``.
 
   .. sourcecode:: http
 
-     GET /projects/23/dialogues/21/revisions/ HTTP/1.1
+     GET /dialogues/21/revisions/ HTTP/1.1
 
   .. sourcecode:: http
 
@@ -1124,13 +1121,12 @@ Ordering revisions
 | ``-created`` | Return revisions in descending order of creation date      |
 +--------------+------------------------------------------------------------+
 
-.. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/revisions/
+.. http:post:: /dialogues/(str:dialogue_id)/revisions/
 
-  Creates a new revision for dialogue ``dialogue_id`` under project
-  ``project_id`` using the :ref:`description <data-revision>` given in the
-  request body and returns the created revisions's description, along with the
-  generated ``id`` field and ``url`` field for accessing the revision
-  description.
+  Creates a new revision for dialogue ``dialogue_id`` using the
+  :ref:`description <data-revision>` given in the request body and returns the
+  created revisions's description, along with the generated ``id`` field and
+  ``url`` field for accessing the revision description.
 
   Creating a new revision updates the dialogue's description. Any new requests
   to :ref:`retrieve <dialogues-get>` the dialogue will return a dialogue
@@ -1138,7 +1134,7 @@ Ordering revisions
 
   .. sourcecode:: http
 
-     POST /projects/23/dialogues/21/revisions/ HTTP/1.1
+     POST /dialogues/21/revisions/ HTTP/1.1
      Content-Type: application/json
 
      {
@@ -1195,7 +1191,7 @@ Ordering revisions
 
   .. sourcecode:: http
 
-     POST /projects/23/dialogues/21/revisions/ HTTP/1.1
+     POST /dialogues/21/revisions/ HTTP/1.1
      Content-Type: application/json
 
      [{
@@ -1288,11 +1284,10 @@ Ordering revisions
 Releases
 --------
 
-.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
+.. http:get:: /dialogues/(str:dialogue_id)/releases/
 
   Retrieves the :ref:`descriptions <data-release>` of the :ref:`releases
-  <concepts-releases>` of dialogue ``dialogue_id`` in the project
-  ``project_id``.
+  <concepts-releases>` of dialogue ``dialogue_id``.
 
   .. sourcecode:: http
 
@@ -1306,7 +1301,7 @@ Releases
     [{
       "id": "1",
       "number": 1,
-      "url": "/projects/23/dialogues/21/releases/1",
+      "url": "/releases/1",
       "revision_id": "7"
     }]
 
@@ -1336,15 +1331,14 @@ Ordering releases
 | ``-created`` | Return releases in descending order of creation date       |
 +--------------+------------------------------------------------------------+
 
-.. http:get:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/(str:release_id)
+.. http:get:: /releases/(str:release_id)
 
   Retrieves the :ref:`description <data-release>` for the release with id
-  ``release_id`` for dialogue ``dialogue_id`` contained in the project with id
-  ``project_id``.
+  ``release_id``.
 
   .. sourcecode:: http
 
-      GET /projects/23/dialogues/21/releases/44 HTTP/1.1
+      GET /releases/44 HTTP/1.1
 
   .. sourcecode:: http
 
@@ -1354,7 +1348,7 @@ Ordering releases
      {
        "id": "1",
        "number": 1,
-       "url": "/projects/23/dialogues/21/releases/1",
+       "url": "/releases/1",
        "revision_id": "7",
        "created": 1460022608855
      }
@@ -1377,17 +1371,16 @@ Ordering releases
        }
      }
 
-.. http:post:: /projects/(str:project_id)/dialogues/(str:dialogue_id)/releases/
+.. http:post:: /dialogues/(str:dialogue_id)/releases/
 
-  Creates a new release for dialogue ``dialogue_id`` under the project with the
-  id ``project_id`` using the :ref:`description <data-release>` given in the
-  request body and returns the created releases's description, along with the
-  generated release ``id`` field and ``url`` field for accessing the release
-  description.
+  Creates a new release for dialogue ``dialogue_id`` using the
+  :ref:`description <data-release>` given in the request body and returns the
+  created releases's description, along with the generated release ``id`` field
+  and ``url`` field for accessing the release description.
 
   .. sourcecode:: http
 
-    POST /projects/23/dialogues/21/releases/ HTTP/1.1
+    POST /dialogues/21/releases/ HTTP/1.1
     Content-Type: application/json
 
     {
@@ -1404,7 +1397,7 @@ Ordering releases
       "number": 1,
       "revision_id": "7",
       "created": 1460022608855,
-      "url": "/projects/23/dialogues/21/releases/1"
+      "url": "/releases/1"
     }
 
 .. _channels:
