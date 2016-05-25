@@ -7,6 +7,7 @@ const { validationError } = require('src/middleware/api/errors');
 const { captureError } = require('tests/utils');
 const identity = require('lodash/identity');
 const { validate } = require('@praekelt/json-schema-utils');
+const { json_patch: patchSchema } = require('schemas').definitions;
 
 const {
   create,
@@ -209,12 +210,26 @@ describe('middlewares/api/methods', () => {
   });
 
   describe('patch', () => {
-    it('should validate the request body');
+    it('should validate the request body', done => {
+      const app = new Koa()
+        .use(validationError)
+        .use(bodyParser())
+        .use(_.post('/', patch(identity)));
+
+      request(app.listen())
+        .post('/')
+        .send({a: 23})
+        .expect(resp => {
+          const e = captureError(() => validate(patchSchema, {a: 23}));
+          expect(resp.body.details.errors).to.deep.equal(e.errors);
+        })
+        .end(done);
+    });
 
     it('should use the api call result as the response body', done => {
       const app = new Koa()
         .use(bodyParser())
-        .use(_.patch('/:a/:b', patch({}, (a, b, d) => Promise.resolve({
+        .use(_.patch('/:a/:b', patch((a, b, d) => Promise.resolve({
           a,
           b,
           d
@@ -222,11 +237,19 @@ describe('middlewares/api/methods', () => {
 
       request(app.listen())
         .patch('/2/3')
-        .send({foo: 23})
+        .send([{
+          op: 'add',
+          path: '/foo',
+          value: 23
+        }])
         .expect({
           a: 2,
           b: 3,
-          d: {foo: 23}
+          d: [{
+            op: 'add',
+            path: '/foo',
+            value: 23
+          }]
         })
         .end(done);
     });
