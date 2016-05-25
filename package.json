@@ -10,7 +10,8 @@
     "start": "NODE_PATH=. node src/index.js",
     "test": "NODE_ENV=test NODE_PATH=. mocha -R spec 'tests/**/*.test.js'",
     "lint": "NODE_PATH=. eslint 'schemas/**/*.js' 'src/**/*.js' 'tests/**/*.js'",
-    "ci": "npm run lint && npm test"
+    "ci": "npm run lint && npm test",
+    "build-schema": "json-schema-utils build schemas/src > schemas/schemas.json"
   },
   "repository": {
     "type": "git",

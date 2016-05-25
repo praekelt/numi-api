@@ -1,55 +1,53 @@
-const { read } = require('src/utils');
-const { resolve } = require('path');
-const deref = require('json-schema-deref-sync');
 const jsonPatch = require('./json-patch');
+const build = require('@praekelt/json-schema-utils/build');
 
 
-function readSchema(path) {
-  return read(resolve(__dirname, path));
-}
-
-
-module.exports = deref({
+module.exports = build(inDir(read => ({
   definitions: {
     json_patch: jsonPatch,
-    config: readSchema('./config.yml'),
-    release: readSchema('./release.yml'),
+    config: read('config'),
+    release: read('release'),
     user: {
-      summary: readSchema('./user/summary.yml')
+      summary: read('user/summary')
     },
     permission: {
-      permission: readSchema('./permission/permission.yml')
+      permission: read('permission/permission')
     },
     organization: {
-      summary: readSchema('./organization/summary.yml')
+      summary: read('organization/summary')
     },
     team: {
-      team: readSchema('./team/team.yml'),
-      summary: readSchema('./team/summary.yml')
+      team: read('team/team'),
+      summary: read('team/summary')
     },
     project: {
-      project: readSchema('./project/project.yml'),
-      summary: readSchema('./project/summary.yml')
+      project: read('project/project'),
+      summary: read('project/summary')
     },
     dialogue: {
-      dialogue: readSchema('./dialogue/dialogue.yml'),
-      summary: readSchema('./dialogue/summary.yml'),
-      sequence: readSchema('./dialogue/sequence.yml'),
-      block: readSchema('./dialogue/block.yml'),
-      symbol: readSchema('./dialogue/symbol.yml')
+      dialogue: read('dialogue/dialogue'),
+      summary: read('dialogue/summary'),
+      sequence: read('dialogue/sequence'),
+      block: read('dialogue/block'),
+      symbol: read('dialogue/symbol')
     },
     revision: {
-      revision: readSchema('./revision/revision.yml'),
-      revert: readSchema('./revision/revert.yml'),
-      edit: readSchema('./revision/edit.yml')
+      revision: read('revision/revision'),
+      revert: read('revision/revert'),
+      edit: read('revision/edit')
     },
     channel: {
-      channel: readSchema('./channel/channel.yml'),
-      summary: readSchema('./channel/summary.yml')
+      channel: read('channel/channel'),
+      summary: read('channel/summary')
     },
     provider: {
-      provider: readSchema('./provider/provider.yml'),
-      summary: readSchema('./provider/summary.yml')
+      provider: read('provider/provider'),
+      summary: read('provider/summary')
     }
   }
-});
+})));
+
+
+function inDir(fn) {
+  return read => fn(name => read(`${__dirname}/${name}`));
+}
