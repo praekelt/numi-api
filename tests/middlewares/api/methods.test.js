@@ -1,7 +1,13 @@
+const { expect } = require('chai');
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const _ = require('koa-route');
 const request = require('supertest');
+const { validationError } = require('src/middleware/api/errors');
+const { captureError } = require('tests/utils');
+const identity = require('lodash/identity');
+const { validate } = require('@praekelt/json-schema-utils');
+
 const {
   create,
   read,
@@ -13,9 +19,39 @@ const {
 
 describe('middlewares/api/methods', () => {
   describe('create', () => {
-    it('should validate the request body');
+    it('should validate the request body', done => {
+      const app = new Koa()
+        .use(validationError)
+        .use(bodyParser())
+        .use(_.post('/', create({type: 'string'}, identity)));
 
-    it('should apply defaults to the request body');
+      request(app.listen())
+        .post('/')
+        .send({a: 23})
+        .expect(resp => {
+          const e = captureError(() => validate({type: 'string'}, {a: 23}));
+          expect(resp.body.details.errors).to.deep.equal(e.errors);
+        })
+        .end(done);
+    });
+
+    it('should apply defaults to the request body', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.post('/', create({
+          type: 'object',
+          properties: {a: {default: 23}}
+        }, identity)));
+
+      request(app.listen())
+        .post('/')
+        .send({b: 21})
+        .expect({
+          a: 23,
+          b: 21
+        })
+        .end(done);
+    });
 
     it('should use the api call result as the response body', done => {
       const app = new Koa()
@@ -40,7 +76,7 @@ describe('middlewares/api/methods', () => {
     it('should set the status code to 201', done => {
       const app = new Koa()
         .use(bodyParser())
-        .use(_.post('/:a/:b', create({}, () => ({}))));
+        .use(_.post('/:a/:b', create({}, identity)));
 
       request(app.listen())
         .post('/2/3')
@@ -99,11 +135,57 @@ describe('middlewares/api/methods', () => {
   });
 
   describe('update', () => {
-    it('should omit read only fields');
+    it('should omit read only fields', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.post('/', update({
+          type: 'object',
+          properties: {a: {readOnly: true}}
+        }, identity)));
 
-    it('should validate the request body');
+      request(app.listen())
+        .post('/')
+        .send({
+          a: 23,
+          b: 21
+        })
+        .expect({b: 21})
+        .end(done);
+    });
 
-    it('should apply defaults to the request body');
+    it('should validate the request body', done => {
+      const app = new Koa()
+        .use(validationError)
+        .use(bodyParser())
+        .use(_.post('/', update({type: 'string'}, identity)));
+
+      request(app.listen())
+        .post('/')
+        .send({a: 23})
+        .expect(resp => {
+          const e = captureError(() => validate({type: 'string'}, {a: 23}));
+          expect(resp.body.details.errors).to.deep.equal(e.errors);
+        })
+        .end(done);
+    });
+
+    it('should apply defaults to the request body', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.post('/', update({
+          type: 'object',
+          properties: {a: {default: 23}}
+        }, identity)));
+
+      request(app.listen())
+        .post('/')
+        .send({b: 21})
+        .expect({
+          a: 23,
+          b: 21
+        })
+        .end(done);
+    });
 
     it('should use the api call result as the response body', done => {
       const app = new Koa()
