@@ -14,5 +14,5 @@ module.exports = [
   _.get('/projects/:id/teams/', read(projects.getTeams)),
   _.get('/projects/:id/channels/', read(projects.getChannels)),
   _.put('/projects/:id', update(schemas.project, projects.update)),
-  _.patch('/projects/:id', patch(schemas.project, projects.patch))
+  _.patch('/projects/:id', patch(projects.patch))
 ];

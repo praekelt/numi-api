@@ -27,5 +27,5 @@ module.exports = [
 
   _.patch(
     '/dialogues/:id',
-    patch(schemas.dialogue, dialogues.patch))
+    patch(dialogues.patch))
 ];
