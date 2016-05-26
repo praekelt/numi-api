@@ -11,9 +11,9 @@ describe('api.dialogues', () => {
     });
   });
 
-  describe('getAll', () => {
+  describe('list', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => dialogues.getAll())
+      expect(() => dialogues.list())
         .to.throw(NotImplementedError);
     });
   });

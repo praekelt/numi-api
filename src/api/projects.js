@@ -6,7 +6,7 @@ function create(d) {
 }
 
 
-function getAll(params) {
+function list(params) {
   throw new NotImplementedError();
 }
 
@@ -38,7 +38,7 @@ function patch(id, d) {
 
 module.exports = {
   create,
-  getAll,
+  list,
   get,
   getChannels,
   getTeams,

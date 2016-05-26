@@ -4,6 +4,6 @@ const { read } = require('src/middleware/api/methods');
 
 
 module.exports = [
-  _.get('/providers/', read(providers.getAll)),
+  _.get('/providers/', read(providers.list)),
   _.get('/providers/:id', read(providers.get))
 ];

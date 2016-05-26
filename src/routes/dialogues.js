@@ -11,7 +11,7 @@ module.exports = [
 
   _.get(
     '/projects/:project_id/dialogues/',
-    read(dialogues.getAll)),
+    read(dialogues.list)),
 
   _.get(
     '/dialogues/:id',

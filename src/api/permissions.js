@@ -6,7 +6,7 @@ function create(teamId, d) {
 }
 
 
-function getAll(teamId, params) {
+function list(teamId, params) {
   throw new NotImplementedError();
 }
 
@@ -23,7 +23,7 @@ function remove(teamId, id) {
 
 module.exports = {
   create,
-  getAll,
+  list,
   get,
   remove
 };

@@ -4,7 +4,7 @@ const { read } = require('src/middleware/api/methods');
 
 
 module.exports = [
-  _.get('/teams/', read(teams.getAll, () => ({
+  _.get('/teams/', read(teams.list, () => ({
     page: 1,
     per_page: 100
   }))),

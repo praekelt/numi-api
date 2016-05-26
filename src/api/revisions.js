@@ -6,12 +6,12 @@ function create(dialogueId, d) {
 }
 
 
-function getAll(dialogueId, params) {
+function list(dialogueId, params) {
   throw new NotImplementedError();
 }
 
 
 module.exports = {
   create,
-  getAll
+  list
 };

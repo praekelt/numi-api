@@ -6,7 +6,7 @@ const { create, read, update, patch } = require('src/middleware/api/methods');
 
 module.exports = [
   _.post('/projects/', create(schemas.project, projects.create)),
-  _.get('/projects/', read(projects.getAll, () => ({
+  _.get('/projects/', read(projects.list, () => ({
     page: 1,
     per_page: 100
   }))),
