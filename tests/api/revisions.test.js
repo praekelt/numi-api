@@ -11,9 +11,9 @@ describe('api.revisions', () => {
     });
   });
 
-  describe('getAll', () => {
+  describe('list', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => revisions.getAll())
+      expect(() => revisions.list())
         .to.throw(NotImplementedError);
     });
   });

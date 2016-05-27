@@ -11,9 +11,9 @@ describe('api.permissions', () => {
     });
   });
 
-  describe('getAll', () => {
+  describe('list', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => permissions.getAll())
+      expect(() => permissions.list())
         .to.throw(NotImplementedError);
     });
   });

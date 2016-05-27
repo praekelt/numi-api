@@ -11,7 +11,7 @@ module.exports = [
 
   _.get(
     '/teams/:team_id/permissions/',
-    read(permissions.getAll)),
+    read(permissions.list)),
 
   _.get(
     '/teams/:team_id/permissions/:id',

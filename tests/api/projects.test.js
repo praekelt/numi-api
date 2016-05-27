@@ -11,9 +11,9 @@ describe('api.projects', () => {
     });
   });
 
-  describe('getAll', () => {
+  describe('list', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => projects.getAll())
+      expect(() => projects.list())
         .to.throw(NotImplementedError);
     });
   });
