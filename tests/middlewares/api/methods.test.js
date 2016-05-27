@@ -4,7 +4,7 @@ const bodyParser = require('koa-bodyparser');
 const _ = require('koa-route');
 const request = require('supertest');
 const { validationError } = require('src/middleware/api/errors');
-const { captureError } = require('tests/utils');
+const attempt = require('lodash/attempt');
 const identity = require('lodash/identity');
 const { validate } = require('@praekelt/json-schema-utils');
 const { json_patch: patchSchema } = require('schemas').definitions;
@@ -32,7 +32,7 @@ describe('middlewares/api/methods', () => {
         .post('/')
         .send({a: 23})
         .expect(resp => {
-          const e = captureError(() => validate({type: 'string'}, {a: 23}));
+          const e = attempt(() => validate({type: 'string'}, {a: 23}));
           expect(resp.body.details.errors).to.deep.equal(e.errors);
         })
         .end(done);
@@ -106,7 +106,7 @@ describe('middlewares/api/methods', () => {
       request(app.listen())
         .get('/?a=21')
         .expect(resp => {
-          const e = captureError(() => validate(schema, {a: '21'}));
+          const e = attempt(() => validate(schema, {a: '21'}));
           expect(resp.body.details.errors).to.deep.equal(e.errors);
         })
         .end(done);
@@ -197,7 +197,7 @@ describe('middlewares/api/methods', () => {
         .post('/')
         .send({a: 23})
         .expect(resp => {
-          const e = captureError(() => validate({type: 'string'}, {a: 23}));
+          const e = attempt(() => validate({type: 'string'}, {a: 23}));
           expect(resp.body.details.errors).to.deep.equal(e.errors);
         })
         .end(done);
@@ -255,7 +255,7 @@ describe('middlewares/api/methods', () => {
         .post('/')
         .send({a: 23})
         .expect(resp => {
-          const e = captureError(() => validate(patchSchema, {a: 23}));
+          const e = attempt(() => validate(patchSchema, {a: 23}));
           expect(resp.body.details.errors).to.deep.equal(e.errors);
         })
         .end(done);
