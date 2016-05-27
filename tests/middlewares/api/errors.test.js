@@ -1,12 +1,17 @@
 const Koa = require('koa');
 const request = require('supertest');
+const { str } = require('src/utils');
 const {
   NotImplementedError,
-  ValidationError
+  ValidationError,
+  AuthenticationRequiredError,
+  AuthorizationError
 } = require('src/errors');
 const {
   notImplementedError,
-  validationError
+  validationError,
+  authenticationRequiredError,
+  authorizationError
 } = require('src/middleware/api/errors');
 
 
@@ -56,6 +61,42 @@ describe('middleware/api/errors', () => {
               message: "should be number"
             }]
           }
+        })
+        .end(done);
+    });
+  });
+
+  describe('authenticationRequiredError', () => {
+    it('should handle AuthenticationRequiredErrors', done => {
+      const app = new Koa()
+        .use(authenticationRequiredError)
+        .use(() => { throw new AuthenticationRequiredError(); });
+
+      request(app.listen())
+        .get('/')
+        .expect(401)
+        .expect({
+          type: 'authentication_required_error',
+          message: "Authentication details are required for the given request"
+        })
+        .end(done);
+    });
+  });
+
+  describe('authorizationError', () => {
+    it('should handle AuthorizationErrors', done => {
+      const app = new Koa()
+        .use(authorizationError)
+        .use(() => { throw new AuthorizationError(); });
+
+      request(app.listen())
+        .get('/')
+        .expect(403)
+        .expect({
+          type: 'authorization_error',
+          message: str`
+            The given authenticated details do not corresond to the required
+            permissions for the given request`
         })
         .end(done);
     });

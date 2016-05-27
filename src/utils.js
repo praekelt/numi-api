@@ -1,6 +1,7 @@
 const extend = require('lodash/extend');
 const { readFileSync: open } = require('fs');
 const { safeLoad: load } = require('js-yaml');
+const { Multiline: str } = require('multiline-tag');
 
 
 function conj(a, b) {
@@ -32,5 +33,6 @@ module.exports = {
   conj,
   trap,
   read,
-  effect
+  effect,
+  str
 };
