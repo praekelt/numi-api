@@ -92,6 +92,26 @@ describe('middlewares/api/methods', () => {
   });
 
   describe('read', () => {
+    it('should validate the request query parameters', done => {
+      const schema = {
+        type: 'object',
+        properties: {a: {enum: ['23']}}
+      };
+
+      const app = new Koa()
+        .use(validationError)
+        .use(bodyParser())
+        .use(_.get('/', read(identity, {schema})));
+
+      request(app.listen())
+        .get('/?a=21')
+        .expect(resp => {
+          const e = captureError(() => validate(schema, {a: '21'}));
+          expect(resp.body.details.errors).to.deep.equal(e.errors);
+        })
+        .end(done);
+    });
+
     it('should apply defaults to the request query parameters', done => {
       const app = new Koa()
         .use(_.get('/:a/:b', read((a, b, d) => Promise.resolve({
@@ -99,10 +119,13 @@ describe('middlewares/api/methods', () => {
           b,
           d
         }), {
-          defaults: () => ({
-            y: 20,
-            z: 22
-          })
+          schema: {
+            type: 'object',
+            properties: {
+              y: {default: 20},
+              z: {default: 22}
+            }
+          }
         })));
 
       request(app.listen())

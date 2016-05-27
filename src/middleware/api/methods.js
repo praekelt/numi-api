@@ -1,5 +1,5 @@
 const last = require('lodash/last');
-const { conj, effect } = require('src/utils');
+const { effect } = require('src/utils');
 const { json_patch: patchSchema } = require('schemas').definitions;
 const {
   omitReadOnly,
@@ -21,9 +21,10 @@ function create(fn, opts = {schema: {}}) {
 }
 
 
-function read(fn, opts = {defaults: () => ({})}) {
+function read(fn, opts = {schema: {}}) {
   return method(opts, (ctx, args, next) => Promise.resolve(ctx.request.query)
-    .then(d => conj(opts.defaults(), d))
+    .then(effect(d => validate(opts.schema, d)))
+    .then(d => defaults(opts.schema, d))
     .then(d => fn(...args, d))
     .then(res => { ctx.body = res; })
     .then(() => next()));
