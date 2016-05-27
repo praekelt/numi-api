@@ -10,15 +10,15 @@ module.exports = [
   })),
 
   _.get('/dialogue/:dialogue_id/releases/', read(releases.list, {
-      schema: {
-        type: 'object',
-        properties: {
-          page: {default: '1'},
-          per_page: {default: '100'},
-          ordering: {default: '-number'}
-        }
+    schema: {
+      type: 'object',
+      properties: {
+        page: {default: '1'},
+        per_page: {default: '100'},
+        ordering: {default: '-number'}
       }
-    })),
+    }
+  })),
 
   _.get('/releases/:id', read(releases.get))
 ];
