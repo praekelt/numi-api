@@ -5,23 +5,20 @@ const { create, read } = require('src/middleware/api/methods');
 
 
 module.exports = [
-  _.post(
-    '/dialogue/:dialogue_id/releases/',
-    create(schema, releases.create)),
+  _.post('/dialogue/:dialogue_id/releases/', create(releases.create, {
+    schema
+  })),
 
-  _.get(
-    '/dialogue/:dialogue_id/releases/',
-    read(releases.list, () => ({
-      page: 1,
-      per_page: 100,
-      ordering: '-number'
-    }))),
+  _.get('/dialogue/:dialogue_id/releases/', read(releases.list, {
+      schema: {
+        type: 'object',
+        properties: {
+          page: {default: '1'},
+          per_page: {default: '100'},
+          ordering: {default: '-number'}
+        }
+      }
+    })),
 
-  _.get(
-    '/releases/:id',
-    read(releases.get, () => ({
-      page: 1,
-      per_page: 100,
-      ordering: '-number'
-    })))
+  _.get('/releases/:id', read(releases.get))
 ];

@@ -4,7 +4,5 @@ const { read } = require('src/middleware/api/methods');
 
 
 module.exports = [
-  _.get(
-    '/user/permissions/',
-    read(user.getPermissions))
+  _.get('/user/permissions/', read(user.getPermissions))
 ];

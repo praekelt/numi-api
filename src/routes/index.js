@@ -9,7 +9,6 @@ const providers = require('src/routes/providers');
 
 
 module.exports = [].concat(...[
-  user,
   permissions,
   projects,
   dialogues,
