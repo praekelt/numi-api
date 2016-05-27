@@ -1,5 +1,5 @@
 const _ = require('koa-route');
-const { channel: {channel: schema} } = require('schemas').definitions;
+const { channel: { channel: schema } } = require('schemas').definitions;
 const { channels } = require('src/api');
 const { read, update, patch } = require('src/middleware/api/methods');
 

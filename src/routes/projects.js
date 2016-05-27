@@ -1,5 +1,5 @@
 const _ = require('koa-route');
-const { project: {project: schema} } = require('schemas').definitions;
+const { project: { project: schema } } = require('schemas').definitions;
 const { projects } = require('src/api');
 const { create, read, update, patch } = require('src/middleware/api/methods');
 
