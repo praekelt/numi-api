@@ -1,7 +1,11 @@
 const last = require('lodash/last');
 const { conj, effect } = require('src/utils');
-const { omitReadOnly, defaults, validate } = require('src/schema-utils');
-
+const { json_patch: patchSchema } = require('schemas').definitions;
+const {
+  omitReadOnly,
+  defaults,
+  validate
+} = require('@praekelt/json-schema-utils');
 
 function create(schema, fn) {
   return method((ctx, args, next) => Promise.resolve(ctx.request.body)
@@ -36,9 +40,9 @@ function update(schema, fn) {
 }
 
 
-function patch(schema, fn) {
+function patch(fn) {
   return method((ctx, args, next) => Promise.resolve(ctx.request.body)
-    .then(effect(d => validate(schema, d)))
+    .then(effect(d => validate(patchSchema, d)))
     .then(d => fn(...args, d))
     .then(res => { ctx.body = res; })
     .then(() => next()));

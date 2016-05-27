@@ -10,7 +10,8 @@
     "start": "NODE_PATH=. node src/index.js",
     "test": "NODE_ENV=test NODE_PATH=. mocha -R spec 'tests/**/*.test.js'",
     "lint": "NODE_PATH=. eslint 'schemas/**/*.js' 'src/**/*.js' 'tests/**/*.js'",
-    "ci": "npm run lint && npm test"
+    "ci": "npm run lint && npm test",
+    "build-schema": "json-schema-utils build schemas/src > schemas/schemas.json"
   },
   "repository": {
     "type": "git",
@@ -36,7 +37,8 @@
     "koa-logger": "^2.0.0",
     "koa-route": "^3.1.0",
     "lodash": "^4.11.2",
-    "snake-case": "^1.1.2"
+    "snake-case": "^1.1.2",
+    "@praekelt/json-schema-utils": "^0.1.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
