@@ -6,7 +6,7 @@ function create(projectId, d) {
 }
 
 
-function getAll(projectId, params) {
+function list(projectId, params) {
   throw new NotImplementedError();
 }
 
@@ -33,7 +33,7 @@ function patch(id, d) {
 
 module.exports = {
   create,
-  getAll,
+  list,
   get,
   getTeams,
   update,

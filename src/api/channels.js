@@ -1,7 +1,7 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function getAll(params) {
+function list(params) {
   throw new NotImplementedError();
 }
 
@@ -22,7 +22,7 @@ function patch(id, d) {
 
 
 module.exports = {
-  getAll,
+  list,
   get,
   update,
   patch

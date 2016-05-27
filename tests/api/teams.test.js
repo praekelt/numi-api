@@ -4,9 +4,9 @@ const { NotImplementedError } = require('src/errors');
 
 
 describe('api.teams', () => {
-  describe('getAll', () => {
+  describe('list', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => teams.getAll())
+      expect(() => teams.list())
         .to.throw(NotImplementedError);
     });
   });

@@ -11,9 +11,9 @@ describe('api.releases', () => {
     });
   });
 
-  describe('getAll', () => {
+  describe('list', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => releases.getAll())
+      expect(() => releases.list())
         .to.throw(NotImplementedError);
     });
   });

@@ -4,9 +4,9 @@ const { NotImplementedError } = require('src/errors');
 
 
 describe('api.providers', () => {
-  describe('getAll', () => {
+  describe('list', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => providers.getAll())
+      expect(() => providers.list())
         .to.throw(NotImplementedError);
     });
   });

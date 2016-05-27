@@ -11,7 +11,7 @@ module.exports = [
 
   _.get(
     '/dialogue/:dialogue_id/revisions/',
-    read(revisions.getAll, () => ({
+    read(revisions.list, () => ({
       page: 1,
       per_page: 100,
       ordering: '-number'

@@ -4,9 +4,9 @@ const { NotImplementedError } = require('src/errors');
 
 
 describe('api.channels', () => {
-  describe('getAll', () => {
+  describe('list', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => channels.getAll())
+      expect(() => channels.list())
         .to.throw(NotImplementedError);
     });
   });
