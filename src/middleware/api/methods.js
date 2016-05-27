@@ -1,5 +1,5 @@
-const last = require('lodash/last');
 const { effect } = require('src/utils');
+const method = require('src/middleware/util/method');
 const { json_patch: patchSchema } = require('schemas').definitions;
 const {
   omitReadOnly,
@@ -56,11 +56,6 @@ function remove(fn, opts = {}) {
     .then(() => fn(...args))
     .then(res => { ctx.body = res; })
     .then(() => next()));
-}
-
-
-function method(opts, fn) {
-  return (ctx, ...args) => fn(ctx, args.slice(0, -1), last(args));
 }
 
 
