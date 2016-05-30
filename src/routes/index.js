@@ -9,8 +9,8 @@ const providers = require('src/routes/providers');
 
 
 module.exports = [].concat(...[
-  user,
   permissions,
+  user,
   projects,
   dialogues,
   revisions,

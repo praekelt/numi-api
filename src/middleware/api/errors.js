@@ -1,7 +1,10 @@
 const error = require('src/middleware/util/error');
+const { str } = require('src/utils');
 const {
   NotImplementedError,
-  ValidationError
+  ValidationError,
+  AuthorizationError,
+  AuthenticationRequiredError
 } = require('src/errors');
 
 
@@ -25,7 +28,42 @@ function validationError(ctx, e) {
 }
 
 
+function authenticationRequiredError(ctx, e) {
+  ctx.status = 401;
+
+  ctx.body = {
+    type: 'authentication_required_error',
+    message: "Authentication details are required for the given request"
+  };
+}
+
+
+function authorizationError(ctx, e) {
+  ctx.status = 403;
+
+  ctx.body = {
+    type: 'authorization_error',
+    message: str`
+      The given authenticated details do not corresond to the required
+      permissions for the given request`
+  };
+}
+
+
 module.exports = {
-  notImplementedError: error(NotImplementedError, notImplementedError),
-  validationError: error(ValidationError, validationError)
+  notImplementedError: error(
+    NotImplementedError,
+    notImplementedError),
+
+  validationError: error(
+    ValidationError,
+    validationError),
+
+  authorizationError: error(
+    AuthorizationError,
+    authorizationError),
+
+  authenticationRequiredError: error(
+    AuthenticationRequiredError,
+    authenticationRequiredError)
 };

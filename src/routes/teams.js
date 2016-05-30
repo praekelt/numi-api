@@ -4,9 +4,15 @@ const { read } = require('src/middleware/api/methods');
 
 
 module.exports = [
-  _.get('/teams/', read(teams.list, () => ({
-    page: 1,
-    per_page: 100
-  }))),
+  _.get('/teams/', read(teams.list, {
+    schema: {
+      type: 'object',
+      properties: {
+        page: {default: '1'},
+        per_page: {default: '100'}
+      }
+    }
+  })),
+
   _.get('/teams/:id', read(teams.get))
 ];

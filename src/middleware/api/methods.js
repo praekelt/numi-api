@@ -1,16 +1,18 @@
-const last = require('lodash/last');
-const { conj, effect } = require('src/utils');
+const { effect } = require('src/utils');
+const method = require('src/middleware/util/method');
 const { json_patch: patchSchema } = require('schemas').definitions;
+
 const {
   omitReadOnly,
   defaults,
   validate
 } = require('@praekelt/json-schema-utils');
 
-function create(schema, fn) {
-  return method((ctx, args, next) => Promise.resolve(ctx.request.body)
-    .then(effect(d => validate(schema, d)))
-    .then(d => defaults(schema, d))
+
+function create(fn, opts = {schema: {}}) {
+  return method(opts, (ctx, args, next) => Promise.resolve(ctx.request.body)
+    .then(effect(d => validate(opts.schema, d)))
+    .then(d => defaults(opts.schema, d))
     .then(d => fn(...args, d))
     .then(res => {
       ctx.status = 201;
@@ -20,28 +22,29 @@ function create(schema, fn) {
 }
 
 
-function read(fn, defaults = () => ({})) {
-  return method((ctx, args, next) => Promise.resolve(ctx.request.query)
-    .then(d => conj(defaults(), d))
+function read(fn, opts = {schema: {}}) {
+  return method(opts, (ctx, args, next) => Promise.resolve(ctx.request.query)
+    .then(effect(d => validate(opts.schema, d)))
+    .then(d => defaults(opts.schema, d))
     .then(d => fn(...args, d))
     .then(res => { ctx.body = res; })
     .then(() => next()));
 }
 
 
-function update(schema, fn) {
-  return method((ctx, args, next) => Promise.resolve(ctx.request.body)
-    .then(d => omitReadOnly(schema, d))
-    .then(effect(d => validate(schema, d)))
-    .then(d => defaults(schema, d))
+function update(fn, opts = {schema: {}}) {
+  return method(opts, (ctx, args, next) => Promise.resolve(ctx.request.body)
+    .then(d => omitReadOnly(opts.schema, d))
+    .then(effect(d => validate(opts.schema, d)))
+    .then(d => defaults(opts.schema, d))
     .then(d => fn(...args, d))
     .then(res => { ctx.body = res; })
     .then(() => next()));
 }
 
 
-function patch(fn) {
-  return method((ctx, args, next) => Promise.resolve(ctx.request.body)
+function patch(fn, opts = {}) {
+  return method(opts, (ctx, args, next) => Promise.resolve(ctx.request.body)
     .then(effect(d => validate(patchSchema, d)))
     .then(d => fn(...args, d))
     .then(res => { ctx.body = res; })
@@ -49,16 +52,11 @@ function patch(fn) {
 }
 
 
-function remove(fn) {
-  return method((ctx, args, next) => Promise.resolve()
+function remove(fn, opts = {}) {
+  return method(opts, (ctx, args, next) => Promise.resolve()
     .then(() => fn(...args))
     .then(res => { ctx.body = res; })
     .then(() => next()));
-}
-
-
-function method(fn) {
-  return (ctx, ...args) => fn(ctx, args.slice(0, -1), last(args));
 }
 
 
