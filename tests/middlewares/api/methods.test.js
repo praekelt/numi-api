@@ -78,6 +78,22 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
+    it('should provide auth to the api function', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = {foo: 23};
+          return next();
+        })
+        .use(_.post('/', create((d, opts) => opts.auth)));
+
+      request(app.listen())
+        .post('/')
+        .send({})
+        .expect({foo: 23})
+        .end(done);
+    });
+
     it('should set the status code to 201', done => {
       const app = new Koa()
         .use(bodyParser())
@@ -162,6 +178,21 @@ describe('middlewares/api/methods', () => {
         })
         .end(done);
     });
+
+    it('should provide auth to the api function', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = {foo: 23};
+          return next();
+        })
+        .use(_.get('/', read((d, opts) => opts.auth)));
+
+      request(app.listen())
+        .get('/')
+        .expect({foo: 23})
+        .end(done);
+    });
   });
 
   describe('update', () => {
@@ -242,6 +273,22 @@ describe('middlewares/api/methods', () => {
         })
         .end(done);
     });
+
+    it('should provide auth to the api function', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = {foo: 23};
+          return next();
+        })
+        .use(_.put('/', update((d, opts) => opts.auth)));
+
+      request(app.listen())
+        .put('/')
+        .send({})
+        .expect({foo: 23})
+        .end(done);
+    });
   });
 
   describe('patch', () => {
@@ -288,6 +335,22 @@ describe('middlewares/api/methods', () => {
         })
         .end(done);
     });
+
+    it('should provide auth to the api function', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = {foo: 23};
+          return next();
+        })
+        .use(_.patch('/', patch((d, opts) => opts.auth)));
+
+      request(app.listen())
+        .patch('/')
+        .send([])
+        .expect({foo: 23})
+        .end(done);
+    });
   });
 
   describe('remove', () => {
@@ -304,6 +367,21 @@ describe('middlewares/api/methods', () => {
           a: 2,
           b: 3
         })
+        .end(done);
+    });
+
+    it('should provide auth to the api function', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = {foo: 23};
+          return next();
+        })
+        .use(_.delete('/', remove(opts => opts.auth)));
+
+      request(app.listen())
+        .delete('/')
+        .expect({foo: 23})
         .end(done);
     });
   });
