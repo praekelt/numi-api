@@ -19,7 +19,8 @@ function authUser({auth = coreAuth} = {}) {
 
 
 function fromToken(auth, token) {
-  return auth.user.get({conf: {token}});
+  return auth.user.get({conf: {token}})
+    .then(d => d.data);
 }
 
 

@@ -8,15 +8,17 @@ describe('authUser', () => {
   it("should get the user from a token", () => {
     const auth = {
       user: {
-        get: ({conf: {token: token}}) => ({fakeToken: 'fake-user'}[token])
+        get: ({conf: {token: token}}) => Promise.resolve({
+          fakeToken: {data: 'fake-user'}
+        }[token])
       }
     };
 
-    expect(authUser({auth})({
+    return authUser({auth})({
         type: 'token',
         value: 'fakeToken'
-      }))
-      .to.equal('fake-user');
+      })
+      .then(res => expect(res).to.equal('fake-user'));
   });
 
 
