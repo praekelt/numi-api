@@ -34,3 +34,4 @@ rules:
   brace-style: 0
   quotes: 0
   no-confusing-arrow: 0
+  indent: 0
