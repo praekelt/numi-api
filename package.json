@@ -28,6 +28,7 @@
   "homepage": "https://github.com/praekelt/numi-api#readme",
   "dependencies": {
     "@praekelt/json-schema-utils": "^0.1.0",
+    "@praekelt/seed-auth-js": "^0.1.0",
     "ajv": "^4.0.5",
     "js-yaml": "^3.6.0",
     "json-schema-defaults": "^0.1.1",
