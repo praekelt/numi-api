@@ -12,7 +12,7 @@ function authUser({auth = coreAuth} = {}) {
         return fromToken(auth, token);
 
       default:
-        throw new UnsupportedAuthTypeError(type);
+        return Promise.reject(new UnsupportedAuthTypeError(type));
     }
   };
 }

@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const { fail } = expect;
 const { UnsupportedAuthTypeError } = require('src/errors');
 const authUser = require('src/core/auth-user');
 
@@ -19,11 +20,11 @@ describe('authUser', () => {
   });
 
 
-  it("should raise an UnsupportedAuthTypeError for unsupported types", () => {
-    expect(() => authUser({auth: {}})({
+  it("should reject with UnsupportedAuthTypeError for unsupported types", () => {
+    return authUser({auth: {}})({
         type: 'unknown',
         value: null
-      }))
-      .to.throw(UnsupportedAuthTypeError);
+      })
+      .then(fail, e => expect(e).to.be.instanceof(UnsupportedAuthTypeError));
   });
 });
