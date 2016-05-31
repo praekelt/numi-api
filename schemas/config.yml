@@ -1,7 +1,14 @@
 type: object
+
 properties:
   port:
     type: number
     default: 2332
     description: |
       The port that the API should listen on
+
+  authUrl:
+    type: string
+    default: 'http://localhost:8000'
+    description: |
+      Base url for the auth api.

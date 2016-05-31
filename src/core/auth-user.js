@@ -2,7 +2,7 @@ const coreAuth = require('src/core/auth');
 const { UnsupportedAuthTypeError } = require('src/errors');
 
 
-function authUser({auth = coreAuth}) {
+function authUser({auth = coreAuth} = {}) {
   return ({
     type,
     value: token
