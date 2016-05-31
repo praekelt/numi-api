@@ -2,7 +2,7 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const request = require('supertest');
 const constant = require('lodash/constant');
-const user = require('src/middleware/util/user');
+const user = require('src/middleware/api/user');
 
 
 describe('middlewares/util/user', () => {

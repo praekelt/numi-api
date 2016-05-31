@@ -1,6 +1,6 @@
 const Koa = require('koa');
 const request = require('supertest');
-const auth = require('src/middleware/util/auth');
+const auth = require('src/middleware/api/auth');
 const multicb = require('multicb');
 
 
