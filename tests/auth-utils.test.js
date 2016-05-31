@@ -2,7 +2,7 @@ const constant = require('lodash/constant');
 const { expect } = require('chai');
 const { fail } = expect;
 const { UnsupportedAuthTypeError } = require('src/errors');
-const { authUser, getConf } = require('src/core/auth-utils');
+const { authUser, getConf } = require('src/auth-utils');
 
 
 describe('core/auth-utils', () => {

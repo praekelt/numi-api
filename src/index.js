@@ -6,8 +6,8 @@ const routes = require('src/routes');
 const errors = require('src/middleware/api/errors');
 const setAuth = require('src/middleware/api/auth');
 const setUser = require('src/middleware/api/user');
-const { authUser } = require('src/core/auth-utils');
-const auth = require('src/core/auth');
+const { authUser } = require('src/auth-utils');
+const auth = require('src/auth');
 const values = require('lodash/values');
 
 
