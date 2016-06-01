@@ -1,7 +1,7 @@
 const _ = require('koa-route');
 const { dialogue: { dialogue: schema } } = require('schemas').definitions;
 const { dialogues } = require('src/api');
-const { create, read, update, patch } = require('src/middleware/api/methods');
+const { create, read, update, patch } = require('src/middlewares/methods');
 
 
 module.exports = [

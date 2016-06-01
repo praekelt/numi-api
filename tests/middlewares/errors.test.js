@@ -14,10 +14,10 @@ const {
   authenticationRequiredError,
   authorizationError,
   unsupportedAuthTypeError
-} = require('src/middleware/api/errors');
+} = require('src/middlewares/errors');
 
 
-describe('middleware/api/errors', () => {
+describe('middlewares/errors', () => {
   describe('notImplementedError', () => {
     it('should handle NotImplementedErrors', done => {
       const app = new Koa()

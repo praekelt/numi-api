@@ -2,10 +2,10 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const request = require('supertest');
 const constant = require('lodash/constant');
-const user = require('src/middleware/api/user');
+const user = require('src/middlewares/user');
 
 
-describe('middlewares/util/user', () => {
+describe('middlewares/user', () => {
   it("should set the user data on the context", done => {
     const app = new Koa()
       .use(bodyParser())

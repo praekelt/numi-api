@@ -1,6 +1,6 @@
 const get = require('lodash/get');
 const { effect } = require('src/utils');
-const method = require('src/middleware/util/method');
+const method = require('src/middlewares/method');
 const { json_patch: patchSchema } = require('schemas').definitions;
 
 const {

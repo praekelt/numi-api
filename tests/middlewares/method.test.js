@@ -3,15 +3,15 @@ const bodyParser = require('koa-bodyparser');
 const request = require('supertest');
 const _ = require('koa-route');
 const constant = require('lodash/constant');
-const method = require('src/middleware/util/method');
+const method = require('src/middlewares/method');
 const multicb = require('multicb');
 const {
   authenticationRequiredError,
   authorizationError
-} = require('src/middleware/api/errors');
+} = require('src/middlewares/errors');
 
 
-describe('middlewares/util/methods', () => {
+describe('middlewares/methods', () => {
   it("should call the given method function", done => {
     const app = new Koa()
       .use(_.get('/:a/:b', method(null, (ctx, args, next) => {

@@ -1,9 +1,9 @@
 const Koa = require('koa');
 const request = require('supertest');
-const next = require('src/middleware/util/next');
+const next = require('src/middlewares/next');
 
 
-describe('middleware/util/next', () => {
+describe('middlewares/next', () => {
   it('should be a noop', done => {
     const app = new Koa()
       .use(next)

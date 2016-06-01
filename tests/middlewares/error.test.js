@@ -1,9 +1,9 @@
 const Koa = require('koa');
 const request = require('supertest');
-const error = require('src/middleware/util/error');
+const error = require('src/middlewares/error');
 
 
-describe('middleware/util/error', () => {
+describe('middlewares/error', () => {
   it('should handle the errors of the given type with the given handler',
   done => {
     class FooError extends Error {}

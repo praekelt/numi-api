@@ -3,7 +3,7 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const _ = require('koa-route');
 const request = require('supertest');
-const { validationError } = require('src/middleware/api/errors');
+const { validationError } = require('src/middlewares/errors');
 const attempt = require('lodash/attempt');
 const identity = require('lodash/identity');
 const { validate } = require('@praekelt/json-schema-utils');
@@ -15,7 +15,7 @@ const {
   update,
   patch,
   remove
-} = require('src/middleware/api/methods');
+} = require('src/middlewares/methods');
 
 
 describe('middlewares/api/methods', () => {
