@@ -5,13 +5,15 @@ const {
   NotImplementedError,
   ValidationError,
   AuthenticationRequiredError,
-  AuthorizationError
+  AuthorizationError,
+  UnsupportedAuthTypeError
 } = require('src/errors');
 const {
   notImplementedError,
   validationError,
   authenticationRequiredError,
-  authorizationError
+  authorizationError,
+  unsupportedAuthTypeError
 } = require('src/middleware/api/errors');
 
 
@@ -97,6 +99,24 @@ describe('middleware/api/errors', () => {
           message: str`
             The given authenticated details do not corresond to the required
             permissions for the given request`
+        })
+        .end(done);
+    });
+  });
+
+  describe('unsupportedAuthTypeError', () => {
+    it('should handle UnsupportedAuthTypeErrors', done => {
+      const app = new Koa()
+        .use(unsupportedAuthTypeError)
+        .use(() => { throw new UnsupportedAuthTypeError('foo'); });
+
+      request(app.listen())
+        .get('/')
+        .expect(401)
+        .expect({
+          type: 'unsupported_auth_type',
+          message: "Authentication type 'foo' is not supported",
+          details: {type: 'foo'}
         })
         .end(done);
     });

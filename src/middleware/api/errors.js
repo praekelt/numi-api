@@ -4,7 +4,8 @@ const {
   NotImplementedError,
   ValidationError,
   AuthorizationError,
-  AuthenticationRequiredError
+  AuthenticationRequiredError,
+  UnsupportedAuthTypeError
 } = require('src/errors');
 
 
@@ -38,6 +39,17 @@ function authenticationRequiredError(ctx, e) {
 }
 
 
+function unsupportedAuthTypeError(ctx, e) {
+  ctx.status = 401;
+
+  ctx.body = {
+    type: 'unsupported_auth_type',
+    message: `Authentication type '${e.type}' is not supported`,
+    details: {type: e.type}
+  };
+}
+
+
 function authorizationError(ctx, e) {
   ctx.status = 403;
 
@@ -65,5 +77,9 @@ module.exports = {
 
   authenticationRequiredError: error(
     AuthenticationRequiredError,
-    authenticationRequiredError)
+    authenticationRequiredError),
+
+  unsupportedAuthTypeError: error(
+    UnsupportedAuthTypeError,
+    unsupportedAuthTypeError)
 };
