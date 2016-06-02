@@ -1,6 +1,6 @@
 const _ = require('koa-route');
 const { teams } = require('src/api');
-const { read } = require('src/middleware/api/methods');
+const { read } = require('src/middlewares/methods');
 
 
 module.exports = [

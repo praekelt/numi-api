@@ -1,10 +1,10 @@
 const Koa = require('koa');
 const request = require('supertest');
-const auth = require('src/middleware/api/auth');
+const auth = require('src/middlewares/auth');
 const multicb = require('multicb');
 
 
-describe('middlewares/util/auth', () => {
+describe('middlewares/auth', () => {
   it("should set the auth data on the context", done => {
     const app = new Koa()
       .use(auth())

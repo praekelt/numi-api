@@ -1,4 +1,4 @@
-const error = require('src/middleware/util/error');
+const error = require('src/middlewares/error');
 const { str } = require('src/utils');
 const {
   NotImplementedError,
