@@ -3,7 +3,7 @@ const constant = require('lodash/constant');
 const permission = require('src/permissions/permission');
 
 
-describe("permission", () => {
+describe("permissions.permission", () => {
   it("should return true if the user is admin", () => {
     expect(permission(constant([{
         type: 'foo',
@@ -46,10 +46,12 @@ describe("permission", () => {
       }, {
         admin: false,
         permissions: [{
+          id: 1,
           type: 'foo',
           namespace: 'a',
           object_id: 21
         }, {
+          id: 2,
           type: 'bar',
           namespace: 'b',
           object_id: 23
@@ -63,10 +65,12 @@ describe("permission", () => {
       }, {
         admin: false,
         permissions: [{
+          id: 1,
           type: 'foo',
           namespace: 'a',
           object_id: 23
         }, {
+          id: 2,
           type: 'bar',
           namespace: 'b',
           object_id: 21

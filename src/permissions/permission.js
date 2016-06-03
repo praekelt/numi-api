@@ -1,8 +1,6 @@
 const has = require('lodash/has');
 const find = require('lodash/find');
 const extend = require('lodash/extend');
-const isEqual = require('lodash/isEqual');
-const intersectionBy = require('lodash/intersectionBy');
 const config = require('src/config');
 
 
@@ -13,15 +11,18 @@ const configNamespaces = {
 
 
 function permission(def, namespaces = configNamespaces) {
-  const fn = (ctx, user) => (user.admin
-     || hasIntersection(user.permissions, parsePermissions(def(ctx), namespaces)));
+  const fn = (ctx, user) => (
+        user.admin
+     || permissionsIntersect(user, def(ctx), namespaces));
 
   return extend(fn, {definition: def});
 }
 
 
-function parsePermissions(permissions, namespaces) {
-  return permissions.map(d => parsePermission(d, namespaces));
+function permissionsIntersect(user, permissions, namespaces) {
+  return hasIntersection(
+    user.permissions.map(parseUserPermission),
+    permissions.map(d => parsePermission(d, namespaces)));
 }
 
 
@@ -34,6 +35,15 @@ function parsePermission({type, object_id, namespace}, namespaces) {
     type,
     object_id,
     namespace: namespaces[namespace]
+  };
+}
+
+
+function parseUserPermission({type, object_id, namespace}) {
+  return {
+    type,
+    object_id,
+    namespace
   };
 }
 
