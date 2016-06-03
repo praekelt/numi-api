@@ -302,7 +302,7 @@ The following permissions are obtainable via this API:
 
 ``project:admin``
 *****************
-  Grants create, archive, read, write and publish access for a given project's dialogues.
+  Grants create, archive, write and publish access for a given project's dialogues.
 
 .. _permissions-project-read:
 
@@ -315,18 +315,6 @@ Grants read access for a given project and its dialogues.
 ``project:write``
 *****************
 Grants write access for a given project and its dialogues.
-
-.. _permissions-dialogue-read:
-
-``dialogue:read``
-*****************
-Grants read access for a given dialogue.
-
-.. _permissions-dialogue-write:
-
-``dialogue:write``
-******************
-Grants write access for a given dialogue.
 
 .. _teams:
 
