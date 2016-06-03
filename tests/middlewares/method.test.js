@@ -2,7 +2,6 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const request = require('supertest');
 const _ = require('koa-route');
-const constant = require('lodash/constant');
 const method = require('src/middlewares/method');
 const multicb = require('multicb');
 const {
@@ -25,7 +24,8 @@ describe('middlewares/methods', () => {
       .end(done);
   });
 
-  it("should assume authentication is needed if a permission is given", done => {
+  it("should assume authentication is needed if access options are given",
+  done => {
     const next = multicb();
 
     const app = new Koa()
@@ -35,7 +35,12 @@ describe('middlewares/methods', () => {
         if (ctx.request.body.isLeet) ctx.user = {a: 23};
         return next();
       })
-      .use(_.put('/', method({permission: constant(true)}, ctx => {
+      .use(_.put('/', method({
+        access: {
+          permission: true,
+          context: null
+        }
+      }, ctx => {
         ctx.body = {a: 23};
       })));
 
@@ -55,7 +60,7 @@ describe('middlewares/methods', () => {
     next(done);
   });
 
-  it("should support permission checking", done => {
+  it("should support access checking", done => {
     const next = multicb();
 
     const app = new Koa()
@@ -65,18 +70,29 @@ describe('middlewares/methods', () => {
         ctx.user = ctx.request.body;
         return next();
       })
-      .use(_.put('/', method({permission: d => d.isLeet}, ctx => {
+      .use(_.put('/:id', method({
+        access: {
+          context: id => Promise.resolve({id}),
+          permission: ({id}, {isLeet}) => Promise.resolve(id === '21' && isLeet)
+        }
+      }, ctx => {
         ctx.body = {a: 23};
       })));
 
     request(app.listen())
-      .put('/')
+      .put('/21')
       .send({isLeet: false})
       .expect(403)
       .end(next());
 
     request(app.listen())
-      .put('/')
+      .put('/23')
+      .send({isLeet: true})
+      .expect(403)
+      .end(next());
+
+    request(app.listen())
+      .put('/21')
       .send({isLeet: true})
       .expect(200)
       .expect({a: 23})
