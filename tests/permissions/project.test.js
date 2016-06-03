@@ -5,7 +5,7 @@ const { project } = require('src/permissions');
 describe("permissions.project", () => {
   describe("create", () => {
     it("should define the permissions needed to create", () => {
-      expect(project.create().definition({organizationId: 21}))
+      expect(project.create.definition({organizationId: 21}))
         .to.deep.equal([{
           namespace: 'auth',
           type: 'org:admin',
@@ -16,7 +16,7 @@ describe("permissions.project", () => {
 
   describe("read", () => {
     it("should define the permissions needed to read", () => {
-      expect(project.create().definition({
+      expect(project.read.definition({
           organizationId: 21,
           projectId: 23
         }))
@@ -42,7 +42,7 @@ describe("permissions.project", () => {
 
   describe("write", () => {
     it("should define the permissions needed to write", () => {
-      expect(project.create().definition({
+      expect(project.write.definition({
           organizationId: 21,
           projectId: 23
         }))
