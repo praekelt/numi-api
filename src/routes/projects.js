@@ -5,7 +5,7 @@ const { create, read, update, patch } = require('src/middlewares/methods');
 
 
 module.exports = [
-  _.post('/projects/', create(projects.create, {
+  _.post('/organizations/:orgId/projects/', create(projects.create, {
     schema
   })),
 

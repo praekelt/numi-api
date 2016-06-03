@@ -1,7 +1,7 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function create(d) {
+function create(orgId, d) {
   throw new NotImplementedError();
 }
 
