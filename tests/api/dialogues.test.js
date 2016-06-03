@@ -25,9 +25,9 @@ describe('api.dialogues', () => {
     });
   });
 
-  describe('getTeams', () => {
+  describe('listTeams', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => dialogues.getTeams())
+      expect(() => dialogues.listTeams())
         .to.throw(NotImplementedError);
     });
   });

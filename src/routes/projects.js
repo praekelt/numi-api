@@ -21,9 +21,9 @@ module.exports = [
 
   _.get('/projects/:id', read(projects.get)),
 
-  _.get('/projects/:id/teams/', read(projects.getTeams)),
+  _.get('/projects/:id/teams/', read(projects.listTeams)),
 
-  _.get('/projects/:id/channels/', read(projects.getChannels)),
+  _.get('/projects/:id/channels/', read(projects.listChannels)),
 
   _.put('/projects/:id', update(projects.update, {
     schema
