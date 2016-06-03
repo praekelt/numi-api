@@ -304,17 +304,17 @@ The following permissions are obtainable via this API:
 *****************
   Grants create, archive, read, write and publish access for a given project's dialogues.
 
-.. _permissions-project-dialogues-read:
+.. _permissions-project-read:
 
-``project:dialogues:read``
-**************************
-Grants read access for a given project's dialogues.
+``project:read``
+****************
+Grants read access for a given project and its dialogues.
 
-.. _permissions-project-dialogues-write:
+.. _permissions-project-write:
 
-``project:dialogues:write``
-***************************
-Grants write access for a given project's dialogues.
+``project:write``
+*****************
+Grants write access for a given project and its dialogues.
 
 .. _permissions-dialogue-read:
 
@@ -426,7 +426,7 @@ Permissions
      [{
        "id": 44,
        "object_id": 21,
-       "type": "project:dialogues:write"
+       "type": "project:write"
      }]
 
 .. http:get:: /team/(str:team_id)/permissions/
@@ -536,10 +536,12 @@ Projects
 
      [{
        "id": "1",
+       "organization_id": "21",
        "title": "Maternal Health ZA",
        "url": "/projects/1"
      }, {
        "id": "2",
+       "organization_id": "21",
        "title": "Maternal Health MX",
        "url": "/projects/2",
      }]
@@ -557,6 +559,12 @@ Projects
   Retrieves the :ref:`description <data-project>` of the project with id
   ``project_id``.
 
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the project's organization
+    - ``project:admin`` for the project
+    - ``project:write`` for the project
+    - ``project:read`` for the project
+
   .. sourcecode:: http
 
      GET /projects/23 HTTP/1.1
@@ -568,6 +576,7 @@ Projects
 
      {
        "id": "23",
+       "organization_id": "21",
        "title": "Maternal Health ZA"
        "url": "/projects/23",
        "is_archived": false,
@@ -603,10 +612,11 @@ Projects
   Retrieves the :ref:`summaries <data-team-summary>` of all teams with
   permissions related to the project with id ``project_id``.
 
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>` or :ref:`project admin
-  <permissions-project-admin>` permission for the project with id
-  ``project_id``.
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the project's organization
+    - ``project:admin`` for the project
+    - ``project:write`` for the project
+    - ``project:read`` for the project
 
   .. sourcecode:: http
 
@@ -637,19 +647,20 @@ Projects
        }
      }]
 
-.. http:post:: /projects/
+.. http:post:: /organizations/(str:organization_id)/projects/
 
   Creates a new project with the :ref:`project description <data-project>`
-  given in the request body and returns the created projects's description,
+  given in the request body underneath the organization with the id
+  ``organization_id`` using the and returns the created projects's description,
   along with the generated dialogue ``id`` field and ``url`` field for
   accessing the project description.
 
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>`.
+  Accessible to admins and teams with ``org:admin`` permission for the
+  organization.
 
   .. sourcecode:: http
 
-     POST /projects/ HTTP/1.1
+     POST /organizations/21/projects/ HTTP/1.1
      Content-Type: application/json
 
      {
@@ -663,6 +674,7 @@ Projects
 
      {
        "id": "23",
+       "organization_id": "21",
        "url": "/projects/23",
        "title": "Maternal Health ZA",
        "dialogues": [],
@@ -677,6 +689,11 @@ Projects
   ``project_id`` with the description given in the request body and returns the
   given description, along with the projects's ``id`` and the ``url`` for
   accessing the projects's description.
+
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the project's organization
+    - ``project:admin`` for the project
+    - ``project:write`` for the project
 
   .. sourcecode:: http
 
@@ -695,6 +712,7 @@ Projects
 
      {
        "id": "23",
+       "organization_id": "21",
        "title": "Maternal Health ZA"
        "url": "/projects/23",
        "is_archived": false,
@@ -719,6 +737,11 @@ Projects
   the request body and returns the given description, along with the projects's
   ``id`` and the ``url`` for accessing the project's description.
 
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the project's organization
+    - ``project:admin`` for the project
+    - ``project:write`` for the project
+
 .. sourcecode:: http
 
    PATCH /projects/23 HTTP/1.1
@@ -737,6 +760,7 @@ Projects
 
    {
      "id": "23",
+     "organization_id": "21",
      "title": "Maternal Health ZA"
      "url": "/projects/23",
      "is_archived": false,
@@ -760,6 +784,12 @@ Projects
   Only accessible if the authenticated user has :ref:`admin permission
   <permissions>` or has permissions associated with project
   ``project_id``.
+
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the project's organization
+    - ``project:admin`` for the project
+    - ``project:write`` for the project
+    - ``project:read`` for the project
 
   .. sourcecode:: http
 
