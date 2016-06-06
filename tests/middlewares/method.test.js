@@ -25,7 +25,8 @@ describe('middlewares/methods', () => {
       .end(done);
   });
 
-  it("should assume authentication is needed if a permission is given", done => {
+  it("should assume authentication is needed if a permission is given",
+  done => {
     const next = multicb();
 
     const app = new Koa()
