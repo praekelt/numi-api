@@ -1,3 +1,4 @@
+const ary = require('lodash/ary');
 const mapValues = require('lodash/mapValues');
 const permission = require('src/permissions/permission');
 
@@ -47,4 +48,4 @@ module.exports = mapValues({
   create,
   read,
   write
-}, permission);
+}, ary(permission, 1));
