@@ -24,7 +24,7 @@ describe('middlewares/methods', () => {
       .end(done);
   });
 
-  it("should assume authentication is needed if access options are given",
+  it("should assume authentication is needed if a permission is given",
   done => {
     const next = multicb();
 
