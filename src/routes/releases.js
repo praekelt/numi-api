@@ -2,11 +2,17 @@ const _ = require('koa-route');
 const { release: schema } = require('schemas').definitions;
 const { releases } = require('src/api');
 const { create, read } = require('src/middlewares/methods');
+const { release: permissions } = require('src/permissions');
+const contexts = require('src/contexts');
 
 
 module.exports = [
   _.post('/dialogue/:dialogue_id/releases/', create(releases.create, {
-    schema
+    schema,
+    access: {
+      permission: permissions.create,
+      context: contexts.release.access
+    }
   })),
 
   _.get('/dialogue/:dialogue_id/releases/', read(releases.list, {
@@ -17,6 +23,10 @@ module.exports = [
         per_page: {default: '100'},
         ordering: {default: '-number'}
       }
+    },
+    access: {
+      permission: permissions.list,
+      context: contexts.release.access
     }
   })),
 
