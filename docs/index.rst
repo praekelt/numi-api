@@ -781,10 +781,6 @@ Projects
   Retrieves the :ref:`descriptions <data-channel>` of the channels accessible
   to the project with the id ``project_id``.
 
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions>` or has permissions associated with project
-  ``project_id``.
-
   Accessible to admins and teams with any of the following permissions:
     - ``org:admin`` for the project's organization
     - ``project:admin`` for the project
