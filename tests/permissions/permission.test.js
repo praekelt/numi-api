@@ -26,7 +26,8 @@ describe("permissions.permission", () => {
       .to.be.true;
   });
 
-  it("should return true if the user has any of the allowed permissions", () => {
+  it("should return true if the user has any of the allowed permissions",
+  () => {
     const fn = permission(({fooId, barId}) => [{
       type: 'foo',
       namespace: 'numi',
