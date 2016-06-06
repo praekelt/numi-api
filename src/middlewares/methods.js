@@ -2,6 +2,7 @@ const get = require('lodash/get');
 const { effect } = require('src/utils');
 const method = require('src/middlewares/method');
 const { json_patch: patchSchema } = require('schemas').definitions;
+const { conj } = require('src/utils');
 
 const {
   omitReadOnly,
@@ -10,7 +11,8 @@ const {
 } = require('@praekelt/json-schema-utils');
 
 
-function create(fn, opts = {schema: {}}) {
+function create(fn, opts = {}) {
+  opts = conj({schema: {}}, opts);
   return method(opts, (ctx, args, next) => Promise.resolve(ctx.request.body)
     .then(effect(d => validate(opts.schema, d)))
     .then(d => defaults(opts.schema, d))
@@ -23,7 +25,8 @@ function create(fn, opts = {schema: {}}) {
 }
 
 
-function read(fn, opts = {schema: {}}) {
+function read(fn, opts = {}) {
+  opts = conj({schema: {}}, opts);
   return method(opts, (ctx, args, next) => Promise.resolve(ctx.request.query)
     .then(effect(d => validate(opts.schema, d)))
     .then(d => defaults(opts.schema, d))
@@ -33,7 +36,8 @@ function read(fn, opts = {schema: {}}) {
 }
 
 
-function update(fn, opts = {schema: {}}) {
+function update(fn, opts = {}) {
+  opts = conj({schema: {}}, opts);
   return method(opts, (ctx, args, next) => Promise.resolve(ctx.request.body)
     .then(d => omitReadOnly(opts.schema, d))
     .then(effect(d => validate(opts.schema, d)))
