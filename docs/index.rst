@@ -202,12 +202,12 @@ A team comprises a set of :ref:`users <concepts-users>`. Each team has a set of 
 
 Organizations
 *************
-Organisations comprise a set of :ref:`projects <concepts-projects>`, :ref:`teams <concepts-teams>` and :ref:`users <concepts-users>`.
-
-The relations between organizations and other entities is as follows:
-  - Each project is owned by exactly one organization.
-  - Each team is owned by exactly one organization.
-  - Users may be members of zero or more organizations.
+Organizations are the highest scope for resource ownership. The relations between organizations and other resources is as follows:
+  - Each :ref:`project <concepts-projects>` is owned by exactly one organization
+  - Each :ref:`team <concepts-teams>` is owned by exactly one organization
+  - :ref:`Users <concepts-users>` may be members of zero or more organizations
+  - Each :ref:`provider <concepts-providers>` and its :ref:`channels
+    <concepts-channels>` is contained under exactly one organization
 
 .. _concepts-projects:
 
@@ -291,42 +291,35 @@ A provider is a set of :ref:`channels <concepts-channels>` that corresponds to t
 Permissions
 ~~~~~~~~~~~
 
-.. note::
-  Numi builds on the permissions provided by `seed-auth-api`_. The permissions provided by seed-auth-api (for example, ``admin`` and ``org:admin``), are granted outside of this API.
+Numi builds on the permissions provided by `seed-auth-api`_. The permissions provided by seed-auth-api (for example, ``admin`` and ``org:admin``), are granted outside of this API.
 
 .. _seed-auth-api: https://seed-auth-api.readthedocs.io
 
-The following permissions are obtainable via this API:
+Teams can be granted the following permissions:
+
+.. _permissions-org-admin:
+
+``org:admin`` (seed-auth-api)
+*****************************
+Grants create, read, write and archive access to an organization and all resources contained under it, including the organization's projects and their dialogues, revisions and releases, as well as the organization's providers and channels.
 
 .. _permissions-project-admin:
 
 ``project:admin``
 *****************
-  Grants create, archive, read, write and publish access for a given project's dialogues.
+Grants create, read, write and archive access to a project and all resources contained it, including dialogues, revisions, and releases, as well as channels currently owned by the project and teams with permissions relevant to the project.
 
-.. _permissions-project-dialogues-read:
+.. _permissions-project-read:
 
-``project:dialogues:read``
-**************************
-Grants read access for a given project's dialogues.
+``project:read``
+****************
+Grants read-only access to a project and all resources contained under it, including dialogues, as well as channels currently owned by the project, and teams with permissions relevant to the project.
 
-.. _permissions-project-dialogues-write:
+.. _permissions-project-write:
 
-``project:dialogues:write``
-***************************
-Grants write access for a given project's dialogues.
-
-.. _permissions-dialogue-read:
-
-``dialogue:read``
+``project:write``
 *****************
-Grants read access for a given dialogue.
-
-.. _permissions-dialogue-write:
-
-``dialogue:write``
-******************
-Grants write access for a given dialogue.
+With the exception of write access to releases, grants create, read and write access to a project and all resources contained under it, including dialogues, revisions, as well as channels currently owned by the project and teams with permissions relevant to the project.
 
 .. _teams:
 
@@ -426,7 +419,7 @@ Permissions
      [{
        "id": 44,
        "object_id": 21,
-       "type": "project:dialogues:write"
+       "type": "project:write"
      }]
 
 .. http:get:: /team/(str:team_id)/permissions/
@@ -536,10 +529,12 @@ Projects
 
      [{
        "id": "1",
+       "organization_id": "21",
        "title": "Maternal Health ZA",
        "url": "/projects/1"
      }, {
        "id": "2",
+       "organization_id": "21",
        "title": "Maternal Health MX",
        "url": "/projects/2",
      }]
@@ -568,6 +563,7 @@ Projects
 
      {
        "id": "23",
+       "organization_id": "21",
        "title": "Maternal Health ZA"
        "url": "/projects/23",
        "is_archived": false,
@@ -603,11 +599,6 @@ Projects
   Retrieves the :ref:`summaries <data-team-summary>` of all teams with
   permissions related to the project with id ``project_id``.
 
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>` or :ref:`project admin
-  <permissions-project-admin>` permission for the project with id
-  ``project_id``.
-
   .. sourcecode:: http
 
      GET /projects/21/teams/ HTTP/1.1
@@ -637,19 +628,17 @@ Projects
        }
      }]
 
-.. http:post:: /projects/
+.. http:post:: /organizations/(str:organization_id)/projects/
 
   Creates a new project with the :ref:`project description <data-project>`
-  given in the request body and returns the created projects's description,
+  given in the request body underneath the organization with the id
+  ``organization_id`` using the and returns the created projects's description,
   along with the generated dialogue ``id`` field and ``url`` field for
   accessing the project description.
 
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>`.
-
   .. sourcecode:: http
 
-     POST /projects/ HTTP/1.1
+     POST /organizations/21/projects/ HTTP/1.1
      Content-Type: application/json
 
      {
@@ -663,6 +652,7 @@ Projects
 
      {
        "id": "23",
+       "organization_id": "21",
        "url": "/projects/23",
        "title": "Maternal Health ZA",
        "dialogues": [],
@@ -695,6 +685,7 @@ Projects
 
      {
        "id": "23",
+       "organization_id": "21",
        "title": "Maternal Health ZA"
        "url": "/projects/23",
        "is_archived": false,
@@ -737,6 +728,7 @@ Projects
 
    {
      "id": "23",
+     "organization_id": "21",
      "title": "Maternal Health ZA"
      "url": "/projects/23",
      "is_archived": false,
@@ -756,10 +748,6 @@ Projects
 
   Retrieves the :ref:`descriptions <data-channel>` of the channels accessible
   to the project with the id ``project_id``.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions>` or has permissions associated with project
-  ``project_id``.
 
   .. sourcecode:: http
 
@@ -876,11 +864,6 @@ Dialogues
 
   Retrieves the :ref:`summaries <data-team-summary>` of all teams with
   permissions related to the dialogue with id ``dialogue_id``.
-
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>`, :ref:`project admin
-  <permissions-project-admin>` permission for the project that contains the
-  relevant dialogue.
 
   .. sourcecode:: http
 
@@ -1405,11 +1388,10 @@ Ordering releases
 Channels
 --------
 
-.. http:get:: /channels/
+.. http:get:: /organizations/:organization_id/channels/
 
-  Retrieves the :ref:`descriptions <data-channel>` of all channels. Only
-  accessible if the authenticated user has :ref:`admin permission
-  <permissions>`.
+  Retrieves the :ref:`descriptions <data-channel>` of all channels contained by
+  the organization with id ``organization_id``.
 
   .. sourcecode:: http
 
@@ -1437,10 +1419,6 @@ Channels
 .. http:get:: /channels/(str:channel_id)
 
   Retrieves the :ref:`description <data-channel>` of the channel with the id
-  ``channel_id``.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions>` or has access to a project using the channel
   ``channel_id``.
 
   .. sourcecode:: http
@@ -1474,9 +1452,6 @@ Channels
   ``channel_id`` with the description given in the request body and returns the
   given description, along with the channel's ``id`` and the ``url`` for
   accessing the channel's description.
-
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>`.
 
   .. sourcecode:: http
 
@@ -1518,9 +1493,6 @@ Channels
   with the channel's ``id`` and the ``url`` for accessing the channel's
   description.
 
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>`.
-
   .. sourcecode:: http
 
      PATCH /channels/23 HTTP/1.1
@@ -1554,12 +1526,10 @@ A channel can only be accessible by one project at a time. A channel can be made
 Providers
 ---------
 
-.. http:get:: /providers/
+.. http:get:: /organizations/:organization_id/providers/
 
-  Retrieves the :ref:`summaries <data-provider-summary>` of all providers.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions>`.
+  Retrieves the :ref:`summaries <data-provider-summary>` of all providers
+  contained under the organization with id ``organization_id``.
 
   .. sourcecode:: http
 
@@ -1584,10 +1554,6 @@ Providers
 
   Retrieves the :ref:`description <data-provider>` of the provider with the id
   ``provider_id``.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions>` or has access to a project using a channel associated
-  with ``provider_id``.
 
   .. sourcecode:: http
 
