@@ -303,11 +303,15 @@ Teams can be granted the following permissions:
 *****************************
 Grants create, read, write and archive access to an organization and all resources contained under it, including the organization's projects and their dialogues, revisions and releases, as well as the organization's providers and channels.
 
+``org:admin``\'s are able to grant any permission to the relevant organization's teams, provided the permission relates to the organization or the projects contained under it.
+
 .. _permissions-project-admin:
 
 ``project:admin``
 *****************
 Grants create, read, write and archive access to a project and all resources contained it, including dialogues, revisions, and releases, as well as channels currently owned by the project and teams with permissions relevant to the project.
+
+``project:admin``\'s are able to grant any permission to the project's organization's teams, provided the permission relates to the project.
 
 .. _permissions-project-read:
 
