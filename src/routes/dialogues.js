@@ -13,7 +13,7 @@ module.exports = [
 
   _.get('/dialogues/:id', read(dialogues.get)),
 
-  _.get('/dialogues/:id/teams/', read(dialogues.getTeams)),
+  _.get('/dialogues/:id/teams/', read(dialogues.listTeams)),
 
   _.put('/dialogues/:id', update(dialogues.update, {
     schema

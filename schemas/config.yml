@@ -12,3 +12,15 @@ properties:
     default: 'http://localhost:8000'
     description: |
       Base url for the auth api.
+
+  permissionNamespace:
+    type: object
+    default: numi
+    description:
+      Namespace to use for numi-specific permissions
+
+  authPermissionNamespace:
+    type: object
+    default: __auth__
+    description:
+      Namespace to use for auth-specific permissions

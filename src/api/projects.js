@@ -1,7 +1,7 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function create(d) {
+function create(orgId, d) {
   throw new NotImplementedError();
 }
 
@@ -16,12 +16,12 @@ function get(id) {
 }
 
 
-function getChannels(id) {
+function listChannels(id) {
   throw new NotImplementedError();
 }
 
 
-function getTeams(id) {
+function listTeams(id) {
   throw new NotImplementedError();
 }
 
@@ -40,8 +40,8 @@ module.exports = {
   create,
   list,
   get,
-  getChannels,
-  getTeams,
+  listChannels,
+  listTeams,
   update,
   patch
 };

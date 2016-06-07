@@ -16,7 +16,7 @@ function get(id) {
 }
 
 
-function getTeams(id) {
+function listTeams(id) {
   throw new NotImplementedError();
 }
 
@@ -35,7 +35,7 @@ module.exports = {
   create,
   list,
   get,
-  getTeams,
+  listTeams,
   update,
   patch
 };
