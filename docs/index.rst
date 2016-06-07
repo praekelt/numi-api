@@ -556,6 +556,12 @@ Projects
   Retrieves the :ref:`description <data-project>` of the project with id
   ``project_id``.
 
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the project's organization
+    - ``project:admin`` for the project
+    - ``project:write`` for the project
+    - ``project:read`` for the project
+
   .. sourcecode:: http
 
      GET /projects/23 HTTP/1.1
@@ -672,6 +678,11 @@ Projects
   given description, along with the projects's ``id`` and the ``url`` for
   accessing the projects's description.
 
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the project's organization
+    - ``project:admin`` for the project
+    - ``project:write`` for the project
+
   .. sourcecode:: http
 
      PUT /projects/23 HTTP/1.1
@@ -713,6 +724,11 @@ Projects
   id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in
   the request body and returns the given description, along with the projects's
   ``id`` and the ``url`` for accessing the project's description.
+
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the project's organization
+    - ``project:admin`` for the project
+    - ``project:write`` for the project
 
 .. sourcecode:: http
 

@@ -1,9 +1,7 @@
 const last = require('lodash/last');
 const get = require('lodash/get');
-const has = require('lodash/has');
 const isNull = require('lodash/isNull');
-const constant = require('lodash/constant');
-const { conj, effect } = require('src/utils');
+const { ensure, effect, castFunction } = require('src/utils');
 
 
 const {
@@ -13,13 +11,12 @@ const {
 
 
 function method(opts, fn) {
-  const isPublic = !has(opts, 'permission');
-  const { permission } = conj({permission: constant(true)}, opts);
+  const {access: access = null} = ensure(opts || {});
 
   return groupArgs((ctx, args, next) => Promise.resolve(ctx)
     .then(getUser)
-    .then(effect(user => isPublic || assertAuthentication(user)))
-    .then(effect(user => assertAuthorization(user, permission)))
+    .then(effect(user => { if (!isNull(access)) assertAuthentication(user); }))
+    .then(effect(user => assertAccess(user, access, args)))
     .then(() => fn(ctx, args, next)));
 }
 
@@ -34,9 +31,18 @@ function assertAuthentication(user) {
 }
 
 
-function assertAuthorization(user, permission) {
-  return Promise.resolve(user)
-    .then(permission)
+function assertAccess(user, access, args) {
+  let {
+    context: context = null,
+    permission: permission = true
+  } = ensure(access, {});
+
+  context = castFunction(context);
+  permission = castFunction(permission);
+
+  return Promise.resolve()
+    .then(() => context(...args))
+    .then(ctx => permission(ctx, user))
     .then(granted => { if (!granted) throw new AuthorizationError(); });
 }
 
