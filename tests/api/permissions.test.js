@@ -1,4 +1,4 @@
-const { stub, restore } = require('sinon');
+const { sandbox } = require('sinon');
 const { expect } = require('chai');
 const { permissions } = require('src/api');
 const { authConf } = require('src/auth-utils');
@@ -6,8 +6,13 @@ const auth = require('src/auth');
 
 
 describe('api.permissions', () => {
+  beforeEach(() => {
+    this.sandbox = sandbox.create();
+  });
+
   afterEach(() => {
-    restore(); });
+    this.sandbox.restore();
+  });
 
   describe('create', () => {
     it('should create permissions', () => {
@@ -18,7 +23,7 @@ describe('api.permissions', () => {
         object_id: 21
       };
 
-      stub(auth.teams, 'addPermission')
+      this.sandbox.stub(auth.teams, 'addPermission')
         .withArgs(23, {
           type: 'project:write',
           namespace: '_numi_',
@@ -55,7 +60,7 @@ describe('api.permissions', () => {
         object_id: 21
       };
 
-      stub(auth.teams, 'removePermission')
+      this.sandbox.stub(auth.teams, 'removePermission')
         .withArgs(23, 21)
         .returns(expected);
 
