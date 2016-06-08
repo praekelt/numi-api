@@ -4,7 +4,7 @@ const { read } = require('src/middlewares/methods');
 
 
 module.exports = [
-  _.get('/teams/', read(teams.list, {
+  _.get('/organizations/:orgId/teams/', read(teams.list, {
     schema: {
       type: 'object',
       properties: {
