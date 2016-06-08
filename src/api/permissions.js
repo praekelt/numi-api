@@ -1,4 +1,3 @@
-const { NotImplementedError } = require('src/errors');
 const { permissionNamespace: configNamespace } = require('src/config');
 const { authConf } = require('src/auth-utils');
 const { conj } = require('src/utils');
@@ -11,8 +10,8 @@ function create(teamId, d, {auth, namespace = configNamespace}) {
 }
 
 
-function remove(teamId, id) {
-  throw new NotImplementedError();
+function remove(teamId, id, {auth}) {
+  return authApi.teams.removePermission(teamId, id, {conf: authConf(auth)});
 }
 
 

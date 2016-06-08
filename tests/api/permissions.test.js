@@ -1,15 +1,13 @@
 const { stub, restore } = require('sinon');
 const { expect } = require('chai');
 const { permissions } = require('src/api');
-const { NotImplementedError } = require('src/errors');
 const { authConf } = require('src/auth-utils');
 const auth = require('src/auth');
 
 
 describe('api.permissions', () => {
   afterEach(() => {
-    restore();
-  });
+    restore(); });
 
   describe('create', () => {
     it('should create permissions', () => {
@@ -50,8 +48,25 @@ describe('api.permissions', () => {
 
   describe('remove', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => permissions.remove())
-        .to.throw(NotImplementedError);
+      const expected = {
+        id: 22,
+        type: 'project:write',
+        namespace: '_numi_',
+        object_id: 21
+      };
+
+      stub(auth.teams, 'removePermission')
+        .withArgs(23, 21)
+        .returns(expected);
+
+      const res = permissions.remove(23, 21, {
+        auth: {
+          type: 'token',
+          token: 'abc'
+        }
+      });
+
+      expect(res).to.deep.equal(expected);
     });
   });
 });
