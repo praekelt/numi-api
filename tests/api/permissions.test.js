@@ -2,7 +2,7 @@ const { sandbox } = require('sinon');
 const { expect } = require('chai');
 const { permissions } = require('src/api');
 const { authConf } = require('src/auth-utils');
-const auth = require('src/auth');
+const authApi = require('src/auth');
 
 
 describe('api.permissions', () => {
@@ -23,16 +23,18 @@ describe('api.permissions', () => {
         object_id: 21
       };
 
-      this.sandbox.stub(auth.teams, 'addPermission')
+      const auth = {
+        type: 'token',
+        token: 'abc'
+      };
+
+      this.sandbox.stub(authApi.teams, 'addPermission')
         .withArgs(23, {
           type: 'project:write',
           namespace: '_numi_',
           object_id: 21
         }, {
-          conf: authConf({
-            type: 'token',
-            token: 'abc'
-          })
+          conf: authConf(auth)
         })
         .returns(expected);
 
@@ -41,10 +43,7 @@ describe('api.permissions', () => {
         object_id: 21
       }, {
         namespace: '_numi_',
-        auth: {
-          type: 'token',
-          token: 'abc'
-        }
+        auth
       });
 
       expect(res).to.deep.equal(expected);
@@ -60,17 +59,16 @@ describe('api.permissions', () => {
         object_id: 21
       };
 
-      this.sandbox.stub(auth.teams, 'removePermission')
-        .withArgs(23, 21)
+      const auth = {
+        type: 'token',
+        token: 'abc'
+      };
+
+      this.sandbox.stub(authApi.teams, 'removePermission')
+        .withArgs(23, 21, {conf: authConf(auth)})
         .returns(expected);
 
-      const res = permissions.remove(23, 21, {
-        auth: {
-          type: 'token',
-          token: 'abc'
-        }
-      });
-
+      const res = permissions.remove(23, 21, {auth});
       expect(res).to.deep.equal(expected);
     });
   });
