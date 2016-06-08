@@ -1,10 +1,11 @@
 const { NotImplementedError } = require('src/errors');
-const { expect, fail } = require('chai');
+const { expect } = require('chai');
 const { sandbox } = require('sinon');
 const { permission } = require('src/contexts');
 const { authConf } = require('src/auth-utils');
 const authApi = require('src/auth');
 const projects = require('src/projects');
+const { fail } = expect;
 
 
 describe('contexts.permission', () => {
