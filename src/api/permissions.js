@@ -6,16 +6,6 @@ function create(teamId, d) {
 }
 
 
-function list(teamId, params) {
-  throw new NotImplementedError();
-}
-
-
-function get(teamId, id) {
-  throw new NotImplementedError();
-}
-
-
 function remove(teamId, id) {
   throw new NotImplementedError();
 }
@@ -23,7 +13,5 @@ function remove(teamId, id) {
 
 module.exports = {
   create,
-  list,
-  get,
   remove
 };
