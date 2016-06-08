@@ -1,4 +1,3 @@
-const user = require('src/routes/user');
 const permissions = require('src/routes/permissions');
 const projects = require('src/routes/projects');
 const dialogues = require('src/routes/dialogues');
@@ -10,7 +9,6 @@ const providers = require('src/routes/providers');
 
 module.exports = [].concat(...[
   permissions,
-  user,
   projects,
   dialogues,
   revisions,

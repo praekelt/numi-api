@@ -1,12 +1,12 @@
 const { expect } = require('chai');
-const { user } = require('src/api');
+const { dialogue } = require('src/contexts');
 const { NotImplementedError } = require('src/errors');
 
 
-describe('api.user', () => {
-  describe('getPermissions', () => {
+describe('contexts.dialogue', () => {
+  describe('access', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => user.getPermissions())
+      expect(() => dialogue.access())
         .to.throw(NotImplementedError);
     });
   });

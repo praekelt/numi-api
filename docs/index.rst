@@ -202,12 +202,12 @@ A team comprises a set of :ref:`users <concepts-users>`. Each team has a set of 
 
 Organizations
 *************
-Organisations comprise a set of :ref:`projects <concepts-projects>`, :ref:`teams <concepts-teams>` and :ref:`users <concepts-users>`.
-
-The relations between organizations and other entities is as follows:
-  - Each project is owned by exactly one organization.
-  - Each team is owned by exactly one organization.
-  - Users may be members of zero or more organizations.
+Organizations are the highest scope for resource ownership. The relations between organizations and other resources is as follows:
+  - Each :ref:`project <concepts-projects>` is owned by exactly one organization
+  - Each :ref:`team <concepts-teams>` is owned by exactly one organization
+  - :ref:`Users <concepts-users>` may be members of zero or more organizations
+  - Each :ref:`provider <concepts-providers>` and its :ref:`channels
+    <concepts-channels>` is contained under exactly one organization
 
 .. _concepts-projects:
 
@@ -291,42 +291,39 @@ A provider is a set of :ref:`channels <concepts-channels>` that corresponds to t
 Permissions
 ~~~~~~~~~~~
 
-.. note::
-  Numi builds on the permissions provided by `seed-auth-api`_. The permissions provided by seed-auth-api (for example, ``admin`` and ``org:admin``), are granted outside of this API.
+Numi builds on the permissions provided by `seed-auth-api`_. The permissions provided by seed-auth-api (for example, ``admin`` and ``org:admin``), are granted outside of this API.
 
 .. _seed-auth-api: https://seed-auth-api.readthedocs.io
 
-The following permissions are obtainable via this API:
+Teams can be granted the following permissions:
+
+.. _permissions-org-admin:
+
+``org:admin`` (seed-auth-api)
+*****************************
+Grants create, read, write and archive access to an organization and all resources contained under it, including the organization's projects and their dialogues, revisions and releases, as well as the organization's providers and channels.
+
+``org:admin``\'s are able to grant any permission to the relevant organization's teams, provided the permission relates to the organization or the projects contained under it.
 
 .. _permissions-project-admin:
 
 ``project:admin``
 *****************
-  Grants create, archive, read, write and publish access for a given project's dialogues.
+Grants create, read, write and archive access to a project and all resources contained it, including dialogues, revisions, and releases, as well as channels currently owned by the project and teams with permissions relevant to the project.
+
+``project:admin``\'s are able to grant any permission to the project's organization's teams, provided the permission relates to the project.
 
 .. _permissions-project-read:
 
 ``project:read``
 ****************
-Grants read access for a given project and its dialogues.
+Grants read-only access to a project and all resources contained under it, including dialogues, as well as channels currently owned by the project, and teams with permissions relevant to the project.
 
 .. _permissions-project-write:
 
 ``project:write``
 *****************
-Grants write access for a given project and its dialogues.
-
-.. _permissions-dialogue-read:
-
-``dialogue:read``
-*****************
-Grants read access for a given dialogue.
-
-.. _permissions-dialogue-write:
-
-``dialogue:write``
-******************
-Grants write access for a given dialogue.
+With the exception of write access to releases, grants create, read and write access to a project and all resources contained under it, including dialogues, revisions, as well as channels currently owned by the project and teams with permissions relevant to the project.
 
 .. _teams:
 
@@ -408,26 +405,6 @@ Teams
 
 Permissions
 -----------
-
-.. http:get:: /user/permissions/
-
-  Retrieves the :ref:`permissions <permissions>` granted to the authenticated
-  user.
-
-  .. sourcecode:: http
-
-     GET /user/permissions/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     [{
-       "id": 44,
-       "object_id": 21,
-       "type": "project:write"
-     }]
 
 .. http:get:: /team/(str:team_id)/permissions/
 
@@ -612,12 +589,6 @@ Projects
   Retrieves the :ref:`summaries <data-team-summary>` of all teams with
   permissions related to the project with id ``project_id``.
 
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the project's organization
-    - ``project:admin`` for the project
-    - ``project:write`` for the project
-    - ``project:read`` for the project
-
   .. sourcecode:: http
 
      GET /projects/21/teams/ HTTP/1.1
@@ -654,9 +625,6 @@ Projects
   ``organization_id`` using the and returns the created projects's description,
   along with the generated dialogue ``id`` field and ``url`` field for
   accessing the project description.
-
-  Accessible to admins and teams with ``org:admin`` permission for the
-  organization.
 
   .. sourcecode:: http
 
@@ -781,12 +749,6 @@ Projects
   Retrieves the :ref:`descriptions <data-channel>` of the channels accessible
   to the project with the id ``project_id``.
 
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the project's organization
-    - ``project:admin`` for the project
-    - ``project:write`` for the project
-    - ``project:read`` for the project
-
   .. sourcecode:: http
 
      GET /projects/21/channels/ HTTP/1.1
@@ -822,6 +784,12 @@ Dialogues
 
   Retrieves a :ref:`summary <data-dialogue-summary>` of every dialogue
   contained in the project with id ``project_id``.
+
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the organization
+    - ``project:admin`` for the project
+    - ``project:write`` for the project
+    - ``project:read`` for the project
 
   .. sourcecode:: http
 
@@ -864,6 +832,13 @@ Dialogues
   Retrieves the :ref:`description <data-dialogue>` of the dialogue with id
   ``dialogue_id``.
 
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the organization that owns the project under which the
+      dialogue is contained
+    - ``project:admin`` for the project under which the dialogue is contained
+    - ``project:write`` for the project under which the dialogue is contained
+    - ``project:read`` for the project under which the dialogue is contained
+
   .. sourcecode:: http
 
       GET /dialogues/21 HTTP/1.1
@@ -903,11 +878,6 @@ Dialogues
   Retrieves the :ref:`summaries <data-team-summary>` of all teams with
   permissions related to the dialogue with id ``dialogue_id``.
 
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>`, :ref:`project admin
-  <permissions-project-admin>` permission for the project that contains the
-  relevant dialogue.
-
   .. sourcecode:: http
 
      GET /dialogues/21/teams/ HTTP/1.1
@@ -943,6 +913,12 @@ Dialogues
   :ref:`dialogue description <data-dialogue>` given in the request body and
   returns the created dialogue's description, along with the generated dialogue
   ``id`` field and ``url`` field for accessing the dialogue description.
+
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the organization that owns the project under which the
+      dialogue is contained
+    - ``project:admin`` for the project under which the dialogue is contained
+    - ``project:write`` for the project under which the dialogue is contained
 
   .. sourcecode:: http
 
@@ -984,6 +960,12 @@ Dialogues
   <concepts-revisions-edit>` with a `JSON patch`_ representing the instructions
   needed to change the current dialogue description to the new description
   given in the request body.
+
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the organization that owns the project under which the
+      dialogue is contained
+    - ``project:admin`` for the project under which the dialogue is contained
+    - ``project:write`` for the project under which the dialogue is contained
 
   .. _JSON Patch: http://tools.ietf.org/html/rfc6902
 
@@ -1029,6 +1011,12 @@ Dialogues
 
   Partially updating the dialogue creates a new :ref:`edit revision
   <concepts-revisions-edit>` using the provided patch instructions.
+
+  Accessible to admins and teams with any of the following permissions:
+    - ``org:admin`` for the organization that owns the project under which the
+      dialogue is contained
+    - ``project:admin`` for the project under which the dialogue is contained
+    - ``project:write`` for the project under which the dialogue is contained
 
 .. sourcecode:: http
 
@@ -1431,11 +1419,10 @@ Ordering releases
 Channels
 --------
 
-.. http:get:: /channels/
+.. http:get:: /organizations/:organization_id/channels/
 
-  Retrieves the :ref:`descriptions <data-channel>` of all channels. Only
-  accessible if the authenticated user has :ref:`admin permission
-  <permissions>`.
+  Retrieves the :ref:`descriptions <data-channel>` of all channels contained by
+  the organization with id ``organization_id``.
 
   .. sourcecode:: http
 
@@ -1463,10 +1450,6 @@ Channels
 .. http:get:: /channels/(str:channel_id)
 
   Retrieves the :ref:`description <data-channel>` of the channel with the id
-  ``channel_id``.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions>` or has access to a project using the channel
   ``channel_id``.
 
   .. sourcecode:: http
@@ -1500,9 +1483,6 @@ Channels
   ``channel_id`` with the description given in the request body and returns the
   given description, along with the channel's ``id`` and the ``url`` for
   accessing the channel's description.
-
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>`.
 
   .. sourcecode:: http
 
@@ -1544,9 +1524,6 @@ Channels
   with the channel's ``id`` and the ``url`` for accessing the channel's
   description.
 
-  This operation is only accessible to the authenticated user if they have
-  :ref:`admin permission <permissions>`.
-
   .. sourcecode:: http
 
      PATCH /channels/23 HTTP/1.1
@@ -1580,12 +1557,10 @@ A channel can only be accessible by one project at a time. A channel can be made
 Providers
 ---------
 
-.. http:get:: /providers/
+.. http:get:: /organizations/:organization_id/providers/
 
-  Retrieves the :ref:`summaries <data-provider-summary>` of all providers.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions>`.
+  Retrieves the :ref:`summaries <data-provider-summary>` of all providers
+  contained under the organization with id ``organization_id``.
 
   .. sourcecode:: http
 
@@ -1610,10 +1585,6 @@ Providers
 
   Retrieves the :ref:`description <data-provider>` of the provider with the id
   ``provider_id``.
-
-  Only accessible if the authenticated user has :ref:`admin permission
-  <permissions>` or has access to a project using a channel associated
-  with ``provider_id``.
 
   .. sourcecode:: http
 
