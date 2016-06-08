@@ -45,7 +45,7 @@ describe('middlewares/error', () => {
       });
   });
 
-  it('should support multiple error types', () => {
+  it('should support multiple error types', done => {
     class FooError extends Error {}
     class BarError extends Error {}
     let i = 0;
