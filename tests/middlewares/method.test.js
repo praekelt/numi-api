@@ -73,7 +73,10 @@ describe('middlewares/method', () => {
       })
       .use(_.put('/:id', method({
         access: {
-          context: (id, {auth}) => Promise.resolve({id, auth}),
+          context: (id, {auth}) => Promise.resolve({
+            id,
+            auth
+          }),
           permission: ({id, auth}, {isLeet}) => Promise.resolve(
                id === '21'
             && isLeet
