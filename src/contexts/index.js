@@ -4,6 +4,7 @@ const provider = require('src/contexts/provider');
 const channel = require('src/contexts/channel');
 const dialogue = require('src/contexts/dialogue');
 const release = require('src/contexts/release');
+const permission = require('src/contexts/permission');
 
 
 module.exports = {
@@ -12,5 +13,6 @@ module.exports = {
   dialogue,
   release,
   provider,
-  channel
+  channel,
+  permission
 };
