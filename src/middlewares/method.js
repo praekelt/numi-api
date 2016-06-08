@@ -21,7 +21,7 @@ function method(def, fn) {
       .then(effect(user => {
         if (!isNull(access)) assertAuthentication(user);
       }))
-      .then(effect(user => assertAccess(user, access, args)))
+      .then(effect(user => assertAccess(user, access, args, opts)))
       .then(() => fn(ctx, args, opts, next));
   });
 }
@@ -37,7 +37,7 @@ function assertAuthentication(user) {
 }
 
 
-function assertAccess(user, access, args) {
+function assertAccess(user, access, args, opts) {
   let {
     context: context = null,
     permission: permission = true
@@ -47,7 +47,7 @@ function assertAccess(user, access, args) {
   permission = castFunction(permission);
 
   return Promise.resolve()
-    .then(() => context(...args))
+    .then(() => context(...args, opts))
     .then(ctx => permission(ctx, user))
     .then(granted => { if (!granted) throw new AuthorizationError(); });
 }

@@ -67,13 +67,17 @@ describe('middlewares/method', () => {
       .use(authorizationError)
       .use(bodyParser())
       .use((ctx, next) => {
+        ctx.auth = {foo: 23};
         ctx.user = ctx.request.body;
         return next();
       })
       .use(_.put('/:id', method({
         access: {
-          context: id => Promise.resolve({id}),
-          permission: ({id}, {isLeet}) => Promise.resolve(id === '21' && isLeet)
+          context: (id, {auth}) => Promise.resolve({id, auth}),
+          permission: ({id, auth}, {isLeet}) => Promise.resolve(
+               id === '21'
+            && isLeet
+            && auth.foo === 23)
         }
       }, ctx => {
         ctx.body = {a: 23};
