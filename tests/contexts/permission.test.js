@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('src/errors');
+const { NotImplementedError, AuthorizationError } = require('src/errors');
 const { expect } = require('chai');
 const { sandbox } = require('sinon');
 const { permission } = require('src/contexts');
@@ -102,7 +102,7 @@ describe('contexts.permission', () => {
           ]));
     });
 
-    it('should throw a NotImplementedError for unsupported permission types',
+    it('should throw a AuthorizationError for unsupported permission types',
     () => {
       const auth = {
         type: 'token',
@@ -127,7 +127,7 @@ describe('contexts.permission', () => {
         }));
 
         return permission.removeAccess(7, 1, {auth})
-          .then(fail, e => expect(e).to.be.instanceof(NotImplementedError));
+          .then(fail, e => expect(e).to.be.instanceof(AuthorizationError));
     });
   });
 });
