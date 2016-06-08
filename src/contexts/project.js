@@ -1,8 +1,13 @@
 const { NotImplementedError } = require('src/errors');
+const projects = require('src/projects');
 
 
-function access() {
-  throw new NotImplementedError();
+function access(projectId) {
+  return projects.get(projectId)
+    .then(({organization_id}) => ({
+      projectId,
+      organizationId: organization_id
+    }));
 }
 
 
