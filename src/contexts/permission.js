@@ -1,11 +1,17 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function access() {
+function createAccess() {
+  throw new NotImplementedError();
+}
+
+
+function removeAccess() {
   throw new NotImplementedError();
 }
 
 
 module.exports = {
-  access
+  createAccess,
+  removeAccess
 };

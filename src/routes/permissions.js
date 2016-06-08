@@ -11,7 +11,7 @@ module.exports = [
     schema,
     access: {
       permission: permissions.create,
-      context: contexts.permission.access
+      context: contexts.permission.createAccess
     }
   })),
 
@@ -22,7 +22,7 @@ module.exports = [
   _.delete('/teams/:team_id/permissions/:id', remove(api.remove, {
     access: {
       permission: permissions.remove,
-      context: contexts.permission.access
+      context: contexts.permission.removeAccess
     }
   }))
 ];
