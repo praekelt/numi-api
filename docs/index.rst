@@ -406,26 +406,6 @@ Teams
 Permissions
 -----------
 
-.. http:get:: /user/permissions/
-
-  Retrieves the :ref:`permissions <permissions>` granted to the authenticated
-  user.
-
-  .. sourcecode:: http
-
-     GET /user/permissions/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     [{
-       "id": 44,
-       "object_id": 21,
-       "type": "project:write"
-     }]
-
 .. http:get:: /team/(str:team_id)/permissions/
 
   Retrieves the :ref:`permissions <data-permissions>` accessible to the
