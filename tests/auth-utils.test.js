@@ -2,7 +2,7 @@ const constant = require('lodash/constant');
 const { expect } = require('chai');
 const { fail } = expect;
 const { UnsupportedAuthTypeError } = require('src/errors');
-const { authUser, getConf } = require('src/auth-utils');
+const { authUser, authConf } = require('src/auth-utils');
 
 
 describe('core/auth-utils', () => {
@@ -40,9 +40,9 @@ describe('core/auth-utils', () => {
     });
   });
 
-  describe("getConf", () => {
+  describe("authConf", () => {
     it("should add the token to the config", () => {
-      expect(getConf({
+      expect(authConf({
           type: 'token',
           value: 'fakeToken'
         }))
@@ -51,7 +51,7 @@ describe('core/auth-utils', () => {
 
     it("should throw an UnsupportedAuthTypeError for unsupported types",
     () => {
-      expect(() => getConf({
+      expect(() => authConf({
           type: 'unknown',
           value: null
         }))
