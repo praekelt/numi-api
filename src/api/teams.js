@@ -1,13 +1,15 @@
 const { NotImplementedError } = require('src/errors');
+const { authConf } = require('src/auth-utils');
+const authApi = require('src/auth');
 
 
-function list(params) {
-  throw new NotImplementedError();
+function list(organizationId, {auth}) {
+  return authApi.organizations.listTeams(organizationId, {conf: authConf(auth)});
 }
 
 
-function get(id) {
-  throw new NotImplementedError();
+function get(id, {auth}) {
+  return authApi.teams.get(id, {conf: authConf(auth)});
 }
 
 
