@@ -1,13 +1,50 @@
+const { stub, restore } = require('sinon');
 const { expect } = require('chai');
 const { permissions } = require('src/api');
 const { NotImplementedError } = require('src/errors');
+const { authConf } = require('src/auth-utils');
+const auth = require('src/auth');
 
 
 describe('api.permissions', () => {
+  afterEach(() => {
+    restore();
+  });
+
   describe('create', () => {
-    it('should throw a NotImplementedError', () => {
-      expect(() => permissions.create())
-        .to.throw(NotImplementedError);
+    it('should create permissions', () => {
+      const expected = {
+        id: 22,
+        type: 'project:write',
+        namespace: '_numi_',
+        object_id: 21
+      };
+
+      stub(auth.teams, 'addPermission')
+        .withArgs(23, {
+          type: 'project:write',
+          namespace: '_numi_',
+          object_id: 21
+        }, {
+          conf: authConf({
+            type: 'token',
+            token: 'abc'
+          })
+        })
+        .returns(expected);
+
+      const res = permissions.create(23, {
+        type: 'project:write',
+        object_id: 21
+      }, {
+        namespace: '_numi_',
+        auth: {
+          type: 'token',
+          token: 'abc'
+        }
+      });
+
+      expect(res).to.deep.equal(expected);
     });
   });
 
