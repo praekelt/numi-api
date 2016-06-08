@@ -11,8 +11,11 @@ module.exports = [
         page: {default: '1'},
         per_page: {default: '100'}
       }
-    }
+    },
+    access: {permission: true}
   })),
 
-  _.get('/teams/:id', read(teams.get))
+  _.get('/teams/:id', read(teams.get, {
+    access: {permission: true}
+  }))
 ];
