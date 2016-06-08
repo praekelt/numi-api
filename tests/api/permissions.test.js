@@ -1,34 +1,75 @@
+const { sandbox } = require('sinon');
 const { expect } = require('chai');
 const { permissions } = require('src/api');
-const { NotImplementedError } = require('src/errors');
+const { authConf } = require('src/auth-utils');
+const authApi = require('src/auth');
 
 
 describe('api.permissions', () => {
+  beforeEach(() => {
+    this.sandbox = sandbox.create();
+  });
+
+  afterEach(() => {
+    this.sandbox.restore();
+  });
+
   describe('create', () => {
-    it('should throw a NotImplementedError', () => {
-      expect(() => permissions.create())
-        .to.throw(NotImplementedError);
-    });
-  });
+    it('should create permissions', () => {
+      const expected = {
+        id: 22,
+        type: 'project:write',
+        namespace: '_numi_',
+        object_id: 21
+      };
 
-  describe('list', () => {
-    it('should throw a NotImplementedError', () => {
-      expect(() => permissions.list())
-        .to.throw(NotImplementedError);
-    });
-  });
+      const auth = {
+        type: 'token',
+        token: 'abc'
+      };
 
-  describe('get', () => {
-    it('should throw a NotImplementedError', () => {
-      expect(() => permissions.get())
-        .to.throw(NotImplementedError);
+      this.sandbox.stub(authApi.teams, 'addPermission')
+        .withArgs(23, {
+          type: 'project:write',
+          namespace: '_numi_',
+          object_id: 21
+        }, {
+          conf: authConf(auth)
+        })
+        .returns(expected);
+
+      const res = permissions.create(23, {
+        type: 'project:write',
+        object_id: 21
+      }, {
+        namespace: '_numi_',
+        auth
+      });
+
+      expect(res).to.deep.equal(expected);
     });
   });
 
   describe('remove', () => {
     it('should throw a NotImplementedError', () => {
-      expect(() => permissions.remove())
-        .to.throw(NotImplementedError);
+      const expected = {
+        id: 22,
+        type: 'project:write',
+        namespace: '_numi_',
+        object_id: 21
+      };
+
+      const auth = {
+        type: 'token',
+        token: 'abc'
+      };
+
+      this.sandbox.stub(authApi.teams, 'removePermission')
+        .withArgs(23, 21, {conf: authConf(auth)})
+        .returns(expected);
+
+      const res = permissions.remove(23, 21, {auth});
+      expect(res).to.deep.equal(expected);
     });
   });
 });

@@ -406,46 +406,6 @@ Teams
 Permissions
 -----------
 
-.. http:get:: /team/(str:team_id)/permissions/
-
-  Retrieves the :ref:`permissions <data-permissions>` accessible to the
-  authenticating user for the team with id ``team_id``.
-
-  .. sourcecode:: http
-
-     GET /teams/21/permissions/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     [{
-       "id": "21",
-       "type": "admin",
-       "object_id": 23
-     }]
-
-.. http:get:: /teams/(str:team_id)/permissions/(str:permission_id)
-
-  Retrieves the :ref:`permission <data-permissions>` with id ``permission_id``
-  for the team with id ``team_id``.
-
-  .. sourcecode:: http
-
-     GET /teams/21/permissions/182 HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": 182,
-       "type": "admin",
-       "object_id": 44
-     }
-
 .. http:post:: /teams/(str:team_id)/permissions/
 
   Creates a new :ref:`permission <data-permissions>` for the team with id

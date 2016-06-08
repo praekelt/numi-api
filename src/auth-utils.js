@@ -4,13 +4,13 @@ const { UnsupportedAuthTypeError } = require('src/errors');
 
 function authUser(auth, api = authApi) {
   return Promise.resolve(auth)
-    .then(getConf)
+    .then(authConf)
     .then(conf => api.user.get({conf}))
     .then(d => d.data);
 }
 
 
-function getConf(auth) {
+function authConf(auth) {
   const {
     type,
     value: token
@@ -28,5 +28,5 @@ function getConf(auth) {
 
 module.exports = {
   authUser,
-  getConf
+  authConf
 };
