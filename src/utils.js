@@ -1,5 +1,6 @@
 const extend = require('lodash/extend');
 const isNull = require('lodash/isNull');
+const castArray = require('lodash/castArray');
 const isFunction = require('lodash/isFunction');
 const isUndefined = require('lodash/isUndefined');
 const constant = require('lodash/constant');
@@ -27,9 +28,9 @@ function effect(fn) {
 }
 
 
-function trap(type, fn) {
+function trap(types, fn) {
   return e => {
-    if (e instanceof type) return fn(e);
+    if (castArray(types).some(type => e instanceof type)) return fn(e);
     else throw e;
   };
 }

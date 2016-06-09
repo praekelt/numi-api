@@ -1,9 +1,9 @@
 const { trap } = require('src/utils');
 
 
-function error(type, fn) {
+function error(types, fn) {
   return (ctx, next) => next()
-    .catch(trap(type, e => fn(ctx, e)));
+    .catch(trap(types, e => fn(ctx, e)));
 }
 
 

@@ -1,11 +1,17 @@
-const error = require('src/middlewares/error');
+const rearg = require('lodash/rearg');
 const { str } = require('src/utils');
+const error = rearg(require('src/middlewares/error'), [1, 0]);
+
 const {
   NotImplementedError,
   ValidationError,
+  NotFoundError,
   AuthorizationError,
   AuthenticationRequiredError,
-  UnsupportedAuthTypeError
+  UnsupportedAuthTypeError,
+  AuthUnauthorizedError,
+  AuthForbiddenError,
+  AuthNotFoundError
 } = require('src/errors');
 
 
@@ -13,7 +19,8 @@ function notImplementedError(ctx, e) {
   ctx.status = 501;
 
   ctx.body = {
-    type: 'not_implemented'
+    type: 'not_implemented',
+    message: "Not implemented"
   };
 }
 
@@ -25,6 +32,16 @@ function validationError(ctx, e) {
     type: 'validation_error',
     message: "Invalid request",
     details: {errors: e.errors}
+  };
+}
+
+
+function notFoundError(ctx, e) {
+  ctx.status = 404;
+
+  ctx.body = {
+    type: 'not_found',
+    message: "Resource not found"
   };
 }
 
@@ -63,23 +80,30 @@ function authorizationError(ctx, e) {
 
 
 module.exports = {
-  notImplementedError: error(
-    NotImplementedError,
-    notImplementedError),
+  notImplementedError: error(notImplementedError, [
+    NotImplementedError
+  ]),
 
-  validationError: error(
-    ValidationError,
-    validationError),
+  notFoundError: error(notFoundError, [
+    NotFoundError,
+    AuthNotFoundError
+  ]),
 
-  authorizationError: error(
+  validationError: error(validationError, [
+    ValidationError
+  ]),
+
+  authorizationError: error(authorizationError, [
     AuthorizationError,
-    authorizationError),
+    AuthForbiddenError
+  ]),
 
-  authenticationRequiredError: error(
+  authenticationRequiredError: error(authenticationRequiredError, [
     AuthenticationRequiredError,
-    authenticationRequiredError),
+    AuthUnauthorizedError
+  ]),
 
-  unsupportedAuthTypeError: error(
-    UnsupportedAuthTypeError,
-    unsupportedAuthTypeError)
+  unsupportedAuthTypeError: error(unsupportedAuthTypeError, [
+    UnsupportedAuthTypeError
+  ])
 };
