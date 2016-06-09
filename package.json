@@ -51,6 +51,7 @@
     "eslint-plugin-react": "^5.0.1",
     "mocha": "^2.4.5",
     "multicb": "^1.2.1",
+    "sinon": "^1.17.4",
     "supertest": "^1.2.0"
   }
 }
