@@ -4,7 +4,7 @@ const provider = require('src/permissions/provider');
 const channel = require('src/permissions/channel');
 const dialogue = require('src/permissions/dialogue');
 const release = require('src/permissions/release');
-const permissions = require('src/permissions/dialogue');
+const permissions = require('src/permissions/permissions');
 
 
 module.exports = {

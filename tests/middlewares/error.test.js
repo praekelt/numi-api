@@ -44,4 +44,31 @@ describe('middlewares/error', () => {
           .end(done);
       });
   });
+
+  it('should support multiple error types', done => {
+    class FooError extends Error {}
+    class BarError extends Error {}
+    let i = 0;
+
+    const app = new Koa()
+      .use(error([FooError, BarError], (ctx, e) => {
+        ctx.body = {
+          message: e.message
+        };
+      }))
+      .use(() => {
+        if (i++) throw new BarError(':/');
+        else throw new FooError('o_O');
+      });
+
+    request(app.listen())
+      .get('/')
+      .expect({message: 'o_O'})
+      .end(() => {
+        request(app.listen())
+          .get('/')
+          .expect({message: ':/'})
+          .end(done);
+      });
+  });
 });

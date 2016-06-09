@@ -50,6 +50,21 @@ describe('utils', () => {
 
       expect(trapped).to.be.empty;
     });
+
+    it("should support multiple error types", () => {
+      class FooError extends Error {}
+      class BarError extends Error {}
+      const trapped = [];
+
+      const err1 = new FooError();
+      const err2 = new BarError();
+
+      const fn = utils.trap([FooError, BarError], e => trapped.push(e));
+      fn(err1);
+      fn(err2);
+
+      expect(trapped).to.deep.equal([err1, err2]);
+    });
   });
 
   describe("effect", () => {
