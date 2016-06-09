@@ -1,9 +1,16 @@
 const _ = require('koa-route');
 const { project: { project: schema } } = require('schemas').definitions;
 const { projects } = require('src/api');
-const { create, read, update, patch } = require('src/middlewares/methods');
 const contexts = require('src/contexts');
 const { project: permissions } = require('src/permissions');
+
+const {
+  create,
+  list,
+  read,
+  update,
+  patch
+} = require('src/middlewares/methods');
 
 
 module.exports = [
@@ -15,7 +22,7 @@ module.exports = [
     }
   })),
 
-  _.get('/projects/', read(projects.list, {
+  _.get('/projects/', list(projects.list, {
     schema: {
       type: 'object',
       properties: {
@@ -34,14 +41,14 @@ module.exports = [
     }
   })),
 
-  _.get('/projects/:id/teams/', read(projects.listTeams, {
+  _.get('/projects/:id/teams/', list(projects.listTeams, {
     access: {
       permission: permissions.read,
       context: contexts.project.access
     }
   })),
 
-  _.get('/projects/:id/channels/', read(projects.listChannels, {
+  _.get('/projects/:id/channels/', list(projects.listChannels, {
     access: {
       permission: permissions.read,
       context: contexts.project.access

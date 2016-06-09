@@ -1,13 +1,13 @@
 const _ = require('koa-route');
 const { channel: { channel: schema } } = require('schemas').definitions;
 const { channels } = require('src/api');
-const { read, update, patch } = require('src/middlewares/methods');
+const { list, read, update, patch } = require('src/middlewares/methods');
 const { channel: permissions } = require('src/permissions');
 const contexts = require('src/contexts');
 
 
 module.exports = [
-  _.get('/organizations/:orgId/channels/', read(channels.list, {
+  _.get('/organizations/:orgId/channels/', list(channels.list, {
     access: {
       permission: permissions.read,
       context: contexts.channel.access
