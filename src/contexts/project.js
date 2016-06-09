@@ -1,4 +1,3 @@
-const { NotImplementedError } = require('src/errors');
 const projects = require('src/projects');
 
 
