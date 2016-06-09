@@ -330,14 +330,14 @@ With the exception of write access to releases, grants create, read and write ac
 Teams
 -----
 
-.. http:get:: /teams/
+.. http:get:: /organizations/(str:organization_id)/teams/
 
-  Retrieves the :ref:`summaries <data-team-summary>` of all teams that the
-  authenticated user has access to.
+  Retrieves the :ref:`summaries <data-team-summary>` of the teams contained
+  under the organization with the id ``organization_id``.
 
   .. sourcecode:: http
 
-     GET /teams/ HTTP/1.1
+     GET /organizations/21/teams/ HTTP/1.1
 
   .. sourcecode:: http
 
