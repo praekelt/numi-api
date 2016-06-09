@@ -1,4 +1,3 @@
-const stream = require('highland');
 const extend = require('lodash/extend');
 const isNull = require('lodash/isNull');
 const castArray = require('lodash/castArray');
