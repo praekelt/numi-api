@@ -11,6 +11,7 @@ const { json_patch: patchSchema } = require('schemas').definitions;
 
 const {
   create,
+  list,
   read,
   update,
   patch,
@@ -187,6 +188,94 @@ describe('middlewares/api/methods', () => {
           return next();
         })
         .use(_.get('/', read((d, opts) => opts.auth)));
+
+      request(app.listen())
+        .get('/')
+        .expect({foo: 23})
+        .end(done);
+    });
+  });
+
+  describe('list', () => {
+    it('should validate the request query parameters', done => {
+      const schema = {
+        type: 'object',
+        properties: {a: {enum: ['23']}}
+      };
+
+      const app = new Koa()
+        .use(validationError)
+        .use(bodyParser())
+        .use(_.get('/', list(identity, {schema})));
+
+      request(app.listen())
+        .get('/?a=21')
+        .expect(resp => {
+          const e = attempt(() => validate(schema, {a: '21'}));
+          expect(resp.body.details.errors).to.deep.equal(e.errors);
+        })
+        .end(done);
+    });
+
+    it('should apply defaults to the request query parameters', done => {
+      const app = new Koa()
+        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve({
+          a,
+          b,
+          d
+        }), {
+          schema: {
+            type: 'object',
+            properties: {
+              y: {default: 20},
+              z: {default: 22}
+            }
+          }
+        })));
+
+      request(app.listen())
+        .get('/2/3?x=23&y=21')
+        .expect({
+          a: 2,
+          b: 3,
+          d: {
+            x: 23,
+            y: 21,
+            z: 22
+          }
+        })
+        .end(done);
+    });
+
+    it('should use the api call result as the response body', done => {
+      const app = new Koa()
+        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve({
+          a,
+          b,
+          d
+        }))));
+
+      request(app.listen())
+        .get('/2/3?x=23&y=21')
+        .expect({
+          a: 2,
+          b: 3,
+          d: {
+            x: 23,
+            y: 21
+          }
+        })
+        .end(done);
+    });
+
+    it('should provide auth to the api function', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = {foo: 23};
+          return next();
+        })
+        .use(_.get('/', list((d, opts) => opts.auth)));
 
       request(app.listen())
         .get('/')

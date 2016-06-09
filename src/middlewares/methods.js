@@ -25,6 +25,19 @@ function create(fn, def = {}) {
 }
 
 
+function list(fn, def = {}) {
+  const {schema = {}} = def;
+
+  return method(def, (ctx, args, opts, next) =>
+    Promise.resolve(ctx.request.query)
+      .then(effect(d => validate(schema, d)))
+      .then(d => defaults(schema, d))
+      .then(d => fn(...args, d, opts))
+      .then(res => { ctx.body = res; })
+      .then(() => next()));
+}
+
+
 function read(fn, def = {}) {
   const {schema = {}} = def;
 
@@ -74,6 +87,7 @@ function remove(fn, def = {}) {
 module.exports = {
   create,
   read,
+  list,
   update,
   patch,
   remove
