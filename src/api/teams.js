@@ -1,10 +1,11 @@
-const { NotImplementedError } = require('src/errors');
 const { authConf } = require('src/auth-utils');
 const authApi = require('src/auth');
 
 
 function list(organizationId, {auth}) {
-  return authApi.organizations.listTeams(organizationId, {conf: authConf(auth)});
+  return authApi.organizations.listTeams(organizationId, {
+    conf: authConf(auth)
+  });
 }
 
 
