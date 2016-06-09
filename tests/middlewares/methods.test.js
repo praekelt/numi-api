@@ -8,6 +8,11 @@ const attempt = require('lodash/attempt');
 const identity = require('lodash/identity');
 const { validate } = require('@praekelt/json-schema-utils');
 const { json_patch: patchSchema } = require('schemas').definitions;
+const multicb = require('multicb');
+
+const {
+  authenticationRequiredError
+} = require('src/middlewares/errors');
 
 const {
   create,
@@ -219,11 +224,11 @@ describe('middlewares/api/methods', () => {
 
     it('should apply defaults to the request query parameters', done => {
       const app = new Koa()
-        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve({
+        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve([
           a,
           b,
           d
-        }), {
+        ]), {
           schema: {
             type: 'object',
             properties: {
@@ -235,36 +240,36 @@ describe('middlewares/api/methods', () => {
 
       request(app.listen())
         .get('/2/3?x=23&y=21')
-        .expect({
-          a: 2,
-          b: 3,
-          d: {
+        .expect([
+          2,
+          3,
+          {
             x: 23,
             y: 21,
             z: 22
           }
-        })
+        ])
         .end(done);
     });
 
     it('should use the api call result as the response body', done => {
       const app = new Koa()
-        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve({
+        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve([
           a,
           b,
           d
-        }))));
+        ]))));
 
       request(app.listen())
         .get('/2/3?x=23&y=21')
-        .expect({
-          a: 2,
-          b: 3,
-          d: {
+        .expect([
+          2,
+          3,
+          {
             x: 23,
             y: 21
           }
-        })
+        ])
         .end(done);
     });
 
@@ -275,13 +280,48 @@ describe('middlewares/api/methods', () => {
           ctx.auth = {foo: 23};
           return next();
         })
-        .use(_.get('/', list((d, opts) => opts.auth)));
+        .use(_.get('/', list((d, opts) => [opts.auth])));
 
       request(app.listen())
         .get('/')
-        .expect({foo: 23})
+        .expect([{foo: 23}])
         .end(done);
     });
+
+    it("should assume authentication is needed if visibility params are given",
+    done => {
+      const next = multicb();
+
+      const app = new Koa()
+      .use(authenticationRequiredError)
+      .use(bodyParser())
+      .use((ctx, next) => {
+        if (ctx.request.query.isLeet) ctx.user = {a: 23};
+        return next();
+      })
+      .use(_.get('/', list(ctx => [21], {
+        visibility: {
+          permission: true,
+          context: null
+        }
+      })));
+
+      request(app.listen())
+        .get('/')
+        .expect(401)
+        .end(next());
+
+      request(app.listen())
+        .get('/')
+        .query({isLeet: true})
+        .expect(200)
+        .expect([21])
+        .end(next());
+
+      next(done);
+    });
+
+    it("should filter out resources the user does not have permission for");
   });
 
   describe('update', () => {
