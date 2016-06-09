@@ -321,7 +321,35 @@ describe('middlewares/api/methods', () => {
       next(done);
     });
 
-    it("should filter out resources the user does not have permission for");
+    it("should filter out resources the user does not have permission for",
+    done => {
+      const app = new Koa()
+      .use(authenticationRequiredError)
+      .use(bodyParser())
+      .use((ctx, next) => {
+        ctx.user = {a: 23};
+        return next();
+      })
+      .use(_.get('/', list(ctx => [
+        {id: 1},
+        {id: 2},
+        {id: 3}
+      ], {
+        visibility: {
+          context: ({id}) => id,
+          permission: (id, user) => !((id + user.a) % 2)
+        }
+      })));
+
+      request(app.listen())
+        .get('/')
+        .expect(200)
+        .expect([
+          {id: 1},
+          {id: 3}
+        ])
+        .end(done);
+    });
   });
 
   describe('update', () => {
