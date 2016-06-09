@@ -4,13 +4,18 @@ const { str } = require('src/utils');
 const {
   NotImplementedError,
   ValidationError,
-  AuthenticationRequiredError,
+  NotFoundError,
   AuthorizationError,
-  UnsupportedAuthTypeError
+  AuthenticationRequiredError,
+  UnsupportedAuthTypeError,
+  AuthUnauthorizedError,
+  AuthForbiddenError,
+  AuthNotFoundError
 } = require('src/errors');
 const {
   notImplementedError,
   validationError,
+  notFoundError,
   authenticationRequiredError,
   authorizationError,
   unsupportedAuthTypeError
@@ -28,7 +33,8 @@ describe('middlewares/errors', () => {
         .get('/')
         .expect(501)
         .expect({
-          type: 'not_implemented'
+          type: 'not_implemented',
+          message: "Not implemented"
         })
         .end(done);
     });
@@ -68,11 +74,58 @@ describe('middlewares/errors', () => {
     });
   });
 
+  describe('notFoundError', () => {
+    it('should handle NotFoundErrors', done => {
+      const app = new Koa()
+        .use(notFoundError)
+        .use(() => { throw new NotFoundError(); });
+
+      request(app.listen())
+        .get('/')
+        .expect(404)
+        .expect({
+          type: 'not_found',
+          message: "Resource not found"
+        })
+        .end(done);
+    });
+
+    it('should handle AuthNotFoundErrors', done => {
+      const app = new Koa()
+        .use(notFoundError)
+        .use(() => { throw new AuthNotFoundError(); });
+
+      request(app.listen())
+        .get('/')
+        .expect(404)
+        .expect({
+          type: 'not_found',
+          message: "Resource not found"
+        })
+        .end(done);
+    });
+  });
+
   describe('authenticationRequiredError', () => {
     it('should handle AuthenticationRequiredErrors', done => {
       const app = new Koa()
         .use(authenticationRequiredError)
         .use(() => { throw new AuthenticationRequiredError(); });
+
+      request(app.listen())
+        .get('/')
+        .expect(401)
+        .expect({
+          type: 'authentication_required_error',
+          message: "Authentication details are required for the given request"
+        })
+        .end(done);
+    });
+
+    it('should handle AuthUnauthorizedError', done => {
+      const app = new Koa()
+        .use(authenticationRequiredError)
+        .use(() => { throw new AuthUnauthorizedError(); });
 
       request(app.listen())
         .get('/')
@@ -90,6 +143,23 @@ describe('middlewares/errors', () => {
       const app = new Koa()
         .use(authorizationError)
         .use(() => { throw new AuthorizationError(); });
+
+      request(app.listen())
+        .get('/')
+        .expect(403)
+        .expect({
+          type: 'authorization_error',
+          message: str`
+            The given authenticated details do not corresond to the required
+            permissions for the given request`
+        })
+        .end(done);
+    });
+
+    it('should handle AuthForbiddenErrors', done => {
+      const app = new Koa()
+        .use(authorizationError)
+        .use(() => { throw new AuthForbiddenError(); });
 
       request(app.listen())
         .get('/')
