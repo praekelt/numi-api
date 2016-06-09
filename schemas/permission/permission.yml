@@ -19,10 +19,8 @@ properties:
     type: string
     enum:
       - project:admin
-      - project:dialogues:read
-      - project:dialogues:write
-      - dialogue:read
-      - dialogue:write
+      - project:read
+      - project:write
     description: |
       Identifies the type of this permission.
 
