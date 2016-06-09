@@ -10,14 +10,20 @@ const {
 } = require('src/errors');
 
 
-function method(opts, fn) {
-  const {access: access = null} = ensure(opts || {});
+function method(def, fn) {
+  const {access: access = null} = ensure(def || {});
 
-  return groupArgs((ctx, args, next) => Promise.resolve(ctx)
-    .then(getUser)
-    .then(effect(user => { if (!isNull(access)) assertAuthentication(user); }))
-    .then(effect(user => assertAccess(user, access, args)))
-    .then(() => fn(ctx, args, next)));
+  return groupArgs((ctx, args, next) => {
+    const opts = getOptions(ctx);
+
+    return Promise.resolve(ctx)
+      .then(getUser)
+      .then(effect(user => {
+        if (!isNull(access)) assertAuthentication(user);
+      }))
+      .then(effect(user => assertAccess(user, access, args, opts)))
+      .then(() => fn(ctx, args, opts, next));
+  });
 }
 
 
@@ -31,7 +37,7 @@ function assertAuthentication(user) {
 }
 
 
-function assertAccess(user, access, args) {
+function assertAccess(user, access, args, opts) {
   let {
     context: context = null,
     permission: permission = true
@@ -41,7 +47,7 @@ function assertAccess(user, access, args) {
   permission = castFunction(permission);
 
   return Promise.resolve()
-    .then(() => context(...args))
+    .then(() => context(...args, opts))
     .then(ctx => permission(ctx, user))
     .then(granted => { if (!granted) throw new AuthorizationError(); });
 }
@@ -49,6 +55,11 @@ function assertAccess(user, access, args) {
 
 function groupArgs(fn) {
   return (ctx, ...args) => fn(ctx, args.slice(0, -1), last(args));
+}
+
+
+function getOptions(ctx) {
+  return {auth: get(ctx, 'auth', null)};
 }
 
 
