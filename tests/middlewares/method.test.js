@@ -10,10 +10,10 @@ const {
 } = require('src/middlewares/errors');
 
 
-describe('middlewares/methods', () => {
+describe('middlewares/method', () => {
   it("should call the given method function", done => {
     const app = new Koa()
-      .use(_.get('/:a/:b', method(null, (ctx, args, next) => {
+      .use(_.get('/:a/:b', method(null, (ctx, args, opts, next) => {
         ctx.body = args;
         return next();
       })));
@@ -67,13 +67,20 @@ describe('middlewares/methods', () => {
       .use(authorizationError)
       .use(bodyParser())
       .use((ctx, next) => {
+        ctx.auth = {foo: 23};
         ctx.user = ctx.request.body;
         return next();
       })
       .use(_.put('/:id', method({
         access: {
-          context: id => Promise.resolve({id}),
-          permission: ({id}, {isLeet}) => Promise.resolve(id === '21' && isLeet)
+          context: (id, {auth}) => Promise.resolve({
+            id,
+            auth
+          }),
+          permission: ({id, auth}, {isLeet}) => Promise.resolve(
+               id === '21'
+            && isLeet
+            && auth.foo === 23)
         }
       }, ctx => {
         ctx.body = {a: 23};
@@ -99,5 +106,24 @@ describe('middlewares/methods', () => {
       .end(next());
 
     next(done);
+  });
+
+  it('should provide auth to the api function', done => {
+    const app = new Koa()
+      .use(bodyParser())
+      .use((ctx, next) => {
+        ctx.auth = ctx.request.body;
+        return next();
+      })
+      .use(_.put('/', method(null, (ctx, args, {auth}, next) => {
+        ctx.body = auth;
+        return next();
+      })));
+
+    request(app.listen())
+      .put('/')
+      .send({foo: 23})
+      .expect({foo: 23})
+      .end(done);
   });
 });
