@@ -1,8 +1,9 @@
 const _ = require('koa-route');
 const { dialogue: { dialogue: schema } } = require('schemas').definitions;
 const { dialogues } = require('src/api');
-const contexts = require('src/contexts');
 const { dialogues: permissions } = require('src/permissions');
+const contexts = require('src/contexts');
+const { dialogue: serializer } = require('src/serializers');
 
 const {
   create,
@@ -16,6 +17,7 @@ const {
 module.exports = [
   _.post('/projects/:project_id/dialogues/', create(dialogues.create, {
     schema,
+    serializer,
     access: {
       permission: permissions.create,
       context: contexts.project.access
@@ -23,6 +25,7 @@ module.exports = [
   })),
 
   _.get('/projects/:project_id/dialogues/', list(dialogues.list, {
+    serializer,
     access: {
       permission: permissions.list,
       context: contexts.project.access
@@ -30,6 +33,7 @@ module.exports = [
   })),
 
   _.get('/dialogues/:id', read(dialogues.get, {
+    serializer,
     access: {
       permission: permissions.read,
       context: contexts.project.access
@@ -38,6 +42,7 @@ module.exports = [
 
   _.put('/dialogues/:id', update(dialogues.update, {
     schema,
+    serializer,
     access: {
       permission: permissions.write,
       context: contexts.dialogue.access
@@ -45,6 +50,7 @@ module.exports = [
   })),
 
   _.patch('/dialogues/:id', patch(dialogues.patch, {
+    serializer,
     access: {
       permission: permissions.write,
       context: contexts.dialogue.access
