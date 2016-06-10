@@ -1,7 +1,7 @@
 const _ = require('koa-route');
 const { release: schema } = require('schemas').definitions;
 const { releases } = require('src/api');
-const { create, read } = require('src/middlewares/methods');
+const { create, list, read } = require('src/middlewares/methods');
 const { release: permissions } = require('src/permissions');
 const contexts = require('src/contexts');
 
@@ -15,7 +15,7 @@ module.exports = [
     }
   })),
 
-  _.get('/dialogue/:dialogue_id/releases/', read(releases.list, {
+  _.get('/dialogue/:dialogue_id/releases/', list(releases.list, {
     schema: {
       type: 'object',
       properties: {

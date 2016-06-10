@@ -30,6 +30,7 @@
     "@praekelt/json-schema-utils": "^0.1.0",
     "@praekelt/seed-auth": "^0.1.2",
     "ajv": "^4.0.5",
+    "bluebird": "^3.4.0",
     "js-yaml": "^3.6.0",
     "json-schema-defaults": "^0.1.1",
     "json-schema-deref-sync": "^0.3.1",

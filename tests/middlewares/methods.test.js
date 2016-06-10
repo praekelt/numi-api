@@ -8,9 +8,15 @@ const attempt = require('lodash/attempt');
 const identity = require('lodash/identity');
 const { validate } = require('@praekelt/json-schema-utils');
 const { json_patch: patchSchema } = require('schemas').definitions;
+const multicb = require('multicb');
+
+const {
+  authenticationRequiredError
+} = require('src/middlewares/errors');
 
 const {
   create,
+  list,
   read,
   update,
   patch,
@@ -191,6 +197,157 @@ describe('middlewares/api/methods', () => {
       request(app.listen())
         .get('/')
         .expect({foo: 23})
+        .end(done);
+    });
+  });
+
+  describe('list', () => {
+    it('should validate the request query parameters', done => {
+      const schema = {
+        type: 'object',
+        properties: {a: {enum: ['23']}}
+      };
+
+      const app = new Koa()
+        .use(validationError)
+        .use(bodyParser())
+        .use(_.get('/', list(identity, {schema})));
+
+      request(app.listen())
+        .get('/?a=21')
+        .expect(resp => {
+          const e = attempt(() => validate(schema, {a: '21'}));
+          expect(resp.body.details.errors).to.deep.equal(e.errors);
+        })
+        .end(done);
+    });
+
+    it('should apply defaults to the request query parameters', done => {
+      const app = new Koa()
+        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve([
+          a,
+          b,
+          d
+        ]), {
+          schema: {
+            type: 'object',
+            properties: {
+              y: {default: 20},
+              z: {default: 22}
+            }
+          }
+        })));
+
+      request(app.listen())
+        .get('/2/3?x=23&y=21')
+        .expect([
+          2,
+          3,
+          {
+            x: 23,
+            y: 21,
+            z: 22
+          }
+        ])
+        .end(done);
+    });
+
+    it('should use the api call result as the response body', done => {
+      const app = new Koa()
+        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve([
+          a,
+          b,
+          d
+        ]))));
+
+      request(app.listen())
+        .get('/2/3?x=23&y=21')
+        .expect([
+          2,
+          3,
+          {
+            x: 23,
+            y: 21
+          }
+        ])
+        .end(done);
+    });
+
+    it('should provide auth to the api function', done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = {foo: 23};
+          return next();
+        })
+        .use(_.get('/', list((d, opts) => [opts.auth])));
+
+      request(app.listen())
+        .get('/')
+        .expect([{foo: 23}])
+        .end(done);
+    });
+
+    it("should assume authentication is needed if visibility params are given",
+    done => {
+      const next = multicb();
+
+      const app = new Koa()
+      .use(authenticationRequiredError)
+      .use(bodyParser())
+      .use((ctx, next) => {
+        if (ctx.request.query.isLeet) ctx.user = {a: 23};
+        return next();
+      })
+      .use(_.get('/', list(ctx => [21], {
+        visibility: {
+          permission: true,
+          context: null
+        }
+      })));
+
+      request(app.listen())
+        .get('/')
+        .expect(401)
+        .end(next());
+
+      request(app.listen())
+        .get('/')
+        .query({isLeet: true})
+        .expect(200)
+        .expect([21])
+        .end(next());
+
+      next(done);
+    });
+
+    it("should filter out resources the user does not have permission for",
+    done => {
+      const app = new Koa()
+      .use(authenticationRequiredError)
+      .use(bodyParser())
+      .use((ctx, next) => {
+        ctx.user = {a: 23};
+        return next();
+      })
+      .use(_.get('/', list(ctx => [
+        {id: 1},
+        {id: 2},
+        {id: 3}
+      ], {
+        visibility: {
+          context: ({id}) => id,
+          permission: (id, user) => !((id + user.a) % 2)
+        }
+      })));
+
+      request(app.listen())
+        .get('/')
+        .expect(200)
+        .expect([
+          {id: 1},
+          {id: 3}
+        ])
         .end(done);
     });
   });

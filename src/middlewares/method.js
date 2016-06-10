@@ -3,7 +3,6 @@ const get = require('lodash/get');
 const isNull = require('lodash/isNull');
 const { ensure, effect, castFunction } = require('src/utils');
 
-
 const {
   AuthenticationRequiredError,
   AuthorizationError
@@ -11,7 +10,7 @@ const {
 
 
 function method(def, fn) {
-  const {access: access = null} = ensure(def || {});
+  const {access = null} = ensure(def, {});
 
   return groupArgs((ctx, args, next) => {
     const opts = getOptions(ctx);
@@ -39,8 +38,8 @@ function assertAuthentication(user) {
 
 function assertAccess(user, access, args, opts) {
   let {
-    context: context = null,
-    permission: permission = true
+    context = null,
+    permission = true
   } = ensure(access, {});
 
   context = castFunction(context);
