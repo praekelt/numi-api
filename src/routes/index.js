@@ -5,6 +5,7 @@ const revisions = require('src/routes/revisions');
 const releases = require('src/routes/releases');
 const channels = require('src/routes/channels');
 const providers = require('src/routes/providers');
+const teams = require('src/routes/teams');
 
 
 module.exports = [].concat(...[
@@ -14,5 +15,6 @@ module.exports = [].concat(...[
   revisions,
   releases,
   channels,
-  providers
+  providers,
+  teams
 ]);
