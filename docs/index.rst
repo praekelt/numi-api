@@ -1305,46 +1305,6 @@ Ordering releases
 | ``-created`` | Return releases in descending order of creation date       |
 +--------------+------------------------------------------------------------+
 
-.. http:get:: /releases/(str:release_id)
-
-  Retrieves the :ref:`description <data-release>` for the release with id
-  ``release_id``.
-
-  .. sourcecode:: http
-
-      GET /releases/44 HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     {
-       "id": "1",
-       "number": 1,
-       "url": "/releases/1",
-       "revision_id": "7",
-       "created": 1460022608855
-     }
-
-  If the release isn't found, a ``404`` response will be given. The response
-  body's ``details`` object contains the ``id`` and ``dialogue_id`` given in
-  the request.
-
-  .. sourcecode:: http
-
-     HTTP/1.1 404 Not Found
-     Content-Type: application/json
-
-     {
-       "type": "not_found",
-       "message": "Release 44 not found",
-       "details": {
-         "id": "44",
-         "dialogue_id": "21"
-       }
-     }
-
 .. http:post:: /dialogues/(str:dialogue_id)/releases/
 
   Creates a new release for dialogue ``dialogue_id`` using the
