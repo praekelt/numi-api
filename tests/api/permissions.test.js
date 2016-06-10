@@ -2,6 +2,7 @@ const { sandbox } = require('sinon');
 const { expect } = require('chai');
 const { permissions } = require('src/api');
 const { authConf } = require('src/auth-utils');
+const { authResult } = require('tests/fakes');
 const authApi = require('src/core/auth');
 
 
@@ -36,7 +37,7 @@ describe("api.permissions", () => {
         }, {
           conf: authConf(auth)
         })
-        .returns(Promise.resolve({data: expected}));
+        .returns(authResult(expected));
 
       return permissions.create(23, {
           type: 'project:write',
@@ -65,7 +66,7 @@ describe("api.permissions", () => {
 
       this.sandbox.stub(authApi.teams, 'removePermission')
         .withArgs(23, 21, {conf: authConf(auth)})
-        .returns(Promise.resolve({data: expected}));
+        .returns(authResult(expected));
 
       return permissions.remove(23, 21, {auth})
         .then(res => expect(res).to.deep.equal(expected));

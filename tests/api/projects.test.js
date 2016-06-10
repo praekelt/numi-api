@@ -2,8 +2,9 @@ const { expect } = require('chai');
 const { sandbox } = require('sinon');
 const { projects } = require('src/api');
 const { NotImplementedError } = require('src/errors');
-const authApi = require('src/core/auth');
 const { authConf } = require('src/auth-utils');
+const { authResult } = require('tests/fakes');
+const authApi = require('src/core/auth');
 
 
 describe("api.projects", () => {
@@ -55,7 +56,7 @@ describe("api.projects", () => {
           permission_contains: 'project:',
           object_id: 23
         })
-        .returns(Promise.resolve({data: expected}));
+        .returns(authResult(expected));
 
       return projects.listTeams(23, {}, {
           auth,

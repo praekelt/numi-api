@@ -2,6 +2,7 @@ const { sandbox } = require('sinon');
 const { expect } = require('chai');
 const { teams } = require('src/api');
 const { authConf } = require('src/auth-utils');
+const { authResult } = require('tests/fakes');
 const authApi = require('src/core/auth');
 
 
@@ -28,7 +29,7 @@ describe("api.teams", () => {
 
       this.sandbox.stub(authApi.organizations, 'listTeams')
         .withArgs(23, {conf: authConf(auth)})
-        .returns(Promise.resolve({data: expected}));
+        .returns(authResult(expected));
 
       return teams.list(23, {auth})
         .then(res => expect(res).to.deep.equal(expected));
@@ -46,7 +47,7 @@ describe("api.teams", () => {
 
       this.sandbox.stub(authApi.teams, 'get')
         .withArgs(21, {conf: authConf(auth)})
-        .returns(Promise.resolve({data: expected}));
+        .returns(authResult(expected));
 
       return teams.get(21, {auth})
         .then(res => expect(res).to.deep.equal(expected));

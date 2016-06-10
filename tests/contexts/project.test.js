@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const { sandbox } = require('sinon');
 const { project } = require('src/contexts');
+const { projectsResult } = require('tests/fakes');
 const projects = require('src/core/projects');
 
 
@@ -17,7 +18,7 @@ describe("contexts.project", () => {
     it("should get the project's access context", () => {
       this.sandbox.stub(projects, 'get')
         .withArgs(23)
-        .returns(Promise.resolve({
+        .returns(projectsResult({
           id: 23,
           organization_id: 21
         }));
