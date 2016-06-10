@@ -4,13 +4,15 @@ const authApi = require('src/auth');
 
 function list(organizationId, {auth}) {
   return authApi.organizations.listTeams(organizationId, {
-    conf: authConf(auth)
-  });
+      conf: authConf(auth)
+    })
+    .then(({data}) => data);
 }
 
 
 function get(id, {auth}) {
-  return authApi.teams.get(id, {conf: authConf(auth)});
+  return authApi.teams.get(id, {conf: authConf(auth)})
+    .then(({data}) => data);
 }
 
 
