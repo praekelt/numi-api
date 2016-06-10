@@ -833,40 +833,6 @@ Dialogues
        "details": {"id": "21"}
      }
 
-.. http:get:: /dialogues/(str:dialogue_id)/teams/
-
-  Retrieves the :ref:`summaries <data-team-summary>` of all teams with
-  permissions related to the dialogue with id ``dialogue_id``.
-
-  .. sourcecode:: http
-
-     GET /dialogues/21/teams/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     [{
-       "id": "23",
-       "url": "/teams/23",
-       "title": "Service Designers",
-       "members": [{
-         "id": "1",
-         "url": "/users/1",
-         "first_name": "Sarima"
-       }],
-       "permissions": [{
-         "id": 44,
-         "type": "project:admin",
-         "object_id": 21
-       }],
-       "organization": {
-         "id": 2,
-         "title": "MH"
-       }
-     }]
-
 .. http:post:: /projects/(str:project_id)/dialogues/
 
   Creates a new dialogue under the project with the id ``project_id`` using the

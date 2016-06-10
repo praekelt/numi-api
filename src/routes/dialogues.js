@@ -29,13 +29,6 @@ module.exports = [
     }
   })),
 
-  _.get('/dialogues/:id/teams/', read(dialogues.listTeams, {
-    access: {
-      permission: permissions.read,
-      context: contexts.dialogue.access
-    }
-  })),
-
   _.put('/dialogues/:id', update(dialogues.update, {
     schema,
     access: {
