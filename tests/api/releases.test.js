@@ -17,11 +17,4 @@ describe('api.releases', () => {
         .to.throw(NotImplementedError);
     });
   });
-
-  describe('get', () => {
-    it('should throw a NotImplementedError', () => {
-      expect(() => releases.get())
-        .to.throw(NotImplementedError);
-    });
-  });
 });
