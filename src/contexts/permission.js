@@ -1,7 +1,7 @@
 const find = require('lodash/find');
 const isNull = require('lodash/isNull');
 const project = require('src/contexts/project');
-const authApi = require('src/auth');
+const authApi = require('src/core/auth');
 const { effect } = require('src/utils');
 const { authConf } = require('src/auth-utils');
 const { NotImplementedError, AuthorizationError } = require('src/errors');

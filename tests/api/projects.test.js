@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const { sandbox } = require('sinon');
 const { projects } = require('src/api');
 const { NotImplementedError } = require('src/errors');
-const authApi = require('src/auth');
+const authApi = require('src/core/auth');
 const { authConf } = require('src/auth-utils');
 
 

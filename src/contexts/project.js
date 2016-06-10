@@ -1,4 +1,4 @@
-const projects = require('src/projects');
+const projects = require('src/core/projects');
 
 
 function access(projectId) {

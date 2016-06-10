@@ -3,8 +3,8 @@ const { expect } = require('chai');
 const { sandbox } = require('sinon');
 const { permission } = require('src/contexts');
 const { authConf } = require('src/auth-utils');
-const authApi = require('src/auth');
-const projects = require('src/projects');
+const authApi = require('src/core/auth');
+const projects = require('src/core/projects');
 const { fail } = expect;
 
 

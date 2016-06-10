@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { sandbox } = require('sinon');
 const { project } = require('src/contexts');
-const projects = require('src/projects');
+const projects = require('src/core/projects');
 
 
 describe("contexts.project", () => {

@@ -1,4 +1,4 @@
-const authApi = require('src/auth');
+const authApi = require('src/core/auth');
 const { authConf } = require('src/auth-utils');
 const { NotImplementedError } = require('src/errors');
 const { permissionNamespace: configNamespace } = require('src/config');

@@ -1,7 +1,7 @@
 const { permissionNamespace: configNamespace } = require('src/config');
 const { authConf } = require('src/auth-utils');
 const { conj } = require('src/utils');
-const authApi = require('src/auth');
+const authApi = require('src/core/auth');
 
 
 function create(teamId, d, {auth, namespace = configNamespace}) {

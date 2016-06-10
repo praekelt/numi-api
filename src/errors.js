@@ -5,7 +5,7 @@ const {
   AuthForbiddenError,
   AuthNotFoundError,
   AuthResponseError
-} = require('src/auth');
+} = require('src/core/auth');
 
 
 class NotImplementedError extends Error {

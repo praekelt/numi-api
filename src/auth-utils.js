@@ -1,4 +1,4 @@
-const authApi = require('src/auth');
+const authApi = require('src/core/auth');
 const { UnsupportedAuthTypeError } = require('src/errors');
 
 

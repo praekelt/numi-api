@@ -1,5 +1,5 @@
 const { authConf } = require('src/auth-utils');
-const authApi = require('src/auth');
+const authApi = require('src/core/auth');
 
 
 function list(organizationId, {auth}) {

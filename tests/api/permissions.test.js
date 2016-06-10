@@ -2,7 +2,7 @@ const { sandbox } = require('sinon');
 const { expect } = require('chai');
 const { permissions } = require('src/api');
 const { authConf } = require('src/auth-utils');
-const authApi = require('src/auth');
+const authApi = require('src/core/auth');
 
 
 describe("api.permissions", () => {
