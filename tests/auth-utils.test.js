@@ -1,4 +1,3 @@
-const constant = require('lodash/constant');
 const { sandbox } = require('sinon');
 const { expect } = require('chai');
 const { fail } = expect;
