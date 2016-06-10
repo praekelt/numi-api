@@ -1,9 +1,10 @@
+const map = require('lodash/map');
 const get = require('lodash/get');
 const isNull = require('lodash/isNull');
 const Promise = require('bluebird');
 const method = require('src/middlewares/method');
 const { json_patch: patchSchema } = require('schemas').definitions;
-const { ensure, effect, castFunction } = require('src/utils');
+const { conj, ensure, effect, castFunction } = require('src/utils');
 
 const {
   omitReadOnly,
@@ -17,13 +18,17 @@ const {
 
 
 function create(fn, def = {}) {
-  const {schema = {}} = def;
+  const {
+    schema = {},
+    url = null
+  } = def;
 
   return method(def, (ctx, args, opts, next) =>
     Promise.resolve(ctx.request.body)
       .then(effect(d => validate(schema, d)))
       .then(d => defaults(schema, d))
       .then(d => fn(...args, d, opts))
+      .then(d => withUrl(d, url))
       .then(res => {
         ctx.status = 201;
         ctx.body = res;
@@ -35,6 +40,7 @@ function create(fn, def = {}) {
 function list(fn, def = {}) {
   const {
     schema = {},
+    url = null,
     visibility = null
   } = def;
 
@@ -46,7 +52,8 @@ function list(fn, def = {}) {
       .then(effect(d => validate(schema, d)))
       .then(d => defaults(schema, d))
       .then(d => fn(...args, d, opts))
-      .then(res => filterVisible(user, visibility, res, opts))
+      .then(data => filterVisible(user, visibility, data, opts))
+      .then(data => map(data, d => withUrl(d, url)))
       .then(res => { ctx.body = res; })
       .then(() => next());
   });
@@ -54,20 +61,27 @@ function list(fn, def = {}) {
 
 
 function read(fn, def = {}) {
-  const {schema = {}} = def;
+  const {
+    schema = {},
+    url = null
+  } = def;
 
   return method(def, (ctx, args, opts, next) =>
     Promise.resolve(ctx.request.query)
       .then(effect(d => validate(schema, d)))
       .then(d => defaults(schema, d))
       .then(d => fn(...args, d, opts))
+      .then(d => withUrl(d, url))
       .then(res => { ctx.body = res; })
       .then(() => next()));
 }
 
 
 function update(fn, def = {}) {
-  const {schema = {}} = def;
+  const {
+    schema = {},
+    url = null
+  } = def;
 
   return method(def, (ctx, args, opts, next) =>
     Promise.resolve(ctx.request.body)
@@ -75,31 +89,38 @@ function update(fn, def = {}) {
       .then(effect(d => validate(schema, d)))
       .then(d => defaults(schema, d))
       .then(d => fn(...args, d, opts))
+      .then(d => withUrl(d, url))
       .then(res => { ctx.body = res; })
       .then(() => next()));
 }
 
 
 function patch(fn, def = {}) {
+  const {url = null} = def;
+
   return method(def, (ctx, args, opts, next) =>
     Promise.resolve(ctx.request.body)
       .then(effect(d => validate(patchSchema, d)))
       .then(d => fn(...args, d, opts))
+      .then(d => withUrl(d, url))
       .then(res => { ctx.body = res; })
       .then(() => next()));
 }
 
 
 function remove(fn, def = {}) {
+  const {url = null} = def;
+
   return method(def, (ctx, args, opts, next) =>
     Promise.resolve()
       .then(() => fn(...args, opts))
+      .then(d => withUrl(d, url))
       .then(res => { ctx.body = res; })
       .then(() => next()));
 }
 
 
-function filterVisible(user, visibility, res, opts) {
+function filterVisible(user, visibility, data, opts) {
   let {
     context = null,
     permission = true
@@ -108,7 +129,7 @@ function filterVisible(user, visibility, res, opts) {
   context = castFunction(context);
   permission = castFunction(permission);
 
-  return Promise.filter(res, d => Promise.resolve()
+  return Promise.filter(data, d => Promise.resolve()
     .then(() => context(d, opts))
     .then(ctx => permission(ctx, user)), {concurrency: 1});
 }
@@ -116,6 +137,13 @@ function filterVisible(user, visibility, res, opts) {
 
 function getUser(ctx) {
   return get(ctx, 'user', null);
+}
+
+
+function withUrl(d, urlFn) {
+  return !isNull(urlFn)
+    ? conj(d, {url: urlFn(d)})
+    : d;
 }
 
 
