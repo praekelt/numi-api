@@ -1,10 +1,11 @@
 const map = require('lodash/map');
 const get = require('lodash/get');
+const identity = require('lodash/identity');
 const isNull = require('lodash/isNull');
 const Promise = require('bluebird');
 const method = require('src/middlewares/method');
 const { json_patch: patchSchema } = require('schemas').definitions;
-const { conj, ensure, effect, castFunction } = require('src/utils');
+const { ensure, effect, castFunction } = require('src/utils');
 
 const {
   omitReadOnly,
@@ -20,7 +21,7 @@ const {
 function create(fn, def = {}) {
   const {
     schema = {},
-    url = null
+    serializer = identity
   } = def;
 
   return method(def, (ctx, args, opts, next) =>
@@ -28,7 +29,7 @@ function create(fn, def = {}) {
       .then(effect(d => validate(schema, d)))
       .then(d => defaults(schema, d))
       .then(d => fn(...args, d, opts))
-      .then(d => withUrl(d, url))
+      .then(serializer)
       .then(res => {
         ctx.status = 201;
         ctx.body = res;
@@ -40,8 +41,8 @@ function create(fn, def = {}) {
 function list(fn, def = {}) {
   const {
     schema = {},
-    url = null,
-    visibility = null
+    visibility = null,
+    serializer = identity
   } = def;
 
   return method(def, (ctx, args, opts, next) => {
@@ -53,7 +54,7 @@ function list(fn, def = {}) {
       .then(d => defaults(schema, d))
       .then(d => fn(...args, d, opts))
       .then(data => filterVisible(user, visibility, data, opts))
-      .then(data => map(data, d => withUrl(d, url)))
+      .then(data => map(data, serializer))
       .then(res => { ctx.body = res; })
       .then(() => next());
   });
@@ -63,7 +64,7 @@ function list(fn, def = {}) {
 function read(fn, def = {}) {
   const {
     schema = {},
-    url = null
+    serializer = identity
   } = def;
 
   return method(def, (ctx, args, opts, next) =>
@@ -71,7 +72,7 @@ function read(fn, def = {}) {
       .then(effect(d => validate(schema, d)))
       .then(d => defaults(schema, d))
       .then(d => fn(...args, d, opts))
-      .then(d => withUrl(d, url))
+      .then(serializer)
       .then(res => { ctx.body = res; })
       .then(() => next()));
 }
@@ -80,7 +81,7 @@ function read(fn, def = {}) {
 function update(fn, def = {}) {
   const {
     schema = {},
-    url = null
+    serializer = identity
   } = def;
 
   return method(def, (ctx, args, opts, next) =>
@@ -89,32 +90,32 @@ function update(fn, def = {}) {
       .then(effect(d => validate(schema, d)))
       .then(d => defaults(schema, d))
       .then(d => fn(...args, d, opts))
-      .then(d => withUrl(d, url))
+      .then(serializer)
       .then(res => { ctx.body = res; })
       .then(() => next()));
 }
 
 
 function patch(fn, def = {}) {
-  const {url = null} = def;
+  const {serializer = identity} = def;
 
   return method(def, (ctx, args, opts, next) =>
     Promise.resolve(ctx.request.body)
       .then(effect(d => validate(patchSchema, d)))
       .then(d => fn(...args, d, opts))
-      .then(d => withUrl(d, url))
+      .then(serializer)
       .then(res => { ctx.body = res; })
       .then(() => next()));
 }
 
 
 function remove(fn, def = {}) {
-  const {url = null} = def;
+  const {serializer = identity} = def;
 
   return method(def, (ctx, args, opts, next) =>
     Promise.resolve()
       .then(() => fn(...args, opts))
-      .then(d => withUrl(d, url))
+      .then(serializer)
       .then(res => { ctx.body = res; })
       .then(() => next()));
 }
@@ -137,13 +138,6 @@ function filterVisible(user, visibility, data, opts) {
 
 function getUser(ctx) {
   return get(ctx, 'user', null);
-}
-
-
-function withUrl(d, urlFn) {
-  return !isNull(urlFn)
-    ? conj(d, {url: urlFn(d)})
-    : d;
 }
 
 
