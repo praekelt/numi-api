@@ -2,10 +2,10 @@ const authApi = require('src/core/auth');
 const { UnsupportedAuthTypeError } = require('src/errors');
 
 
-function authUser(auth, api = authApi) {
+function authUser(auth) {
   return Promise.resolve(auth)
     .then(authConf)
-    .then(conf => api.user.get({conf}))
+    .then(conf => authApi.user.get({conf}))
     .then(d => d.data);
 }
 
