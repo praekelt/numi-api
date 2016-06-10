@@ -85,11 +85,14 @@ describe("middlewares/api/methods", () => {
         .end(done);
     });
 
-    it("should add a url if a url function is given", done => {
+    it("should use the serializer function if given", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.post('/', create(constant({id: 23}), {
-          url: ({id}) => `/${id}`
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
         })));
 
       request(app.listen())
@@ -203,11 +206,14 @@ describe("middlewares/api/methods", () => {
         .end(done);
     });
 
-    it("should add a url if a url function is given", done => {
+    it("should use the serializer function if given", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.get('/:id', read(id => ({id}), {
-          url: ({id}) => `/${id}`
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
         })));
 
       request(app.listen())
@@ -307,11 +313,14 @@ describe("middlewares/api/methods", () => {
         .end(done);
     });
 
-    it("should add a url if a url function is given", done => {
+    it("should use the serializer function if given", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.get('/', list(constant([{id: 21}, {id: 23}]), {
-          url: ({id}) => `/${id}`
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
         })));
 
       request(app.listen())
@@ -484,11 +493,14 @@ describe("middlewares/api/methods", () => {
         .end(done);
     });
 
-    it("should add a url if a url function is given", done => {
+    it("should use the serializer function if given", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.put('/:id', update(id => ({id}), {
-          url: ({id}) => `/${id}`
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
         })));
 
       request(app.listen())
@@ -578,11 +590,14 @@ describe("middlewares/api/methods", () => {
         .end(done);
     });
 
-    it("should add a url if a url function is given", done => {
+    it("should use the serializer function if given", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.patch('/:id', patch(id => ({id}), {
-          url: ({id}) => `/${id}`
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
         })));
 
       request(app.listen())
@@ -613,11 +628,14 @@ describe("middlewares/api/methods", () => {
         .end(done);
     });
 
-    it("should add a url if a url function is given", done => {
+    it("should use the serializer function if given", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.delete('/:id', remove(id => ({id}), {
-          url: ({id}) => `/${id}`
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
         })));
 
       request(app.listen())
