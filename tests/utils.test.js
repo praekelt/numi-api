@@ -83,4 +83,19 @@ describe("utils", () => {
         });
     });
   });
+
+  describe("overrides", () => {
+    it("should conjoin using the given overrides function", () => {
+      const fn = utils.overrides(({a}) => ({a: a + 2}));
+
+      expect(fn({
+        a: 21,
+        b: 2
+      }))
+      .to.deep.equal({
+        a: 23,
+        b: 2
+      });
+    });
+  });
 });

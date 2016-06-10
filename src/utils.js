@@ -48,6 +48,11 @@ function castFunction(v) {
 }
 
 
+function overrides(fn) {
+  return d => conj(d, fn(d));
+}
+
+
 module.exports = {
   conj,
   ensure,
@@ -55,5 +60,6 @@ module.exports = {
   read,
   effect,
   str,
-  castFunction
+  castFunction,
+  overrides
 };
