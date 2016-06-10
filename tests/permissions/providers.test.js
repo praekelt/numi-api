@@ -1,13 +1,13 @@
 const { expect } = require('chai');
-const { provider } = require('src/permissions');
+const { providers } = require('src/permissions');
 
 
-describe("permissions.provider", () => {
+describe("permissions.providers", () => {
   describe("read", () => {
     it("should define the permissions needed to read", () => {
-      expect(provider.read.definition({
+      expect(providers.read.definition({
           organizationId: 21,
-          providerId: 23
+          providersId: 23
         }))
         .to.deep.equal([{
           namespace: 'auth',
