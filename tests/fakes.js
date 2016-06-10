@@ -4,7 +4,7 @@ function authResult(data) {
 
 
 function projectsResult(data) {
-  return Promise.resolve(data);
+  return Promise.resolve({data});
 }
 
 
