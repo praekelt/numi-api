@@ -22,9 +22,9 @@ const {
 } = require('src/middlewares/errors');
 
 
-describe('middlewares/errors', () => {
-  describe('notImplementedError', () => {
-    it('should handle NotImplementedErrors', done => {
+describe("middlewares/errors", () => {
+  describe("notImplementedError", () => {
+    it("should handle NotImplementedErrors", done => {
       const app = new Koa()
         .use(notImplementedError)
         .use(() => { throw new NotImplementedError(); });
@@ -40,8 +40,8 @@ describe('middlewares/errors', () => {
     });
   });
 
-  describe('validationError', () => {
-    it('should handle ValidationErrors', done => {
+  describe("validationError", () => {
+    it("should handle ValidationErrors", done => {
       const app = new Koa()
         .use(validationError)
         .use(() => {
@@ -74,8 +74,8 @@ describe('middlewares/errors', () => {
     });
   });
 
-  describe('notFoundError', () => {
-    it('should handle NotFoundErrors', done => {
+  describe("notFoundError", () => {
+    it("should handle NotFoundErrors", done => {
       const app = new Koa()
         .use(notFoundError)
         .use(() => { throw new NotFoundError(); });
@@ -90,7 +90,7 @@ describe('middlewares/errors', () => {
         .end(done);
     });
 
-    it('should handle AuthNotFoundErrors', done => {
+    it("should handle AuthNotFoundErrors", done => {
       const app = new Koa()
         .use(notFoundError)
         .use(() => { throw new AuthNotFoundError(); });
@@ -106,8 +106,8 @@ describe('middlewares/errors', () => {
     });
   });
 
-  describe('authenticationRequiredError', () => {
-    it('should handle AuthenticationRequiredErrors', done => {
+  describe("authenticationRequiredError", () => {
+    it("should handle AuthenticationRequiredErrors", done => {
       const app = new Koa()
         .use(authenticationRequiredError)
         .use(() => { throw new AuthenticationRequiredError(); });
@@ -122,7 +122,7 @@ describe('middlewares/errors', () => {
         .end(done);
     });
 
-    it('should handle AuthUnauthorizedError', done => {
+    it("should handle AuthUnauthorizedError", done => {
       const app = new Koa()
         .use(authenticationRequiredError)
         .use(() => { throw new AuthUnauthorizedError(); });
@@ -138,8 +138,8 @@ describe('middlewares/errors', () => {
     });
   });
 
-  describe('authorizationError', () => {
-    it('should handle AuthorizationErrors', done => {
+  describe("authorizationError", () => {
+    it("should handle AuthorizationErrors", done => {
       const app = new Koa()
         .use(authorizationError)
         .use(() => { throw new AuthorizationError(); });
@@ -156,7 +156,7 @@ describe('middlewares/errors', () => {
         .end(done);
     });
 
-    it('should handle AuthForbiddenErrors', done => {
+    it("should handle AuthForbiddenErrors", done => {
       const app = new Koa()
         .use(authorizationError)
         .use(() => { throw new AuthForbiddenError(); });
@@ -174,8 +174,8 @@ describe('middlewares/errors', () => {
     });
   });
 
-  describe('unsupportedAuthTypeError', () => {
-    it('should handle UnsupportedAuthTypeErrors', done => {
+  describe("unsupportedAuthTypeError", () => {
+    it("should handle UnsupportedAuthTypeErrors", done => {
       const app = new Koa()
         .use(unsupportedAuthTypeError)
         .use(() => { throw new UnsupportedAuthTypeError('foo'); });

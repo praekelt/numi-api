@@ -5,7 +5,7 @@ const { UnsupportedAuthTypeError } = require('src/errors');
 const { authUser, authConf } = require('src/auth-utils');
 
 
-describe('core/auth-utils', () => {
+describe("core/auth-utils", () => {
   describe("authUser", () => {
     it("should get the user from a token", () => {
       const auth = {

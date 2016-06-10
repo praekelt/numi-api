@@ -4,7 +4,7 @@ const { project } = require('src/contexts');
 const projects = require('src/projects');
 
 
-describe('contexts.project', () => {
+describe("contexts.project", () => {
   beforeEach(() => {
     this.sandbox = sandbox.create();
   });
@@ -13,7 +13,7 @@ describe('contexts.project', () => {
     this.sandbox.restore();
   });
 
-  describe('access', () => {
+  describe("access", () => {
     it("should get the project's access context", () => {
       this.sandbox.stub(projects, 'get')
         .withArgs(23)

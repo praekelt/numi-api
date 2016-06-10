@@ -6,7 +6,7 @@ const authApi = require('src/auth');
 const { authConf } = require('src/auth-utils');
 
 
-describe('api.projects', () => {
+describe("api.projects", () => {
   beforeEach(() => {
     this.sandbox = sandbox.create();
   });
@@ -15,29 +15,29 @@ describe('api.projects', () => {
     this.sandbox.restore();
   });
 
-  describe('create', () => {
-    it('should throw a NotImplementedError', () => {
+  describe("create", () => {
+    it("should throw a NotImplementedError", () => {
       expect(() => projects.create())
         .to.throw(NotImplementedError);
     });
   });
 
-  describe('list', () => {
-    it('should throw a NotImplementedError', () => {
+  describe("list", () => {
+    it("should throw a NotImplementedError", () => {
       expect(() => projects.list())
         .to.throw(NotImplementedError);
     });
   });
 
-  describe('get', () => {
-    it('should throw a NotImplementedError', () => {
+  describe("get", () => {
+    it("should throw a NotImplementedError", () => {
       expect(() => projects.get())
         .to.throw(NotImplementedError);
     });
   });
 
-  describe('listTeams', () => {
-    it('should list teams related to a project', () => {
+  describe("listTeams", () => {
+    it("should list teams related to a project", () => {
       const expected = [
         {id: 1},
         {id: 2}
@@ -65,22 +65,22 @@ describe('api.projects', () => {
     });
   });
 
-  describe('listChannels', () => {
-    it('should throw a NotImplementedError', () => {
+  describe("listChannels", () => {
+    it("should throw a NotImplementedError", () => {
       expect(() => projects.listChannels())
         .to.throw(NotImplementedError);
     });
   });
 
-  describe('update', () => {
-    it('should throw a NotImplementedError', () => {
+  describe("update", () => {
+    it("should throw a NotImplementedError", () => {
       expect(() => projects.update())
         .to.throw(NotImplementedError);
     });
   });
 
-  describe('patch', () => {
-    it('should throw a NotImplementedError', () => {
+  describe("patch", () => {
+    it("should throw a NotImplementedError", () => {
       expect(() => projects.patch())
         .to.throw(NotImplementedError);
     });

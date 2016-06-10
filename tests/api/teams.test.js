@@ -5,7 +5,7 @@ const { authConf } = require('src/auth-utils');
 const authApi = require('src/auth');
 
 
-describe('api.teams', () => {
+describe("api.teams", () => {
   beforeEach(() => {
     this.sandbox = sandbox.create();
   });
@@ -14,8 +14,8 @@ describe('api.teams', () => {
     this.sandbox.restore();
   });
 
-  describe('list', () => {
-    it('should list an organizations teams', () => {
+  describe("list", () => {
+    it("should list an organizations teams", () => {
       const auth = {
         type: 'token',
         token: 'abc'
@@ -35,8 +35,8 @@ describe('api.teams', () => {
     });
   });
 
-  describe('get', () => {
-    it('should get a team', () => {
+  describe("get", () => {
+    it("should get a team", () => {
       const auth = {
         type: 'token',
         token: 'abc'

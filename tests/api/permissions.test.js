@@ -5,7 +5,7 @@ const { authConf } = require('src/auth-utils');
 const authApi = require('src/auth');
 
 
-describe('api.permissions', () => {
+describe("api.permissions", () => {
   beforeEach(() => {
     this.sandbox = sandbox.create();
   });
@@ -14,8 +14,8 @@ describe('api.permissions', () => {
     this.sandbox.restore();
   });
 
-  describe('create', () => {
-    it('should create the given permission', () => {
+  describe("create", () => {
+    it("should create the given permission", () => {
       const expected = {
         id: 22,
         type: 'project:write',
@@ -49,8 +49,8 @@ describe('api.permissions', () => {
     });
   });
 
-  describe('remove', () => {
-    it('should remove the given permission', () => {
+  describe("remove", () => {
+    it("should remove the given permission", () => {
       const expected = {
         id: 22,
         type: 'project:write',

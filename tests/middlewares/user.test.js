@@ -5,7 +5,7 @@ const constant = require('lodash/constant');
 const user = require('src/middlewares/user');
 
 
-describe('middlewares/user', () => {
+describe("middlewares/user", () => {
   it("should set the user data on the context", done => {
     const app = new Koa()
       .use(bodyParser())

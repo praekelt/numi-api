@@ -8,7 +8,7 @@ const projects = require('src/projects');
 const { fail } = expect;
 
 
-describe('contexts.permission', () => {
+describe("contexts.permission", () => {
   beforeEach(() => {
     this.sandbox = sandbox.create();
   });
@@ -18,8 +18,8 @@ describe('contexts.permission', () => {
   });
 
 
-  describe('createAccess', () => {
-    it('should get the contexts for project permission types', () => {
+  describe("createAccess", () => {
+    it("should get the contexts for project permission types", () => {
       const expected = {
         projectId: 23,
         organizationId: 21
@@ -47,7 +47,7 @@ describe('contexts.permission', () => {
           ]));
     });
 
-    it('should reject with NotImplementedError for unsupported types', () => {
+    it("should reject with NotImplementedError for unsupported types", () => {
       return permission.createAccess(7, {
           type: 'unsupported',
           object_id: 23
@@ -56,8 +56,8 @@ describe('contexts.permission', () => {
     });
   });
 
-  describe('removeAccess', () => {
-    it('should get the contexts for project permission types', () => {
+  describe("removeAccess", () => {
+    it("should get the contexts for project permission types", () => {
       const expected = {
         projectId: 23,
         organizationId: 21
@@ -104,7 +104,7 @@ describe('contexts.permission', () => {
           ]));
     });
 
-    it('should throw a AuthorizationError for unsupported permission types',
+    it("should throw a AuthorizationError for unsupported permission types",
     () => {
       const auth = {
         type: 'token',

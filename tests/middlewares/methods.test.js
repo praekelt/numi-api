@@ -24,9 +24,9 @@ const {
 } = require('src/middlewares/methods');
 
 
-describe('middlewares/api/methods', () => {
-  describe('create', () => {
-    it('should validate the request body', done => {
+describe("middlewares/api/methods", () => {
+  describe("create", () => {
+    it("should validate the request body", done => {
       const app = new Koa()
         .use(validationError)
         .use(bodyParser())
@@ -44,7 +44,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should apply defaults to the request body', done => {
+    it("should apply defaults to the request body", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.post('/', create(identity, {
@@ -64,7 +64,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should use the api call result as the response body', done => {
+    it("should use the api call result as the response body", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.post('/:a/:b', create((a, b, d) => Promise.resolve({
@@ -84,7 +84,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should provide auth to the api function', done => {
+    it("should provide auth to the api function", done => {
       const app = new Koa()
         .use(bodyParser())
         .use((ctx, next) => {
@@ -100,7 +100,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should set the status code to 201', done => {
+    it("should set the status code to 201", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.post('/:a/:b', create(identity)));
@@ -113,8 +113,8 @@ describe('middlewares/api/methods', () => {
     });
   });
 
-  describe('read', () => {
-    it('should validate the request query parameters', done => {
+  describe("read", () => {
+    it("should validate the request query parameters", done => {
       const schema = {
         type: 'object',
         properties: {a: {enum: ['23']}}
@@ -134,7 +134,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should apply defaults to the request query parameters', done => {
+    it("should apply defaults to the request query parameters", done => {
       const app = new Koa()
         .use(_.get('/:a/:b', read((a, b, d) => Promise.resolve({
           a,
@@ -164,7 +164,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should use the api call result as the response body', done => {
+    it("should use the api call result as the response body", done => {
       const app = new Koa()
         .use(_.get('/:a/:b', read((a, b, d) => Promise.resolve({
           a,
@@ -185,7 +185,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should provide auth to the api function', done => {
+    it("should provide auth to the api function", done => {
       const app = new Koa()
         .use(bodyParser())
         .use((ctx, next) => {
@@ -201,8 +201,8 @@ describe('middlewares/api/methods', () => {
     });
   });
 
-  describe('list', () => {
-    it('should validate the request query parameters', done => {
+  describe("list", () => {
+    it("should validate the request query parameters", done => {
       const schema = {
         type: 'object',
         properties: {a: {enum: ['23']}}
@@ -222,7 +222,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should apply defaults to the request query parameters', done => {
+    it("should apply defaults to the request query parameters", done => {
       const app = new Koa()
         .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve([
           a,
@@ -252,7 +252,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should use the api call result as the response body', done => {
+    it("should use the api call result as the response body", done => {
       const app = new Koa()
         .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve([
           a,
@@ -273,7 +273,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should provide auth to the api function', done => {
+    it("should provide auth to the api function", done => {
       const app = new Koa()
         .use(bodyParser())
         .use((ctx, next) => {
@@ -352,8 +352,8 @@ describe('middlewares/api/methods', () => {
     });
   });
 
-  describe('update', () => {
-    it('should omit read only fields', done => {
+  describe("update", () => {
+    it("should omit read only fields", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.post('/', update(identity, {
@@ -373,7 +373,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should validate the request body', done => {
+    it("should validate the request body", done => {
       const app = new Koa()
         .use(validationError)
         .use(bodyParser())
@@ -391,7 +391,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should apply defaults to the request body', done => {
+    it("should apply defaults to the request body", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.post('/', update(identity, {
@@ -411,7 +411,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should use the api call result as the response body', done => {
+    it("should use the api call result as the response body", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.put('/:a/:b', update((a, b, d) => Promise.resolve({
@@ -431,7 +431,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should provide auth to the api function', done => {
+    it("should provide auth to the api function", done => {
       const app = new Koa()
         .use(bodyParser())
         .use((ctx, next) => {
@@ -448,8 +448,8 @@ describe('middlewares/api/methods', () => {
     });
   });
 
-  describe('patch', () => {
-    it('should validate the request body', done => {
+  describe("patch", () => {
+    it("should validate the request body", done => {
       const app = new Koa()
         .use(validationError)
         .use(bodyParser())
@@ -465,7 +465,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should use the api call result as the response body', done => {
+    it("should use the api call result as the response body", done => {
       const app = new Koa()
         .use(bodyParser())
         .use(_.patch('/:a/:b', patch((a, b, d) => Promise.resolve({
@@ -493,7 +493,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should provide auth to the api function', done => {
+    it("should provide auth to the api function", done => {
       const app = new Koa()
         .use(bodyParser())
         .use((ctx, next) => {
@@ -510,8 +510,8 @@ describe('middlewares/api/methods', () => {
     });
   });
 
-  describe('remove', () => {
-    it('should use the api call result as the response body', done => {
+  describe("remove", () => {
+    it("should use the api call result as the response body", done => {
       const app = new Koa()
         .use(_.delete('/:a/:b', remove((a, b) => Promise.resolve({
           a,
@@ -527,7 +527,7 @@ describe('middlewares/api/methods', () => {
         .end(done);
     });
 
-    it('should provide auth to the api function', done => {
+    it("should provide auth to the api function", done => {
       const app = new Koa()
         .use(bodyParser())
         .use((ctx, next) => {

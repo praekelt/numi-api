@@ -2,9 +2,9 @@ const { expect } = require('chai');
 const utils = require('src/utils');
 
 
-describe('utils', () => {
-  describe('conj', () => {
-    it('should conjoin the given objects', () => {
+describe("utils", () => {
+  describe("conj", () => {
+    it("should conjoin the given objects", () => {
       expect(utils.conj({
         a: 23,
         b: 2
@@ -20,8 +20,8 @@ describe('utils', () => {
     });
   });
 
-  describe('trap', () => {
-    it('should handle errors of the given type', () => {
+  describe("trap", () => {
+    it("should handle errors of the given type", () => {
       class FooError extends Error {}
       class BarError extends FooError {}
       const trapped = [];
@@ -37,7 +37,7 @@ describe('utils', () => {
     });
 
 
-    it('should throw errors that are not of the given type', () => {
+    it("should throw errors that are not of the given type", () => {
       class FooError extends Error {}
       class BarError extends Error {}
       const trapped = [];
@@ -68,7 +68,7 @@ describe('utils', () => {
   });
 
   describe("effect", () => {
-    it('should call the function, then return the input value', () => {
+    it("should call the function, then return the input value", () => {
       const calls = [];
 
       function fn(v) {
