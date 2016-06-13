@@ -1,9 +1,20 @@
 const { expect } = require('chai');
+const { sandbox } = require('sinon');
 const { projects } = require('src/api');
 const { NotImplementedError } = require('src/errors');
+const authApi = require('src/auth');
+const { authConf } = require('src/auth-utils');
 
 
 describe('api.projects', () => {
+  beforeEach(() => {
+    this.sandbox = sandbox.create();
+  });
+
+  afterEach(() => {
+    this.sandbox.restore();
+  });
+
   describe('create', () => {
     it('should throw a NotImplementedError', () => {
       expect(() => projects.create())
@@ -26,9 +37,31 @@ describe('api.projects', () => {
   });
 
   describe('listTeams', () => {
-    it('should throw a NotImplementedError', () => {
-      expect(() => projects.listTeams())
-        .to.throw(NotImplementedError);
+    it('should list teams related to a project', () => {
+      const expected = [
+        {id: 1},
+        {id: 2}
+      ];
+
+      const auth = {
+        type: 'token',
+        token: 'abc'
+      };
+
+      this.sandbox.stub(authApi.teams, 'list')
+        .withArgs({
+          namespace: '_numi_',
+          conf: authConf(auth),
+          permission_contains: 'project:',
+          object_id: 23
+        })
+        .returns(Promise.resolve({data: expected}));
+
+      return projects.listTeams(23, {}, {
+          auth,
+          namespace: '_numi_'
+        })
+        .then(res => expect(res).to.deep.equal(expected));
     });
   });
 
