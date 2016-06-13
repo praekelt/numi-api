@@ -1,8 +1,8 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function access() {
-  throw new NotImplementedError();
+function access(organisationId) {
+  return {organisationId};
 }
 
 
