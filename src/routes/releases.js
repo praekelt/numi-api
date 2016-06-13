@@ -28,7 +28,5 @@ module.exports = [
       permission: permissions.list,
       context: contexts.release.access
     }
-  })),
-
-  _.get('/releases/:id', read(releases.get))
+  }))
 ];

@@ -28,7 +28,7 @@ describe('api.teams', () => {
 
       this.sandbox.stub(authApi.organizations, 'listTeams')
         .withArgs(23, {conf: authConf(auth)})
-        .returns(Promise.resolve(expected));
+        .returns(Promise.resolve({data: expected}));
 
       return teams.list(23, {auth})
         .then(res => expect(res).to.deep.equal(expected));
@@ -46,7 +46,7 @@ describe('api.teams', () => {
 
       this.sandbox.stub(authApi.teams, 'get')
         .withArgs(21, {conf: authConf(auth)})
-        .returns(Promise.resolve(expected));
+        .returns(Promise.resolve({data: expected}));
 
       return teams.get(21, {auth})
         .then(res => expect(res).to.deep.equal(expected));

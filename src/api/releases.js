@@ -11,13 +11,7 @@ function list(dialogueId, params) {
 }
 
 
-function get(id) {
-  throw new NotImplementedError();
-}
-
-
 module.exports = {
   create,
-  list,
-  get
+  list
 };
