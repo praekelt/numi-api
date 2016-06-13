@@ -15,7 +15,7 @@ describe('api.permissions', () => {
   });
 
   describe('create', () => {
-    it('should create permissions', () => {
+    it('should create the given permission', () => {
       const expected = {
         id: 22,
         type: 'project:write',
@@ -36,22 +36,21 @@ describe('api.permissions', () => {
         }, {
           conf: authConf(auth)
         })
-        .returns(expected);
+        .returns(Promise.resolve({data: expected}));
 
-      const res = permissions.create(23, {
-        type: 'project:write',
-        object_id: 21
-      }, {
-        namespace: '_numi_',
-        auth
-      });
-
-      expect(res).to.deep.equal(expected);
+      return permissions.create(23, {
+          type: 'project:write',
+          object_id: 21
+        }, {
+          namespace: '_numi_',
+          auth
+        })
+        .then(res => expect(res).to.deep.equal(expected));
     });
   });
 
   describe('remove', () => {
-    it('should throw a NotImplementedError', () => {
+    it('should remove the given permission', () => {
       const expected = {
         id: 22,
         type: 'project:write',
@@ -66,10 +65,10 @@ describe('api.permissions', () => {
 
       this.sandbox.stub(authApi.teams, 'removePermission')
         .withArgs(23, 21, {conf: authConf(auth)})
-        .returns(expected);
+        .returns(Promise.resolve({data: expected}));
 
-      const res = permissions.remove(23, 21, {auth});
-      expect(res).to.deep.equal(expected);
+      return permissions.remove(23, 21, {auth})
+        .then(res => expect(res).to.deep.equal(expected));
     });
   });
 });
