@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "NODE_PATH=. node src/index.js",
-    "test": "NODE_ENV=test NODE_PATH=. mocha -R spec 'tests/**/*.test.js'",
+    "test": "NODE_ENV=test NODE_PATH=. mocha -R spec -r 'tests/setup.js' 'tests/**/*.test.js'",
     "lint": "NODE_PATH=. eslint 'schemas/**/*.js' 'src/**/*.js' 'tests/**/*.js'",
     "ci": "npm run lint && npm test",
     "build-schema": "json-schema-utils build schemas/src > schemas/schemas.json"
@@ -52,6 +52,7 @@
     "eslint-plugin-react": "^5.0.1",
     "mocha": "^2.4.5",
     "multicb": "^1.2.1",
+    "replay": "^2.0.6",
     "sinon": "^1.17.4",
     "supertest": "^1.2.0"
   }
