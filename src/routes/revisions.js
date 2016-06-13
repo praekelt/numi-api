@@ -1,7 +1,7 @@
 const _ = require('koa-route');
 const { revision: { revision: schema } } = require('schemas').definitions;
 const { revisions } = require('src/api');
-const { create, read } = require('src/middlewares/methods');
+const { create, list } = require('src/middlewares/methods');
 const { dialogue: permissions } = require('src/permissions');
 const contexts = require('src/contexts');
 
@@ -15,7 +15,7 @@ module.exports = [
     }
   })),
 
-  _.get('/dialogue/:dialogue_id/revisions/', read(revisions.list, {
+  _.get('/dialogue/:dialogue_id/revisions/', list(revisions.list, {
     schema: {
       type: 'object',
       properties: {

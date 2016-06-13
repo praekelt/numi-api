@@ -1,9 +1,16 @@
 const _ = require('koa-route');
 const { dialogue: { dialogue: schema } } = require('schemas').definitions;
 const { dialogues } = require('src/api');
-const { create, read, update, patch } = require('src/middlewares/methods');
 const contexts = require('src/contexts');
 const { dialogue: permissions } = require('src/permissions');
+
+const {
+  create,
+  list,
+  read,
+  update,
+  patch
+} = require('src/middlewares/methods');
 
 
 module.exports = [
@@ -15,7 +22,7 @@ module.exports = [
     }
   })),
 
-  _.get('/projects/:project_id/dialogues/', read(dialogues.list, {
+  _.get('/projects/:project_id/dialogues/', list(dialogues.list, {
     access: {
       permission: permissions.list,
       context: contexts.project.access
