@@ -1,11 +1,12 @@
+const constant = require('lodash/constant');
+const attempt = require('lodash/attempt');
+const identity = require('lodash/identity');
 const { expect } = require('chai');
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const _ = require('koa-route');
 const request = require('supertest');
 const { validationError } = require('src/middlewares/errors');
-const attempt = require('lodash/attempt');
-const identity = require('lodash/identity');
 const { validate } = require('@praekelt/json-schema-utils');
 const { json_patch: patchSchema } = require('schemas').definitions;
 const multicb = require('multicb');
@@ -80,6 +81,26 @@ describe("middlewares/api/methods", () => {
           a: 2,
           b: 3,
           d: {foo: 23}
+        })
+        .end(done);
+    });
+
+    it("should use the serializer function if given", done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.post('/', create(constant({id: 23}), {
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
+        })));
+
+      request(app.listen())
+        .post('/')
+        .send({})
+        .expect({
+          id: 23,
+          url: '/23'
         })
         .end(done);
     });
@@ -185,6 +206,25 @@ describe("middlewares/api/methods", () => {
         .end(done);
     });
 
+    it("should use the serializer function if given", done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.get('/:id', read(id => ({id}), {
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
+        })));
+
+      request(app.listen())
+        .get('/23')
+        .expect({
+          id: 23,
+          url: '/23'
+        })
+        .end(done);
+    });
+
     it("should provide auth to the api function", done => {
       const app = new Koa()
         .use(bodyParser())
@@ -270,6 +310,28 @@ describe("middlewares/api/methods", () => {
             y: 21
           }
         ])
+        .end(done);
+    });
+
+    it("should use the serializer function if given", done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.get('/', list(constant([{id: 21}, {id: 23}]), {
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
+        })));
+
+      request(app.listen())
+        .get('/')
+        .expect([{
+          id: 21,
+          url: '/21'
+        }, {
+          id: 23,
+          url: '/23'
+        }])
         .end(done);
     });
 
@@ -431,6 +493,25 @@ describe("middlewares/api/methods", () => {
         .end(done);
     });
 
+    it("should use the serializer function if given", done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.put('/:id', update(id => ({id}), {
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
+        })));
+
+      request(app.listen())
+        .put('/23')
+        .expect({
+          id: 23,
+          url: '/23'
+        })
+        .end(done);
+    });
+
     it("should provide auth to the api function", done => {
       const app = new Koa()
         .use(bodyParser())
@@ -508,6 +589,26 @@ describe("middlewares/api/methods", () => {
         .expect({foo: 23})
         .end(done);
     });
+
+    it("should use the serializer function if given", done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.patch('/:id', patch(id => ({id}), {
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
+        })));
+
+      request(app.listen())
+        .patch('/23')
+        .send([])
+        .expect({
+          id: 23,
+          url: '/23'
+        })
+        .end(done);
+    });
   });
 
   describe("remove", () => {
@@ -523,6 +624,25 @@ describe("middlewares/api/methods", () => {
         .expect({
           a: 2,
           b: 3
+        })
+        .end(done);
+    });
+
+    it("should use the serializer function if given", done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.delete('/:id', remove(id => ({id}), {
+          serializer: ({id}) => ({
+            id,
+            url: `/${id}`
+          })
+        })));
+
+      request(app.listen())
+        .delete('/23')
+        .expect({
+          id: 23,
+          url: '/23'
         })
         .end(done);
     });
