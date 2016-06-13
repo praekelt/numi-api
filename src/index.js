@@ -8,7 +8,7 @@ const setAuth = require('src/middlewares/auth');
 const setUser = require('src/middlewares/user');
 const auth = require('src/core/auth');
 const values = require('lodash/values');
-const { authUser } = auth;
+const { authUser } = require('src/auth-utils');
 
 
 const env = process.env.NODE_ENV || 'dev';
@@ -29,8 +29,7 @@ app
 routes
   .forEach(route => app.use(route));
 
-app
-  .listen(config.port);
+if (require.main === module) app.listen(config.port);
 
 
 module.exports = app;
