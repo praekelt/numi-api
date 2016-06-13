@@ -16,8 +16,15 @@ function resource(defaults) {
 }
 
 
+const project = resource(() => ({
+  id: '23',
+  title: 'Project Foo'
+}));
+
+
 module.exports = {
   authResult,
   projectsResult,
+  project,
   resource
 };
