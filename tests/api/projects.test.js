@@ -3,7 +3,7 @@ const { sandbox } = require('sinon');
 const { projects } = require('src/api');
 const { NotImplementedError } = require('src/errors');
 const { authConf } = require('src/auth-utils');
-const { authResult } = require('tests/fakes');
+const { fakeAuthResult } = require('tests/fakes');
 const authApi = require('src/core/auth');
 
 
@@ -56,7 +56,7 @@ describe("api.projects", () => {
           permission_contains: 'project:',
           object_id: 23
         })
-        .returns(authResult(expected));
+        .returns(fakeAuthResult(expected));
 
       return projects.listTeams(23, {}, {
           auth,

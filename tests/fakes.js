@@ -1,30 +1,30 @@
 const { conj } = require('src/utils');
 
 
-function authResult(data) {
+function fakeAuthResult(data) {
   return Promise.resolve({data});
 }
 
 
-function projectsResult(data) {
+function fakeProjectsResult(data) {
   return Promise.resolve({data});
 }
 
 
-function resource(defaults) {
+function fakeResource(defaults) {
   return (d = {}) => conj(defaults(), d);
 }
 
 
-const project = resource(() => ({
+const fakeProject = fakeResource(() => ({
   id: '23',
   title: 'Project Foo'
 }));
 
 
 module.exports = {
-  authResult,
-  projectsResult,
-  project,
-  resource
+  fakeAuthResult,
+  fakeProjectsResult,
+  fakeProject,
+  fakeResource
 };
