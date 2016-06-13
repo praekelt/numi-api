@@ -572,6 +572,34 @@ Projects
        }
      }]
 
+.. http:get:: /projects/(str:project_id)/channels/
+
+  Retrieves the :ref:`descriptions <data-channel>` of the channels accessible
+  to the project with the id ``project_id``.
+
+  .. sourcecode:: http
+
+     GET /projects/21/channels/ HTTP/1.1
+
+  .. sourcecode:: http
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json
+
+     [{
+       "id": "23",
+       "url": "/channels/23",
+       "project_id": "21",
+       "title": "@foo",
+       "address": "@foo",
+       "type": "twitter",
+       "is_available": true,
+       "provider": {
+         "id": "21",
+         "title": "Twitter"
+       }
+     }]
+
 .. http:post:: /organizations/(str:organization_id)/projects/
 
   Creates a new project with the :ref:`project description <data-project>`
@@ -647,7 +675,7 @@ Projects
 
 .. _projects-patch:
 
-.. http:patch:: /projects/(str:project_id)/
+.. http:patch:: /projects/(str:project_id)
 
   Partially updates the :ref:`description <data-project>` of the project with
   id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in
@@ -687,34 +715,6 @@ Projects
        "can_edit": true
      }]
    }
-
-.. http:get:: /projects/(str:project_id)/channels/
-
-  Retrieves the :ref:`descriptions <data-channel>` of the channels accessible
-  to the project with the id ``project_id``.
-
-  .. sourcecode:: http
-
-     GET /projects/21/channels/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     [{
-       "id": "23",
-       "url": "/channels/23",
-       "project_id": "21",
-       "title": "@foo",
-       "address": "@foo",
-       "type": "twitter",
-       "is_available": true,
-       "provider": {
-         "id": "21",
-         "title": "Twitter"
-       }
-     }]
 
 
 .. _dialogues:
