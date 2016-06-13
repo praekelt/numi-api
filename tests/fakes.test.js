@@ -7,7 +7,7 @@ describe("tests/fakes", () => {
     it("should support defaults", () => {
       const fake = fakeResource(() => ({foo: 23}));
 
-      expect(fakeResource({}))
+      expect(fake({}))
         .to.deep.equal({foo: 23});
     });
   });
