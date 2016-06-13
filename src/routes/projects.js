@@ -2,7 +2,7 @@ const _ = require('koa-route');
 const { project: { project: schema } } = require('schemas').definitions;
 const { projects } = require('src/api');
 const contexts = require('src/contexts');
-const { project: permissions } = require('src/permissions');
+const { projects: permissions } = require('src/permissions');
 
 const {
   create,

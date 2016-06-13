@@ -1,10 +1,11 @@
 const { expect } = require('chai');
 const { sandbox } = require('sinon');
 const { project } = require('src/contexts');
-const projects = require('src/projects');
+const { projectsResult } = require('tests/fakes');
+const projects = require('src/core/projects');
 
 
-describe('contexts.project', () => {
+describe("contexts.project", () => {
   beforeEach(() => {
     this.sandbox = sandbox.create();
   });
@@ -13,11 +14,11 @@ describe('contexts.project', () => {
     this.sandbox.restore();
   });
 
-  describe('access', () => {
+  describe("access", () => {
     it("should get the project's access context", () => {
       this.sandbox.stub(projects, 'get')
         .withArgs(23)
-        .returns(Promise.resolve({
+        .returns(projectsResult({
           id: 23,
           organization_id: 21
         }));

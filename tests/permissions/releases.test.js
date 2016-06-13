@@ -1,11 +1,11 @@
 const { expect } = require('chai');
-const { release } = require('src/permissions');
+const { releases } = require('src/permissions');
 
 
-describe("permissions.release", () => {
+describe("permissions.releases", () => {
   describe("create", () => {
     it("should define the permissions needed to create", () => {
-      expect(release.create.definition({
+      expect(releases.create.definition({
           organizationId: 21,
           projectId: 23
         }))
@@ -23,7 +23,7 @@ describe("permissions.release", () => {
 
   describe("list", () => {
     it("should define the permissions needed to list", () => {
-      expect(release.list.definition({
+      expect(releases.list.definition({
           organizationId: 21,
           projectId: 23
         }))

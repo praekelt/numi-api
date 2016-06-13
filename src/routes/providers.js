@@ -1,7 +1,7 @@
 const _ = require('koa-route');
 const { providers } = require('src/api');
 const { list, read } = require('src/middlewares/methods');
-const { provider: permissions } = require('src/permissions');
+const { providers: permissions } = require('src/permissions');
 const contexts = require('src/contexts');
 
 

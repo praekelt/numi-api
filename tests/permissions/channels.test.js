@@ -1,11 +1,11 @@
 const { expect } = require('chai');
-const { channel } = require('src/permissions');
+const { channels } = require('src/permissions');
 
 
-describe("permissions.channel", () => {
+describe("permissions.channels", () => {
   describe("read", () => {
     it("should define the permissions needed to read", () => {
-      expect(channel.read.definition({
+      expect(channels.read.definition({
           organizationId: 21,
           channelId: 23
         }))
@@ -19,7 +19,7 @@ describe("permissions.channel", () => {
 
   describe("write", () => {
     it("should define the permissions needed to write", () => {
-      expect(channel.write.definition({
+      expect(channels.write.definition({
           organizationId: 21,
           channelId: 23
         }))

@@ -10,7 +10,7 @@ const {
 } = require('src/middlewares/errors');
 
 
-describe('middlewares/method', () => {
+describe("middlewares/method", () => {
   it("should call the given method function", done => {
     const app = new Koa()
       .use(_.get('/:a/:b', method(null, (ctx, args, opts, next) => {
@@ -108,7 +108,7 @@ describe('middlewares/method', () => {
     next(done);
   });
 
-  it('should provide auth to the api function', done => {
+  it("should provide auth to the api function", done => {
     const app = new Koa()
       .use(bodyParser())
       .use((ctx, next) => {

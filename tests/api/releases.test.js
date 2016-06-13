@@ -3,16 +3,16 @@ const { releases } = require('src/api');
 const { NotImplementedError } = require('src/errors');
 
 
-describe('api.releases', () => {
-  describe('create', () => {
-    it('should throw a NotImplementedError', () => {
+describe("api.releases", () => {
+  describe("create", () => {
+    it("should throw a NotImplementedError", () => {
       expect(() => releases.create())
         .to.throw(NotImplementedError);
     });
   });
 
-  describe('list', () => {
-    it('should throw a NotImplementedError', () => {
+  describe("list", () => {
+    it("should throw a NotImplementedError", () => {
       expect(() => releases.list())
         .to.throw(NotImplementedError);
     });

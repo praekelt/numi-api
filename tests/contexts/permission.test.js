@@ -3,12 +3,13 @@ const { expect } = require('chai');
 const { sandbox } = require('sinon');
 const { permission } = require('src/contexts');
 const { authConf } = require('src/auth-utils');
-const authApi = require('src/auth');
-const projects = require('src/projects');
 const { fail } = expect;
+const { authResult, projectsResult } = require('tests/fakes');
+const authApi = require('src/core/auth');
+const projects = require('src/core/projects');
 
 
-describe('contexts.permission', () => {
+describe("contexts.permission", () => {
   beforeEach(() => {
     this.sandbox = sandbox.create();
   });
@@ -18,8 +19,8 @@ describe('contexts.permission', () => {
   });
 
 
-  describe('createAccess', () => {
-    it('should get the contexts for project permission types', () => {
+  describe("createAccess", () => {
+    it("should get the contexts for project permission types", () => {
       const expected = {
         projectId: 23,
         organizationId: 21
@@ -27,10 +28,10 @@ describe('contexts.permission', () => {
 
       this.sandbox.stub(projects, 'get')
         .withArgs(23)
-        .returns(Promise.resolve({
+        .returns(projectsResult(({
           id: 23,
           organization_id: 21
-        }));
+        })));
 
         return Promise.all([
             'project:admin',
@@ -47,7 +48,7 @@ describe('contexts.permission', () => {
           ]));
     });
 
-    it('should reject with NotImplementedError for unsupported types', () => {
+    it("should reject with NotImplementedError for unsupported types", () => {
       return permission.createAccess(7, {
           type: 'unsupported',
           object_id: 23
@@ -56,8 +57,8 @@ describe('contexts.permission', () => {
     });
   });
 
-  describe('removeAccess', () => {
-    it('should get the contexts for project permission types', () => {
+  describe("removeAccess", () => {
+    it("should get the contexts for project permission types", () => {
       const expected = {
         projectId: 23,
         organizationId: 21
@@ -70,29 +71,27 @@ describe('contexts.permission', () => {
 
       this.sandbox.stub(projects, 'get')
         .withArgs(23)
-        .returns(Promise.resolve({
+        .returns(projectsResult({
           id: 23,
           organization_id: 21
         }));
 
       this.sandbox.stub(authApi.teams, 'get')
         .withArgs(7, {conf: authConf(auth)})
-        .returns(Promise.resolve({
-          data: {
-            permissions: [{
-              id: 1,
-              type: 'project:admin',
-              object_id: 23
-            }, {
-              id: 2,
-              type: 'project:read',
-              object_id: 23
-            }, {
-              id: 3,
-              type: 'project:write',
-              object_id: 23
-            }]
-          }
+        .returns(authResult({
+          permissions: [{
+            id: 1,
+            type: 'project:admin',
+            object_id: 23
+          }, {
+            id: 2,
+            type: 'project:read',
+            object_id: 23
+          }, {
+            id: 3,
+            type: 'project:write',
+            object_id: 23
+          }]
         }));
 
         return Promise.all([1, 2, 3]
@@ -104,7 +103,7 @@ describe('contexts.permission', () => {
           ]));
     });
 
-    it('should throw a AuthorizationError for unsupported permission types',
+    it("should throw a AuthorizationError for unsupported permission types",
     () => {
       const auth = {
         type: 'token',
@@ -113,21 +112,19 @@ describe('contexts.permission', () => {
 
       this.sandbox.stub(projects, 'get')
         .withArgs(23)
-        .returns(Promise.resolve({
+        .returns(projectsResult({
           id: 23,
           organization_id: 21
         }));
 
       this.sandbox.stub(authApi.teams, 'get')
         .withArgs(7, {conf: authConf(auth)})
-        .returns(Promise.resolve({
-          data: {
-            permissions: [{
-              id: 1,
-              type: 'unsupported',
-              object_id: 23
-            }]
-          }
+        .returns(authResult({
+          permissions: [{
+            id: 1,
+            type: 'unsupported',
+            object_id: 23
+          }]
         }));
 
         return permission.removeAccess(7, 1, {auth})

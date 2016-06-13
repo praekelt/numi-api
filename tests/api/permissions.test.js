@@ -2,10 +2,11 @@ const { sandbox } = require('sinon');
 const { expect } = require('chai');
 const { permissions } = require('src/api');
 const { authConf } = require('src/auth-utils');
-const authApi = require('src/auth');
+const { authResult } = require('tests/fakes');
+const authApi = require('src/core/auth');
 
 
-describe('api.permissions', () => {
+describe("api.permissions", () => {
   beforeEach(() => {
     this.sandbox = sandbox.create();
   });
@@ -14,8 +15,8 @@ describe('api.permissions', () => {
     this.sandbox.restore();
   });
 
-  describe('create', () => {
-    it('should create the given permission', () => {
+  describe("create", () => {
+    it("should create the given permission", () => {
       const expected = {
         id: 22,
         type: 'project:write',
@@ -36,7 +37,7 @@ describe('api.permissions', () => {
         }, {
           conf: authConf(auth)
         })
-        .returns(Promise.resolve({data: expected}));
+        .returns(authResult(expected));
 
       return permissions.create(23, {
           type: 'project:write',
@@ -49,8 +50,8 @@ describe('api.permissions', () => {
     });
   });
 
-  describe('remove', () => {
-    it('should remove the given permission', () => {
+  describe("remove", () => {
+    it("should remove the given permission", () => {
       const expected = {
         id: 22,
         type: 'project:write',
@@ -65,7 +66,7 @@ describe('api.permissions', () => {
 
       this.sandbox.stub(authApi.teams, 'removePermission')
         .withArgs(23, 21, {conf: authConf(auth)})
-        .returns(Promise.resolve({data: expected}));
+        .returns(authResult(expected));
 
       return permissions.remove(23, 21, {auth})
         .then(res => expect(res).to.deep.equal(expected));

@@ -3,8 +3,8 @@ const request = require('supertest');
 const error = require('src/middlewares/error');
 
 
-describe('middlewares/error', () => {
-  it('should handle the errors of the given type with the given handler',
+describe("middlewares/error", () => {
+  it("should handle the errors of the given type with the given handler",
   done => {
     class FooError extends Error {}
     class BarError extends Error {}
@@ -45,7 +45,7 @@ describe('middlewares/error', () => {
       });
   });
 
-  it('should support multiple error types', done => {
+  it("should support multiple error types", done => {
     class FooError extends Error {}
     class BarError extends Error {}
     let i = 0;

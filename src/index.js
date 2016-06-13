@@ -6,9 +6,9 @@ const routes = require('src/routes');
 const errors = require('src/middlewares/errors');
 const setAuth = require('src/middlewares/auth');
 const setUser = require('src/middlewares/user');
-const { authUser } = require('src/auth-utils');
-const auth = require('src/auth');
+const auth = require('src/core/auth');
 const values = require('lodash/values');
+const { authUser } = auth;
 
 
 const env = process.env.NODE_ENV || 'dev';

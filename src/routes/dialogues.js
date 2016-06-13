@@ -2,7 +2,7 @@ const _ = require('koa-route');
 const { dialogue: { dialogue: schema } } = require('schemas').definitions;
 const { dialogues } = require('src/api');
 const contexts = require('src/contexts');
-const { dialogue: permissions } = require('src/permissions');
+const { dialogues: permissions } = require('src/permissions');
 
 const {
   create,

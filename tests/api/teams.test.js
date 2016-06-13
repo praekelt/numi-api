@@ -2,10 +2,11 @@ const { sandbox } = require('sinon');
 const { expect } = require('chai');
 const { teams } = require('src/api');
 const { authConf } = require('src/auth-utils');
-const authApi = require('src/auth');
+const { authResult } = require('tests/fakes');
+const authApi = require('src/core/auth');
 
 
-describe('api.teams', () => {
+describe("api.teams", () => {
   beforeEach(() => {
     this.sandbox = sandbox.create();
   });
@@ -14,8 +15,8 @@ describe('api.teams', () => {
     this.sandbox.restore();
   });
 
-  describe('list', () => {
-    it('should list an organizations teams', () => {
+  describe("list", () => {
+    it("should list an organizations teams", () => {
       const auth = {
         type: 'token',
         token: 'abc'
@@ -28,15 +29,15 @@ describe('api.teams', () => {
 
       this.sandbox.stub(authApi.organizations, 'listTeams')
         .withArgs(23, {conf: authConf(auth)})
-        .returns(Promise.resolve({data: expected}));
+        .returns(authResult(expected));
 
       return teams.list(23, {auth})
         .then(res => expect(res).to.deep.equal(expected));
     });
   });
 
-  describe('get', () => {
-    it('should get a team', () => {
+  describe("get", () => {
+    it("should get a team", () => {
       const auth = {
         type: 'token',
         token: 'abc'
@@ -46,7 +47,7 @@ describe('api.teams', () => {
 
       this.sandbox.stub(authApi.teams, 'get')
         .withArgs(21, {conf: authConf(auth)})
-        .returns(Promise.resolve({data: expected}));
+        .returns(authResult(expected));
 
       return teams.get(21, {auth})
         .then(res => expect(res).to.deep.equal(expected));
