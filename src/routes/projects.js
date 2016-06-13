@@ -62,6 +62,7 @@ module.exports = [
   })),
 
   _.put('/projects/:id', update(projects.update, {
+    schema,
     serializer: serializers.project,
     access: {
       permission: permissions.write,
