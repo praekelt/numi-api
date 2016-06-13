@@ -496,12 +496,6 @@ Projects
   Retrieves the :ref:`description <data-project>` of the project with id
   ``project_id``.
 
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the project's organization
-    - ``project:admin`` for the project
-    - ``project:write`` for the project
-    - ``project:read`` for the project
-
   .. sourcecode:: http
 
      GET /projects/23 HTTP/1.1
@@ -618,11 +612,6 @@ Projects
   given description, along with the projects's ``id`` and the ``url`` for
   accessing the projects's description.
 
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the project's organization
-    - ``project:admin`` for the project
-    - ``project:write`` for the project
-
   .. sourcecode:: http
 
      PUT /projects/23 HTTP/1.1
@@ -664,11 +653,6 @@ Projects
   id ``project_id`` with the :ref:`instructions <overview-partial-updates>` in
   the request body and returns the given description, along with the projects's
   ``id`` and the ``url`` for accessing the project's description.
-
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the project's organization
-    - ``project:admin`` for the project
-    - ``project:write`` for the project
 
 .. sourcecode:: http
 
@@ -745,12 +729,6 @@ Dialogues
   Retrieves a :ref:`summary <data-dialogue-summary>` of every dialogue
   contained in the project with id ``project_id``.
 
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the organization
-    - ``project:admin`` for the project
-    - ``project:write`` for the project
-    - ``project:read`` for the project
-
   .. sourcecode:: http
 
       GET /projects/23/dialogues/ HTTP/1.1
@@ -791,13 +769,6 @@ Dialogues
 
   Retrieves the :ref:`description <data-dialogue>` of the dialogue with id
   ``dialogue_id``.
-
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the organization that owns the project under which the
-      dialogue is contained
-    - ``project:admin`` for the project under which the dialogue is contained
-    - ``project:write`` for the project under which the dialogue is contained
-    - ``project:read`` for the project under which the dialogue is contained
 
   .. sourcecode:: http
 
@@ -840,12 +811,6 @@ Dialogues
   returns the created dialogue's description, along with the generated dialogue
   ``id`` field and ``url`` field for accessing the dialogue description.
 
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the organization that owns the project under which the
-      dialogue is contained
-    - ``project:admin`` for the project under which the dialogue is contained
-    - ``project:write`` for the project under which the dialogue is contained
-
   .. sourcecode:: http
 
      POST /projects/23/dialogues/ HTTP/1.1
@@ -886,12 +851,6 @@ Dialogues
   <concepts-revisions-edit>` with a `JSON patch`_ representing the instructions
   needed to change the current dialogue description to the new description
   given in the request body.
-
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the organization that owns the project under which the
-      dialogue is contained
-    - ``project:admin`` for the project under which the dialogue is contained
-    - ``project:write`` for the project under which the dialogue is contained
 
   .. _JSON Patch: http://tools.ietf.org/html/rfc6902
 
@@ -937,12 +896,6 @@ Dialogues
 
   Partially updating the dialogue creates a new :ref:`edit revision
   <concepts-revisions-edit>` using the provided patch instructions.
-
-  Accessible to admins and teams with any of the following permissions:
-    - ``org:admin`` for the organization that owns the project under which the
-      dialogue is contained
-    - ``project:admin`` for the project under which the dialogue is contained
-    - ``project:write`` for the project under which the dialogue is contained
 
 .. sourcecode:: http
 
