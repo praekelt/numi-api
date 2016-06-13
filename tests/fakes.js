@@ -17,8 +17,9 @@ function fakeResource(defaults) {
 
 
 const fakeProject = fakeResource(() => ({
-  id: '23',
-  title: 'Project Foo'
+  id: '1',
+  organization_id: '1',
+  title: 'Org 1 Admins'
 }));
 
 
