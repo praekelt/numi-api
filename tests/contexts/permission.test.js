@@ -78,19 +78,21 @@ describe('contexts.permission', () => {
       this.sandbox.stub(authApi.teams, 'get')
         .withArgs(7, {conf: authConf(auth)})
         .returns(Promise.resolve({
-          permissions: [{
-            id: 1,
-            type: 'project:admin',
-            object_id: 23
-          }, {
-            id: 2,
-            type: 'project:read',
-            object_id: 23
-          }, {
-            id: 3,
-            type: 'project:write',
-            object_id: 23
-          }]
+          data: {
+            permissions: [{
+              id: 1,
+              type: 'project:admin',
+              object_id: 23
+            }, {
+              id: 2,
+              type: 'project:read',
+              object_id: 23
+            }, {
+              id: 3,
+              type: 'project:write',
+              object_id: 23
+            }]
+          }
         }));
 
         return Promise.all([1, 2, 3]
@@ -119,11 +121,13 @@ describe('contexts.permission', () => {
       this.sandbox.stub(authApi.teams, 'get')
         .withArgs(7, {conf: authConf(auth)})
         .returns(Promise.resolve({
-          permissions: [{
-            id: 1,
-            type: 'unsupported',
-            object_id: 23
-          }]
+          data: {
+            permissions: [{
+              id: 1,
+              type: 'unsupported',
+              object_id: 23
+            }]
+          }
         }));
 
         return permission.removeAccess(7, 1, {auth})
