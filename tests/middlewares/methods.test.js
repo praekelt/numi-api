@@ -8,7 +8,7 @@ const _ = require('koa-route');
 const request = require('supertest');
 const { validationError } = require('src/middlewares/errors');
 const { validate } = require('@praekelt/json-schema-utils');
-const { json_patch: patchSchema } = require('schemas').definitions;
+const { definitions: { json_patch: patchSchema } } = require('schemas');
 const multicb = require('multicb');
 
 const {

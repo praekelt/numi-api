@@ -4,7 +4,7 @@ const identity = require('lodash/identity');
 const isNull = require('lodash/isNull');
 const Promise = require('bluebird');
 const method = require('src/middlewares/method');
-const { json_patch: patchSchema } = require('schemas').definitions;
+const { definitions: { json_patch: patchSchema } } = require('schemas');
 const { ensure, effect, castFunction } = require('src/utils');
 
 const {
