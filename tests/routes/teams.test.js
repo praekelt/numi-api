@@ -7,7 +7,7 @@ const tokens = require('tests/fixtures/tokens');
 const { statusToNotEqual } = require('tests/utils');
 
 
-describe.only("routes/teams", () => {
+describe("routes/teams", () => {
   before(() => {
     this.numi = app.listen();
   });
