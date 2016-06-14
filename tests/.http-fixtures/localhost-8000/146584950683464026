@@ -1,0 +1,13 @@
+GET /user/
+accept: application/json, text/plain, */*
+authorization: Token 113a7ee2e7debe5d55d7bb5a4afc6c609248c0b1
+
+HTTP/1.0 200 OK
+date: Mon, 13 Jun 2016 20:25:06 GMT
+server: WSGIServer/0.1 Python/2.7.10
+vary: Accept
+x-frame-options: SAMEORIGIN
+content-type: application/json
+allow: GET, HEAD, OPTIONS
+
+{"id":11,"url":"http://localhost:8000/users/11/","first_name":"","last_name":"","email":"project2admin@users.org","admin":false,"active":true,"permissions":[{"id":4,"type":"project:admin","object_id":"2","namespace":"numi"}]}
