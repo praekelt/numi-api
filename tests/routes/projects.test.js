@@ -26,19 +26,19 @@ describe("routes/projects", () => {
     this.sandbox.restore();
   });
 
-  describe("POST /organizations/21/projects/", () => {
+  describe("POST /organizations/:id/projects/", () => {
     it("should validate the request body", done => {
       const next = multicb();
 
       request(this.numi)
-        .post('/organizations/21/projects/')
+        .post('/organizations/1/projects/')
         .set('Authorization', `Token ${tokens.admin}`)
         .send({})
         .expect(422)
         .end(next());
 
       request(this.numi)
-        .post('/organizations/21/projects/')
+        .post('/organizations/1/projects/')
         .set('Authorization', `Token ${tokens.admin}`)
         .send(omitReadOnly(schema, fakeProject()))
         .expect(statusToNotEqual(422))
