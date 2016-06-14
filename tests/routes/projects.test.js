@@ -9,6 +9,7 @@ const { fakeProject } = require('tests/fakes');
 const { omitReadOnly } = require('@praekelt/json-schema-utils');
 const { sandbox } = require('sinon');
 const { definitions: { project: { project: schema } } } = require('schemas');
+const { expect } = require('chai');
 
 
 describe("routes/projects", () => {
@@ -144,6 +145,21 @@ describe("routes/projects", () => {
         .end(next());
 
       next(done);
+    });
+
+    it("should retrieve the teams associated to the project", done => {
+      request(this.numi)
+        .get('/projects/1/teams/')
+        .set('Authorization', `Token ${tokens.admin}`)
+        .expect(200)
+        .expect(resp => {
+          expect(resp.body).to.shallowDeepEqual([
+            {title: 'Project 1 Admins'},
+            {title: 'Project 1 Readers'},
+            {title: 'Project 1 Writers'}
+          ]);
+        })
+        .end(done);
     });
   });
 
