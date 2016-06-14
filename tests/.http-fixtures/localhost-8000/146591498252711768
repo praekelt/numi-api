@@ -1,0 +1,13 @@
+GET /organizations/1/teams/
+accept: application/json, text/plain, */*
+authorization: Token f5e2b9e9754a88fec77422fe9e30fafcfb354917
+
+HTTP/1.0 200 OK
+date: Tue, 14 Jun 2016 14:36:22 GMT
+server: WSGIServer/0.1 Python/2.7.10
+vary: Accept
+x-frame-options: SAMEORIGIN
+content-type: application/json
+allow: GET, POST, HEAD, OPTIONS
+
+[{"id":1,"title":"Org 1 Admins","permissions":[{"id":1,"type":"org:admin","object_id":"1","namespace":"__auth__"}],"users":[{"id":2,"url":"http://localhost:8000/users/2/"}],"url":"http://localhost:8000/teams/1/","organization":{"id":1,"url":"http://localhost:8000/organizations/1/"},"archived":false},{"id":3,"title":"Project 1 Admins","permissions":[{"id":3,"type":"project:admin","object_id":"1","namespace":"numi"}],"users":[{"id":4,"url":"http://localhost:8000/users/4/"}],"url":"http://localhost:8000/teams/3/","organization":{"id":1,"url":"http://localhost:8000/organizations/1/"},"archived":false},{"id":4,"title":"Project 2 Admins","permissions":[{"id":4,"type":"project:admin","object_id":"2","namespace":"numi"}],"users":[{"id":11,"url":"http://localhost:8000/users/11/"}],"url":"http://localhost:8000/teams/4/","organization":{"id":1,"url":"http://localhost:8000/organizations/1/"},"archived":false},{"id":5,"title":"Project 1 Readers","permissions":[{"id":7,"type":"project:read","object_id":"1","namespace":"numi"}],"users":[{"id":5,"url":"http://localhost:8000/users/5/"}],"url":"http://localhost:8000/teams/5/","organization":{"id":1,"url":"http://localhost:8000/organizations/1/"},"archived":false},{"id":6,"title":"Project 2 Readers","permissions":[{"id":8,"type":"project:read","object_id":"2","namespace":"numi"}],"users":[{"id":6,"url":"http://localhost:8000/users/6/"}],"url":"http://localhost:8000/teams/6/","organization":{"id":1,"url":"http://localhost:8000/organizations/1/"},"archived":false},{"id":7,"title":"Project 1 Writers","permissions":[{"id":9,"type":"project:write","object_id":"1","namespace":"numi"}],"users":[{"id":7,"url":"http://localhost:8000/users/7/"}],"url":"http://localhost:8000/teams/7/","organization":{"id":1,"url":"http://localhost:8000/organizations/1/"},"archived":false},{"id":8,"title":"Project 2 Writers","permissions":[{"id":10,"type":"project:write","object_id":"2","namespace":"numi"}],"users":[{"id":10,"url":"http://localhost:8000/users/10/"}],"url":"http://localhost:8000/teams/8/","organization":{"id":1,"url":"http://localhost:8000/organizations/1/"},"archived":false}]
