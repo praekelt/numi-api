@@ -9,7 +9,7 @@ function create(orgId, d) {
 }
 
 
-function list(params) {
+function list() {
   throw new NotImplementedError();
 }
 
@@ -24,7 +24,7 @@ function listChannels(id) {
 }
 
 
-function listTeams(id, params, {auth, namespace = configNamespace}) {
+function listTeams(id, {auth, namespace = configNamespace}) {
   // TODO take into account pagination
   return authApi.teams.list({
       namespace,

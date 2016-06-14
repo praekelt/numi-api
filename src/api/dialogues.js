@@ -6,7 +6,7 @@ function create(projectId, d) {
 }
 
 
-function list(projectId, params) {
+function list(projectId) {
   throw new NotImplementedError();
 }
 
