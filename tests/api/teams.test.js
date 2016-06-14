@@ -31,7 +31,7 @@ describe("api.teams", () => {
         .withArgs(23, {conf: authConf(auth)})
         .returns(fakeAuthResult(expected));
 
-      return teams.list(23, {}, {auth})
+      return teams.list(23, {auth})
         .then(res => expect(res).to.deep.equal(expected));
     });
   });
@@ -49,7 +49,7 @@ describe("api.teams", () => {
         .withArgs(21, {conf: authConf(auth)})
         .returns(fakeAuthResult(expected));
 
-      return teams.get(21, {}, {auth})
+      return teams.get(21, {auth})
         .then(res => expect(res).to.deep.equal(expected));
     });
   });

@@ -2,7 +2,7 @@ const { authConf } = require('src/auth-utils');
 const authApi = require('src/core/auth');
 
 
-function list(organizationId, params, {auth}) {
+function list(organizationId, {auth}) {
   return authApi.organizations.listTeams(organizationId, {
       conf: authConf(auth)
     })
@@ -10,7 +10,7 @@ function list(organizationId, params, {auth}) {
 }
 
 
-function get(id, params, {auth}) {
+function get(id, {auth}) {
   return authApi.teams.get(id, {conf: authConf(auth)})
     .then(({data}) => data);
 }
