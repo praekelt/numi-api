@@ -5,7 +5,7 @@ const isNull = require('lodash/isNull');
 const Promise = require('bluebird');
 const method = require('src/middlewares/method');
 const { definitions: { json_patch: patchSchema } } = require('schemas');
-const { ensure, effect, castFunction } = require('src/utils');
+const { conj, ensure, effect, castFunction } = require('src/utils');
 
 const {
   omitReadOnly,
@@ -50,9 +50,9 @@ function list(fn, def = {}) {
     if (!isNull(visibility)) assertAuthentication(user);
 
     return Promise.resolve(ctx.request.query)
-      .then(effect(d => validate(schema, d)))
-      .then(d => defaults(schema, d))
-      .then(d => fn(...args, d, opts))
+      .then(effect(params => validate(schema, params)))
+      .then(params => defaults(schema, params))
+      .then(params => fn(...args, conj(opts, {params})))
       .then(data => filterVisible(user, visibility, data, opts))
       .then(data => map(data, serializer))
       .then(res => { ctx.body = res; })
@@ -69,9 +69,9 @@ function read(fn, def = {}) {
 
   return method(def, (ctx, args, opts, next) =>
     Promise.resolve(ctx.request.query)
-      .then(effect(d => validate(schema, d)))
-      .then(d => defaults(schema, d))
-      .then(d => fn(...args, d, opts))
+      .then(effect(params => validate(schema, params)))
+      .then(params => defaults(schema, params))
+      .then(params => fn(...args, conj(opts, {params})))
       .then(serializer)
       .then(res => { ctx.body = res; })
       .then(() => next()));

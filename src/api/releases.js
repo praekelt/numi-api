@@ -6,7 +6,7 @@ function create(dialogueId, d) {
 }
 
 
-function list(dialogueId, params) {
+function list(dialogueId) {
   throw new NotImplementedError();
 }
 
