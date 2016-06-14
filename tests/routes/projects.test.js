@@ -108,6 +108,8 @@ describe("routes/projects", () => {
 
       next(done);
     });
+
+    it("should return the project description");
   });
 
   describe("GET /projects/:id/teams/", () => {
@@ -152,8 +154,8 @@ describe("routes/projects", () => {
         .get('/projects/1/teams/')
         .set('Authorization', `Token ${tokens.admin}`)
         .expect(200)
-        .expect(resp => {
-          expect(resp.body).to.shallowDeepEqual([
+        .expect(({body}) => {
+          expect(body).to.shallowDeepEqual([
             {title: 'Project 1 Admins'},
             {title: 'Project 1 Readers'},
             {title: 'Project 1 Writers'}
@@ -199,6 +201,8 @@ describe("routes/projects", () => {
 
       next(done);
     });
+
+    it("should return the project's associated channels");
   });
 
   describe("PUT /projects/:id", () => {
@@ -261,6 +265,8 @@ describe("routes/projects", () => {
 
       next(done);
     });
+
+    it("should update the project description");
   });
 
   describe("PATCH /projects/:id", () => {
@@ -321,5 +327,7 @@ describe("routes/projects", () => {
 
       next(done);
     });
+
+    it("should patch the project description");
   });
 });
