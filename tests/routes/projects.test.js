@@ -155,11 +155,16 @@ describe("routes/projects", () => {
         .set('Authorization', `Token ${tokens.admin}`)
         .expect(200)
         .expect(({body}) => {
-          expect(body).to.shallowDeepEqual([
-            {title: 'Project 1 Admins'},
-            {title: 'Project 1 Readers'},
-            {title: 'Project 1 Writers'}
-          ]);
+          expect(body).to.shallowDeepEqual([{
+            url: '/teams/3',
+            title: 'Project 1 Admins'
+          }, {
+            url: '/teams/5',
+            title: 'Project 1 Readers'
+          }, {
+            url: '/teams/7',
+            title: 'Project 1 Writers'
+          }]);
         })
         .end(done);
     });
