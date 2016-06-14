@@ -157,10 +157,10 @@ describe("middlewares/api/methods", () => {
 
     it("should apply defaults to the request query parameters", done => {
       const app = new Koa()
-        .use(_.get('/:a/:b', read((a, b, d) => Promise.resolve({
+        .use(_.get('/:a/:b', read((a, b, {params}) => Promise.resolve({
           a,
           b,
-          d
+          params
         }), {
           schema: {
             type: 'object',
@@ -176,7 +176,7 @@ describe("middlewares/api/methods", () => {
         .expect({
           a: 2,
           b: 3,
-          d: {
+          params: {
             x: 23,
             y: 21,
             z: 22
@@ -187,10 +187,10 @@ describe("middlewares/api/methods", () => {
 
     it("should use the api call result as the response body", done => {
       const app = new Koa()
-        .use(_.get('/:a/:b', read((a, b, d) => Promise.resolve({
+        .use(_.get('/:a/:b', read((a, b, {params}) => Promise.resolve({
           a,
           b,
-          d
+          params
         }))));
 
       request(app.listen())
@@ -198,7 +198,7 @@ describe("middlewares/api/methods", () => {
         .expect({
           a: 2,
           b: 3,
-          d: {
+          params: {
             x: 23,
             y: 21
           }
@@ -232,7 +232,7 @@ describe("middlewares/api/methods", () => {
           ctx.auth = {foo: 23};
           return next();
         })
-        .use(_.get('/', read((d, opts) => opts.auth)));
+        .use(_.get('/', read(({auth}) => auth)));
 
       request(app.listen())
         .get('/')
@@ -264,10 +264,10 @@ describe("middlewares/api/methods", () => {
 
     it("should apply defaults to the request query parameters", done => {
       const app = new Koa()
-        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve([
+        .use(_.get('/:a/:b', list((a, b, {params}) => Promise.resolve([
           a,
           b,
-          d
+          params
         ]), {
           schema: {
             type: 'object',
@@ -294,10 +294,10 @@ describe("middlewares/api/methods", () => {
 
     it("should use the api call result as the response body", done => {
       const app = new Koa()
-        .use(_.get('/:a/:b', list((a, b, d) => Promise.resolve([
+        .use(_.get('/:a/:b', list((a, b, {params}) => Promise.resolve([
           a,
           b,
-          d
+          params
         ]))));
 
       request(app.listen())
@@ -342,7 +342,7 @@ describe("middlewares/api/methods", () => {
           ctx.auth = {foo: 23};
           return next();
         })
-        .use(_.get('/', list((d, opts) => [opts.auth])));
+        .use(_.get('/', list(({auth}) => [auth])));
 
       request(app.listen())
         .get('/')
