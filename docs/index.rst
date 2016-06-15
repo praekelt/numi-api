@@ -1274,6 +1274,7 @@ Channels
 
      {
        "id": "23",
+       "provider_id": "3",
        "url": "/channels/23",
        "project_id": "21",
        "title": "@foo",
@@ -1302,6 +1303,7 @@ Channels
 
      {
        "id": "23",
+       "provider_id": "3",
        "project_id": "17",
        "url": "/channels/23",
        "title": "@foo",
@@ -1353,6 +1355,7 @@ Channels
 
      {
        "id": "23",
+       "provider_id": "3",
        "project_id": "17",
        "url": "/channels/23",
        "title": "@foo",
@@ -1412,8 +1415,9 @@ Providers
        "title": "Twitter"
        "channels": [{
          "id": "23",
+         "provider_id": "21",
          "url": "/channels/23",
-         "project_id": 21,
+         "project_id": 3,
          "title": "@foo",
          "address": "@foo",
          "type": "twitter",
