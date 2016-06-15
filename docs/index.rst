@@ -1258,34 +1258,6 @@ Ordering releases
 Channels
 --------
 
-.. http:get:: /organizations/:organization_id/channels/
-
-  Retrieves the :ref:`descriptions <data-channel>` of all channels contained by
-  the organization with id ``organization_id``.
-
-  .. sourcecode:: http
-
-     GET /channels/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     [{
-       "id": "23",
-       "url": "/channels/23",
-       "project_id": "21",
-       "title": "@foo",
-       "address": "@foo",
-       "type": "twitter",
-       "is_available": true,
-       "provider": {
-         "id": "21",
-         "title": "Twitter"
-       }
-     }]
-
 .. http:get:: /channels/(str:channel_id)
 
   Retrieves the :ref:`description <data-channel>` of the channel with the id
