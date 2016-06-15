@@ -15,7 +15,7 @@ const { statusToNotEqual } = require('tests/utils');
 const { fakeDialogue } = require('tests/fakes');
 
 
-describe.only("routes/dialogues", () => {
+describe("routes/dialogues", () => {
   before(() => {
     this.numi = app.listen();
   });
