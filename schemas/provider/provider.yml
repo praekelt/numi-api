@@ -7,6 +7,12 @@ properties:
     description: |
       The channel's identifier (provided by the API)
 
+  organization_id:
+    type: string
+    readOnly: true
+    description: |
+      The identifier of the organization that owns this provider
+
   url:
     type: string
     readOnly: true
@@ -23,7 +29,7 @@ properties:
     type: array
     readOnly: true
     items:
-      $ref: '#/definitions/channel/summary'
+      $ref: '#/definitions/provider/summary'
     description: |
       Summaries of the channels associated with this provider
 
