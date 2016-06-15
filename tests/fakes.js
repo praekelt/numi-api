@@ -16,6 +16,11 @@ function fakeProvidersResult(data) {
 }
 
 
+function fakeChannelsResult(data) {
+  return Promise.resolve({data});
+}
+
+
 function fakeResource(defaults) {
   return (d = {}) => conj(defaults(), d);
 }
@@ -36,11 +41,21 @@ const fakeProvider = fakeResource(() => ({
 }));
 
 
+const fakeChannel = fakeResource(() => ({
+  id: '1',
+  provider_id: '1',
+  title: 'Channel 1',
+  project_id: null
+}));
+
+
 module.exports = {
   fakeAuthResult,
   fakeProjectsResult,
   fakeProvidersResult,
+  fakeChannelsResult,
   fakeProject,
   fakeResource,
-  fakeProvider
+  fakeProvider,
+  fakeChannel
 };
