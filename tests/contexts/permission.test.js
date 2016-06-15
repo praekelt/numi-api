@@ -37,7 +37,7 @@ describe("contexts.permission", () => {
             'project:admin',
             'project:read',
             'project:write'
-          ].map(type => permission.createAccess(7, {
+          ].map(type => permission.createAccess('7', {
             type,
             object_id: 23
           })))
@@ -49,7 +49,7 @@ describe("contexts.permission", () => {
     });
 
     it("should reject with NotImplementedError for unsupported types", () => {
-      return permission.createAccess(7, {
+      return permission.createAccess('7', {
           type: 'unsupported',
           object_id: 23
         })
