@@ -75,6 +75,20 @@ describe("utils", () => {
         return Promise.resolve().then(() => calls.push(v));
       }
 
+      return utils.effect(fn)(23)
+        .then(v => {
+          expect(v).to.equal(23);
+          expect(calls).to.deep.equal([23]);
+        });
+    });
+
+    it("should support functions returning promises", () => {
+      const calls = [];
+
+      function fn(v) {
+        return Promise.resolve().then(() => calls.push(v));
+      }
+
       return Promise.resolve(23)
         .then(utils.effect(fn))
         .then(v => {

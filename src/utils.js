@@ -22,9 +22,13 @@ function ensure(v, defaultVal) {
 
 
 function effect(fn) {
-  return (v) => Promise.resolve(v)
-    .then(fn)
-    .then(() => v);
+  return v => {
+    const res = fn(v);
+
+    return res instanceof Promise
+      ? res.then(constant(v))
+      : v;
+  };
 }
 
 

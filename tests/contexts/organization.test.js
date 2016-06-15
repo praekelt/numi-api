@@ -1,13 +1,12 @@
 const { expect } = require('chai');
 const { organization } = require('src/contexts');
-const { NotImplementedError } = require('src/errors');
 
 
 describe("contexts.organization", () => {
   describe("access", () => {
-    it("should throw a NotImplementedError", () => {
-      expect(() => organization.access())
-        .to.throw(NotImplementedError);
+    it("should get the organizations access context", () => {
+      expect(organization.access(23))
+        .to.deep.equal({organizationId: 23});
     });
   });
 });
