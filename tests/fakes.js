@@ -16,6 +16,11 @@ function fakeDialoguesResult(data) {
 }
 
 
+function fakeReleasesResult(data) {
+  return Promise.resolve({data});
+}
+
+
 function fakeResource(defaults) {
   return (d = {}) => conj(defaults(), d);
 }
@@ -35,11 +40,21 @@ const fakeDialogue = fakeResource(() => ({
 }));
 
 
+const fakeRelease = fakeResource(() => ({
+  id: '1',
+  dialogue_id: '1',
+  revision_id: '1',
+  number: 1
+}));
+
+
 module.exports = {
   fakeAuthResult,
   fakeProjectsResult,
   fakeDialoguesResult,
+  fakeReleasesResult,
   fakeProject,
   fakeResource,
-  fakeDialogue
+  fakeDialogue,
+  fakeRelease
 };
