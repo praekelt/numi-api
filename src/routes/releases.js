@@ -11,7 +11,7 @@ module.exports = [
     schema,
     access: {
       permission: permissions.create,
-      context: contexts.release.access
+      context: contexts.dialogue.access
     }
   })),
 
@@ -26,7 +26,7 @@ module.exports = [
     },
     access: {
       permission: permissions.list,
-      context: contexts.release.access
+      context: contexts.dialogue.access
     }
   }))
 ];

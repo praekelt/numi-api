@@ -12,7 +12,6 @@ const { definitions: { release: schema } } = require('schemas');
 const tokens = require('tests/fixtures/tokens');
 const projectFixtures = require('tests/fixtures/projects');
 const dialogueFixtures = require('tests/fixtures/dialogues');
-const releaseFixtures = require('tests/fixtures/releases');
 const { statusToNotEqual } = require('tests/utils');
 const { fakeRelease } = require('tests/fakes');
 
@@ -26,7 +25,6 @@ describe("routes/releases", () => {
     this.sandbox = sandbox.create();
     projectFixtures(this.sandbox, projects);
     dialogueFixtures(this.sandbox, dialogues);
-    releaseFixtures(this.sandbox, releases);
   });
 
   afterEach(() => {
