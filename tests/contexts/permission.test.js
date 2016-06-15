@@ -77,7 +77,7 @@ describe("contexts.permission", () => {
         }));
 
       this.sandbox.stub(authApi.teams, 'get')
-        .withArgs(7, {conf: authConf(auth)})
+        .withArgs('7', {conf: authConf(auth)})
         .returns(fakeAuthResult({
           permissions: [{
             id: 1,
@@ -94,8 +94,8 @@ describe("contexts.permission", () => {
           }]
         }));
 
-        return Promise.all([1, 2, 3]
-          .map(id => permission.removeAccess(7, id, {auth})))
+        return Promise.all(['1', '2', '3']
+          .map(id => permission.removeAccess('7', id, {auth})))
           .then(res => expect(res).to.deep.equal([
             expected,
             expected,
@@ -118,7 +118,7 @@ describe("contexts.permission", () => {
         }));
 
       this.sandbox.stub(authApi.teams, 'get')
-        .withArgs(7, {conf: authConf(auth)})
+        .withArgs('7', {conf: authConf(auth)})
         .returns(fakeAuthResult({
           permissions: [{
             id: 1,
@@ -127,7 +127,7 @@ describe("contexts.permission", () => {
           }]
         }));
 
-        return permission.removeAccess(7, 1, {auth})
+        return permission.removeAccess('7', '1', {auth})
           .then(fail, e => expect(e).to.be.instanceof(AuthorizationError));
     });
   });
