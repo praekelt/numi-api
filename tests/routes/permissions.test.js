@@ -2,7 +2,6 @@ const multicb = require('multicb');
 const request = require('supertest');
 const { omitReadOnly } = require('@praekelt/json-schema-utils');
 const { sandbox } = require('sinon');
-const { expect } = require('chai');
 
 const app = require('src');
 const {
