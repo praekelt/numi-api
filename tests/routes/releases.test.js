@@ -6,7 +6,6 @@ const { sandbox } = require('sinon');
 const app = require('src');
 const projects = require('src/core/projects');
 const dialogues = require('src/core/dialogues');
-const releases = require('src/core/releases');
 const { definitions: { release: schema } } = require('schemas');
 
 const tokens = require('tests/fixtures/tokens');
