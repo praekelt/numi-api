@@ -7,6 +7,12 @@ properties:
     description: |
       The channel's identifier (provided by the API)
 
+  provider_id:
+    type: string
+    readOnly: true
+    description: |
+      The identifier of the provider that owns this channel
+
   url:
     type: string
     readOnly: true
