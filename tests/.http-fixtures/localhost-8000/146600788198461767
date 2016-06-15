@@ -1,0 +1,15 @@
+POST /teams/9/permissions/
+accept: application/json, text/plain, */*
+authorization: Token a2792b8ace1aeea3fa7816744ebe3bfcc485bce6
+content-type: application/json;charset=utf-8
+body: {\"object_id\":\"3\",\"type\":\"project:admin\",\"namespace\":\"numi\"}
+
+HTTP/1.0 201 Created
+date: Wed, 15 Jun 2016 16:24:41 GMT
+server: WSGIServer/0.1 Python/2.7.10
+vary: Accept
+x-frame-options: SAMEORIGIN
+content-type: application/json
+allow: POST, OPTIONS
+
+{"id":18,"type":"project:admin","object_id":"3","namespace":"numi"}

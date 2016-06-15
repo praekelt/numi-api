@@ -1,0 +1,13 @@
+GET /teams/9/
+accept: application/json, text/plain, */*
+authorization: Token 15aacbc0c9dd9bc6d8b4f515cde55280d99a00db
+
+HTTP/1.0 200 OK
+date: Wed, 15 Jun 2016 16:41:56 GMT
+server: WSGIServer/0.1 Python/2.7.10
+vary: Accept
+x-frame-options: SAMEORIGIN
+content-type: application/json
+allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+
+{"id":9,"title":"Project 3 Admins","permissions":[{"id":11,"type":"project:admin","object_id":"3","namespace":"numi"},{"id":12,"type":"project:admin","object_id":"9","namespace":"numi"},{"id":18,"type":"project:admin","object_id":"3","namespace":"numi"},{"id":19,"type":"project:admin","object_id":"3","namespace":"numi"},{"id":20,"type":"project:admin","object_id":"3","namespace":"numi"}],"users":[],"url":"http://localhost:8000/teams/9/","organization":{"id":2,"url":"http://localhost:8000/organizations/2/"},"archived":false}
