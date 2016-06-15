@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const { fail } = expect;
 const { UnsupportedAuthTypeError } = require('src/errors');
 const { authUser, authConf } = require('src/auth-utils');
-const { authResult } = require('tests/fakes');
+const { fakeAuthResult } = require('tests/fakes');
 const authApi = require('src/core/auth');
 
 
@@ -27,7 +27,7 @@ describe("auth-utils", () => {
 
       this.sandbox.stub(authApi.user, 'get')
         .withArgs({conf: {token: '1234'}})
-        .returns(authResult(expected));
+        .returns(fakeAuthResult(expected));
 
       return authUser(auth)
         .then(res => expect(res).to.deep.equal(expected));

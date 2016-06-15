@@ -4,7 +4,7 @@ const { sandbox } = require('sinon');
 const { permission } = require('src/contexts');
 const { authConf } = require('src/auth-utils');
 const { fail } = expect;
-const { authResult, projectsResult } = require('tests/fakes');
+const { fakeAuthResult, fakeProjectsResult } = require('tests/fakes');
 const authApi = require('src/core/auth');
 const projects = require('src/core/projects');
 
@@ -28,7 +28,7 @@ describe("contexts.permission", () => {
 
       this.sandbox.stub(projects, 'get')
         .withArgs(23)
-        .returns(projectsResult(({
+        .returns(fakeProjectsResult(({
           id: 23,
           organization_id: 21
         })));
@@ -71,14 +71,14 @@ describe("contexts.permission", () => {
 
       this.sandbox.stub(projects, 'get')
         .withArgs(23)
-        .returns(projectsResult({
+        .returns(fakeProjectsResult({
           id: 23,
           organization_id: 21
         }));
 
       this.sandbox.stub(authApi.teams, 'get')
         .withArgs(7, {conf: authConf(auth)})
-        .returns(authResult({
+        .returns(fakeAuthResult({
           permissions: [{
             id: 1,
             type: 'project:admin',
@@ -112,14 +112,14 @@ describe("contexts.permission", () => {
 
       this.sandbox.stub(projects, 'get')
         .withArgs(23)
-        .returns(projectsResult({
+        .returns(fakeProjectsResult({
           id: 23,
           organization_id: 21
         }));
 
       this.sandbox.stub(authApi.teams, 'get')
         .withArgs(7, {conf: authConf(auth)})
-        .returns(authResult({
+        .returns(fakeAuthResult({
           permissions: [{
             id: 1,
             type: 'unsupported',
