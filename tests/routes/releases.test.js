@@ -17,7 +17,7 @@ const { statusToNotEqual } = require('tests/utils');
 const { fakeRelease } = require('tests/fakes');
 
 
-describe.only("routes/releases", () => {
+describe("routes/releases", () => {
   before(() => {
     this.numi = app.listen();
   });
