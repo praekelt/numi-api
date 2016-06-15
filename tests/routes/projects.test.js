@@ -26,19 +26,19 @@ describe("routes/projects", () => {
     this.sandbox.restore();
   });
 
-  describe("POST /organizations/21/projects/", () => {
+  describe("POST /organizations/:id/projects/", () => {
     it("should validate the request body", done => {
       const next = multicb();
 
       request(this.numi)
-        .post('/organizations/21/projects/')
+        .post('/organizations/1/projects/')
         .set('Authorization', `Token ${tokens.admin}`)
         .send({})
         .expect(422)
         .end(next());
 
       request(this.numi)
-        .post('/organizations/21/projects/')
+        .post('/organizations/1/projects/')
         .set('Authorization', `Token ${tokens.admin}`)
         .send(omitReadOnly(schema, fakeProject()))
         .expect(statusToNotEqual(422))
@@ -155,11 +155,16 @@ describe("routes/projects", () => {
         .set('Authorization', `Token ${tokens.admin}`)
         .expect(200)
         .expect(({body}) => {
-          expect(body).to.shallowDeepEqual([
-            {title: 'Project 1 Admins'},
-            {title: 'Project 1 Readers'},
-            {title: 'Project 1 Writers'}
-          ]);
+          expect(body).to.shallowDeepEqual([{
+            url: '/teams/3',
+            title: 'Project 1 Admins'
+          }, {
+            url: '/teams/5',
+            title: 'Project 1 Readers'
+          }, {
+            url: '/teams/7',
+            title: 'Project 1 Writers'
+          }]);
         })
         .end(done);
     });
