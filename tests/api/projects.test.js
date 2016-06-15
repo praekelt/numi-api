@@ -58,7 +58,7 @@ describe("api.projects", () => {
         })
         .returns(authResult(expected));
 
-      return projects.listTeams(23, {}, {
+      return projects.listTeams(23, {
           auth,
           namespace: '_numi_'
         })

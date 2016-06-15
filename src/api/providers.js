@@ -1,7 +1,7 @@
 const { NotImplementedError } = require('src/errors');
 
 
-function list(params) {
+function list() {
   throw new NotImplementedError();
 }
 
