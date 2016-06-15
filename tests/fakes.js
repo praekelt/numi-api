@@ -21,6 +21,11 @@ function fakeReleasesResult(data) {
 }
 
 
+function fakeRevisionsResult(data) {
+  return Promise.resolve({data});
+}
+
+
 function fakeResource(defaults) {
   return (d = {}) => conj(defaults(), d);
 }
@@ -48,13 +53,31 @@ const fakeRelease = fakeResource(() => ({
 }));
 
 
+const fakeRevision = fakeResource(() => ({
+  id: '1',
+  dialogue_id: '1',
+  created: +new Date(0),
+  type: 'edit',
+  properties: {
+    edit_type: 'new_sequence',
+    patch: [{
+      op: 'add',
+      path: '/sequences/',
+      value: {title: 'Sequence 1'}
+    }]
+  }
+}));
+
+
 module.exports = {
   fakeAuthResult,
   fakeProjectsResult,
   fakeDialoguesResult,
   fakeReleasesResult,
+  fakeRevisionsResult,
   fakeProject,
   fakeResource,
   fakeDialogue,
-  fakeRelease
+  fakeRelease,
+  fakeRevision
 };
