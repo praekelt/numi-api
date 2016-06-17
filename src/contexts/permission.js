@@ -17,7 +17,7 @@ function createAccess(teamId, permission) {
 
 function removeAccess(teamId, id, {auth}) {
   return authApi.teams.get(teamId, {conf: authConf(auth)})
-    .then(({data: {permissions}}) => find(permissions, {id}))
+    .then(({data: {permissions}}) => find(permissions, {id: +id}))
     .then(access)
     .then(effect(v => {
       if (isNull(v)) throw new AuthorizationError();

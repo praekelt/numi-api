@@ -23,9 +23,18 @@ const fakeProject = fakeResource(() => ({
 }));
 
 
+const fakePermission = fakeResource(() => ({
+  id: '11',
+  object_id: '3',
+  type: 'project:admin',
+  namespace: 'numi'
+}));
+
+
 module.exports = {
   fakeAuthResult,
   fakeProjectsResult,
   fakeProject,
-  fakeResource
+  fakeResource,
+  fakePermission
 };
