@@ -1,5 +1,6 @@
 const extend = require('lodash/extend');
 const isNull = require('lodash/isNull');
+const omitBy = require('lodash/omitBy');
 const castArray = require('lodash/castArray');
 const isFunction = require('lodash/isFunction');
 const isUndefined = require('lodash/isUndefined');
@@ -54,7 +55,7 @@ function castFunction(v) {
 
 
 function overrides(fn) {
-  return d => conj(d, fn(d));
+  return d => omitBy(conj(d, fn(d)), isUndefined);
 }
 
 
