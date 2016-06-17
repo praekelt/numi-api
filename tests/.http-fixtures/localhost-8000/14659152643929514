@@ -1,0 +1,13 @@
+GET /teams/1/
+accept: application/json, text/plain, */*
+authorization: Token f5e2b9e9754a88fec77422fe9e30fafcfb354917
+
+HTTP/1.0 200 OK
+date: Tue, 14 Jun 2016 14:41:04 GMT
+server: WSGIServer/0.1 Python/2.7.10
+vary: Accept
+x-frame-options: SAMEORIGIN
+content-type: application/json
+allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+
+{"id":1,"title":"Org 1 Admins","permissions":[{"id":1,"type":"org:admin","object_id":"1","namespace":"__auth__"}],"users":[{"id":2,"url":"http://localhost:8000/users/2/"}],"url":"http://localhost:8000/teams/1/","organization":{"id":1,"url":"http://localhost:8000/organizations/1/"},"archived":false}
