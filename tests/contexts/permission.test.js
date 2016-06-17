@@ -1,12 +1,18 @@
-const { NotImplementedError, AuthorizationError } = require('src/errors');
 const { expect } = require('chai');
 const { sandbox } = require('sinon');
-const { permission } = require('src/contexts');
-const { authConf } = require('src/auth-utils');
 const { fail } = expect;
-const { fakeAuthResult, fakeProjectsResult } = require('tests/fakes');
+
 const authApi = require('src/core/auth');
 const projects = require('src/core/projects');
+const { permission } = require('src/contexts');
+const { authConf } = require('src/auth-utils');
+const {
+  NotFoundError,
+  AuthorizationError,
+  NotImplementedError
+} = require('src/errors');
+
+const { fakeAuthResult, fakeProjectsResult } = require('tests/fakes');
 
 
 describe("contexts.permission", () => {
@@ -129,6 +135,27 @@ describe("contexts.permission", () => {
 
         return permission.removeAccess('7', '1', {auth})
           .then(fail, e => expect(e).to.be.instanceof(AuthorizationError));
+    });
+
+    it("should throw a NotFoundError if permission does not exist", () => {
+      const auth = {
+        type: 'token',
+        token: 'abc'
+      };
+
+      this.sandbox.stub(projects, 'get')
+        .withArgs(23)
+        .returns(fakeProjectsResult({
+          id: 23,
+          organization_id: 21
+        }));
+
+      this.sandbox.stub(authApi.teams, 'get')
+        .withArgs('7', {conf: authConf(auth)})
+        .returns(fakeAuthResult({permissions: []}));
+
+        return permission.removeAccess('7', '1', {auth})
+          .then(fail, e => expect(e).to.be.instanceof(NotFoundError));
     });
   });
 });
