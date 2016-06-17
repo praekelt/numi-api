@@ -282,14 +282,14 @@ describe("routes/projects", () => {
         .patch('/projects/1')
         .set('Authorization', `Token ${tokens.org2Admin}`)
         .send({})
-        .expect(403)
+        .expect(422)
         .end(next());
 
       request(this.numi)
         .get('/projects/1')
         .set('Authorization', `Token ${tokens.org1Admin}`)
         .send([])
-        .expect(statusToNotEqual(403))
+        .expect(statusToNotEqual(422))
         .end(next());
 
       next(done);

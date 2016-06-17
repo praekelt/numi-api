@@ -10,7 +10,7 @@ const {
 
 
 module.exports = [
-  _.post('/teams/:team_id/permissions/', create(api.create, {
+  _.post('/teams/:teamId/permissions/', create(api.create, {
     schema,
     access: {
       permission: permissions.create,
@@ -18,7 +18,7 @@ module.exports = [
     }
   })),
 
-  _.delete('/teams/:team_id/permissions/:id', remove(api.remove, {
+  _.delete('/teams/:teamId/permissions/:id', remove(api.remove, {
     access: {
       permission: permissions.remove,
       context: contexts.permission.removeAccess
