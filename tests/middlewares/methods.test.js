@@ -1,17 +1,20 @@
+const isEqual = require('lodash/isEqual');
 const constant = require('lodash/constant');
 const attempt = require('lodash/attempt');
 const identity = require('lodash/identity');
-const { expect } = require('chai');
+const multicb = require('multicb');
 const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
 const _ = require('koa-route');
+const bodyParser = require('koa-bodyparser');
 const request = require('supertest');
-const { validationError } = require('src/middlewares/errors');
+const { expect } = require('chai');
+
 const { validate } = require('@praekelt/json-schema-utils');
 const { definitions: { json_patch: patchSchema } } = require('schemas');
-const multicb = require('multicb');
 
 const {
+  validationError,
+  authorizationError,
   authenticationRequiredError
 } = require('src/middlewares/errors');
 
@@ -132,6 +135,77 @@ describe("middlewares/api/methods", () => {
         .expect(201)
         .end(done);
     });
+
+    it("should assume authentication is needed if access options are given",
+    done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authenticationRequiredError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          if (ctx.request.body.isLeet) ctx.user = {a: 23};
+          return next();
+        })
+        .use(_.post('/', create(identity, {
+          access: {permission: true}
+        })));
+
+      request(app.listen())
+        .post('/')
+        .send({isLeet: false})
+        .expect(401)
+        .end(next());
+
+      request(app.listen())
+        .post('/')
+        .send({isLeet: true})
+        .expect(201)
+        .end(next());
+
+      next(done);
+    });
+
+    it("should support access checking", done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authorizationError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = 'foo';
+          ctx.user = 'bar';
+          return next();
+        })
+        .use(_.post('/:id', create(identity, {
+          access: {
+            context: (...args) => args,
+            permission: (ctx, user) => isEqual(
+              [['21', {isLeet: true}, {auth: 'foo'}], 'bar'],
+              [ctx, user])
+          }
+        })));
+
+      request(app.listen())
+        .post('/23')
+        .send({isLeet: false})
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .post('/23')
+        .send({isLeet: true})
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .post('/21')
+        .send({isLeet: true})
+        .expect(201)
+        .end(next());
+
+      next(done);
+    });
   });
 
   describe("read", () => {
@@ -238,6 +312,80 @@ describe("middlewares/api/methods", () => {
         .get('/')
         .expect({foo: 23})
         .end(done);
+    });
+
+    it("should assume authentication is needed if access options are given",
+    done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authenticationRequiredError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          if (ctx.request.query.isLeet) ctx.user = {a: 23};
+          return next();
+        })
+        .use(_.get('/', read(constant({}), {
+          access: {permission: true}
+        })));
+
+      request(app.listen())
+        .get('/')
+        .expect(401)
+        .end(next());
+
+      request(app.listen())
+        .get('/?isLeet=true')
+        .expect(200)
+        .end(next());
+
+      next(done);
+    });
+
+    it("should support access checking", done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authorizationError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = 'foo';
+          ctx.user = 'bar';
+          return next();
+        })
+        .use(_.get('/:id', read(constant({}), {
+          access: {
+            context: (...args) => args,
+            permission: (ctx, user) => isEqual([[
+              '21',
+              {
+                params: {isLeet: 'true'},
+                auth: 'foo'
+              }],
+              'bar'
+            ], [
+              ctx,
+              user
+            ])
+          }
+        })));
+
+      request(app.listen())
+        .get('/23')
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .get('/23')
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .get('/21?isLeet=true')
+        .expect(200)
+        .end(next());
+
+      next(done);
     });
   });
 
@@ -361,7 +509,7 @@ describe("middlewares/api/methods", () => {
         if (ctx.request.query.isLeet) ctx.user = {a: 23};
         return next();
       })
-      .use(_.get('/', list(ctx => [21], {
+      .use(_.get('/', list(constant([21]), {
         visibility: {
           permission: true,
           context: null
@@ -399,7 +547,7 @@ describe("middlewares/api/methods", () => {
       ], {
         visibility: {
           context: ({id}) => id,
-          permission: (id, user) => !((id + user.a) % 2)
+          permission: (id, {a}) => !((id + a) % 2)
         }
       })));
 
@@ -411,6 +559,80 @@ describe("middlewares/api/methods", () => {
           {id: 3}
         ])
         .end(done);
+    });
+
+    it("should assume authentication is needed if access options are given",
+    done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authenticationRequiredError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          if (ctx.request.query.isLeet) ctx.user = {a: 23};
+          return next();
+        })
+        .use(_.get('/', list(constant([]), {
+          access: {permission: true}
+        })));
+
+      request(app.listen())
+        .get('/')
+        .expect(401)
+        .end(next());
+
+      request(app.listen())
+        .get('/?isLeet=true')
+        .expect(200)
+        .end(next());
+
+      next(done);
+    });
+
+    it("should support access checking", done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authorizationError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = 'foo';
+          ctx.user = 'bar';
+          return next();
+        })
+        .use(_.get('/:id/', list(constant([]), {
+          access: {
+            context: (...args) => args,
+            permission: (ctx, user) => isEqual([[
+              '21',
+              {
+                params: {isLeet: 'true'},
+                auth: 'foo'
+              }],
+              'bar'
+            ], [
+              ctx,
+              user
+            ])
+          }
+        })));
+
+      request(app.listen())
+        .get('/23/')
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .get('/23/')
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .get('/21/?isLeet=true')
+        .expect(200)
+        .end(next());
+
+      next(done);
     });
   });
 
@@ -527,6 +749,77 @@ describe("middlewares/api/methods", () => {
         .expect({foo: 23})
         .end(done);
     });
+
+    it("should assume authentication is needed if access options are given",
+    done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authenticationRequiredError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          if (ctx.request.body.isLeet) ctx.user = {a: 23};
+          return next();
+        })
+        .use(_.put('/', update(identity, {
+          access: {permission: true}
+        })));
+
+      request(app.listen())
+        .put('/')
+        .send({isLeet: false})
+        .expect(401)
+        .end(next());
+
+      request(app.listen())
+        .put('/')
+        .send({isLeet: true})
+        .expect(200)
+        .end(next());
+
+      next(done);
+    });
+
+    it("should support access checking", done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authorizationError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = 'foo';
+          ctx.user = 'bar';
+          return next();
+        })
+        .use(_.put('/:id', update(identity, {
+          access: {
+            context: (...args) => args,
+            permission: (ctx, user) => isEqual(
+              [['21', {isLeet: true}, {auth: 'foo'}], 'bar'],
+              [ctx, user])
+          }
+        })));
+
+      request(app.listen())
+        .put('/23')
+        .send({isLeet: false})
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .put('/23')
+        .send({isLeet: true})
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .put('/21')
+        .send({isLeet: true})
+        .expect(200)
+        .end(next());
+
+      next(done);
+    });
   });
 
   describe("patch", () => {
@@ -581,7 +874,7 @@ describe("middlewares/api/methods", () => {
           ctx.auth = {foo: 23};
           return next();
         })
-        .use(_.patch('/', patch((d, opts) => opts.auth)));
+        .use(_.patch('/', patch((d, {auth}) => auth)));
 
       request(app.listen())
         .patch('/')
@@ -608,6 +901,98 @@ describe("middlewares/api/methods", () => {
           url: '/23'
         })
         .end(done);
+    });
+
+    it("should assume authentication is needed if access options are given",
+    done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authenticationRequiredError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          const [{value: {isLeet}}] = ctx.request.body;
+          if (isLeet) ctx.user = {a: 23};
+          return next();
+        })
+        .use(_.patch('/', patch(identity, {
+          access: {permission: true}
+        })));
+
+      request(app.listen())
+        .patch('/')
+        .send([{
+          op: 'add',
+          path: '/',
+          value: {isLeet: false}
+        }])
+        .expect(401)
+        .end(next());
+
+      request(app.listen())
+        .patch('/')
+        .send([{
+          op: 'add',
+          path: '/',
+          value: {isLeet: true}
+        }])
+        .expect(200)
+        .end(next());
+
+      next(done);
+    });
+
+    it("should support access checking", done => {
+      const next = multicb();
+
+      const app = new Koa()
+        .use(authorizationError)
+        .use(bodyParser())
+        .use((ctx, next) => {
+          ctx.auth = 'foo';
+          ctx.user = 'bar';
+          return next();
+        })
+        .use(_.patch('/:id', patch(identity, {
+          access: {
+            context: (id, [{value}], opts) => [id, value, opts],
+            permission: (ctx, user) => isEqual(
+              [['21', {isLeet: true}, {auth: 'foo'}], 'bar'],
+              [ctx, user])
+          }
+        })));
+
+      request(app.listen())
+        .patch('/23')
+        .send([{
+          op: 'add',
+          path: '/',
+          value: {isLeet: false}
+        }])
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .patch('/23')
+        .send([{
+          op: 'add',
+          path: '/',
+          value: {isLeet: false}
+        }])
+        .expect(403)
+        .end(next());
+
+      request(app.listen())
+        .patch('/21')
+        .send([{
+          op: 'add',
+          path: '/',
+          value: {isLeet: true}
+        }])
+        .expect(200)
+        .end(next());
+
+      next(done);
     });
   });
 
@@ -654,7 +1039,7 @@ describe("middlewares/api/methods", () => {
           ctx.auth = {foo: 23};
           return next();
         })
-        .use(_.delete('/', remove(opts => opts.auth)));
+        .use(_.delete('/', remove(({auth}) => auth)));
 
       request(app.listen())
         .delete('/')

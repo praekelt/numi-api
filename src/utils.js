@@ -7,6 +7,7 @@ const constant = require('lodash/constant');
 const { readFileSync: open } = require('fs');
 const { safeLoad: load } = require('js-yaml');
 const { Multiline: str } = require('multiline-tag');
+const { Promise: BluebirdPromise } = require('bluebird');
 
 
 function conj(...args) {
@@ -25,7 +26,7 @@ function effect(fn) {
   return v => {
     const res = fn(v);
 
-    return res instanceof Promise
+    return res instanceof Promise || res instanceof BluebirdPromise
       ? res.then(constant(v))
       : v;
   };
