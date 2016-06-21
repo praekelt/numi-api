@@ -1,3 +1,5 @@
+const constant = require('lodash/constant');
+
 const { permissionNamespace: configNamespace } = require('src/config');
 const { authConf } = require('src/auth-utils');
 const { conj } = require('src/utils');
@@ -13,7 +15,7 @@ function create(teamId, d, {auth, namespace = configNamespace}) {
 
 function remove(teamId, id, {auth}) {
   return authApi.teams.removePermission(teamId, id, {conf: authConf(auth)})
-    .then(({data}) => data);
+    .then(constant(Promise.resolve(null)));
 }
 
 
