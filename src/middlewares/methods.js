@@ -32,10 +32,7 @@ function create(fn, def = {}) {
       .then(effect(d => assertAccess(ctx, access, ...args, d, opts)))
       .then(d => fn(...args, d, opts))
       .then(serializer)
-      .then(res => {
-        ctx.status = 201;
-        ctx.body = res;
-      })
+      .then(setResponse(ctx, 201))
       .then(() => next()));
 }
 
@@ -57,7 +54,7 @@ function list(fn, def = {}) {
       .then(opts => fn(...args, opts))
       .then(data => filterVisible(ctx, visibility, data, opts))
       .then(data => map(data, serializer))
-      .then(res => { ctx.body = res; })
+      .then(setResponse(ctx))
       .then(() => next()));
 }
 
@@ -77,7 +74,7 @@ function read(fn, def = {}) {
       .then(effect(opts => assertAccess(ctx, access, ...args, opts)))
       .then(opts => fn(...args, opts))
       .then(serializer)
-      .then(res => { ctx.body = res; })
+      .then(setResponse(ctx))
       .then(() => next()));
 }
 
@@ -97,7 +94,7 @@ function update(fn, def = {}) {
       .then(d => defaults(schema, d))
       .then(d => fn(...args, d, opts))
       .then(serializer)
-      .then(res => { ctx.body = res; })
+      .then(setResponse(ctx))
       .then(() => next()));
 }
 
@@ -114,7 +111,7 @@ function patch(fn, def = {}) {
       .then(effect(d => assertAccess(ctx, access, ...args, d, opts)))
       .then(d => fn(...args, d, opts))
       .then(serializer)
-      .then(res => { ctx.body = res; })
+      .then(setResponse(ctx))
       .then(() => next()));
 }
 
@@ -129,13 +126,27 @@ function remove(fn, def = {}) {
       .then(effect(() => assertAccess(ctx, access, ...args, opts)))
       .then(() => fn(...args, opts))
       .then(serializer)
-      .then(res => { ctx.body = res; })
+      .then(setResponse(ctx))
       .then(() => next()));
 }
 
 
 function method(fn) {
   return groupArgs((ctx, args, next) => fn(ctx, args, getOptions(ctx), next));
+}
+
+
+function setResponse(ctx, status = 200) {
+  return res => {
+    if (isNull(res)) {
+      ctx.status = 204;
+      ctx.body = '';
+    }
+    else {
+      ctx.status = status;
+      ctx.body = res;
+    }
+  };
 }
 
 
