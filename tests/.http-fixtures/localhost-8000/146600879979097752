@@ -1,0 +1,11 @@
+DELETE /teams/9/permissions/11/
+accept: application/json, text/plain, */*
+authorization: Token f5e2b9e9754a88fec77422fe9e30fafcfb354917
+
+HTTP/1.0 204 No Content
+date: Wed, 15 Jun 2016 16:39:59 GMT
+server: WSGIServer/0.1 Python/2.7.10
+vary: Accept
+x-frame-options: SAMEORIGIN
+content-length: 0
+allow: DELETE, OPTIONS

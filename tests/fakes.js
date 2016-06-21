@@ -35,11 +35,20 @@ const fakeDialogue = fakeResource(() => ({
 }));
 
 
+const fakePermission = fakeResource(() => ({
+  id: '11',
+  object_id: '3',
+  type: 'project:admin',
+  namespace: 'numi'
+}));
+
+
 module.exports = {
   fakeAuthResult,
   fakeProjectsResult,
   fakeDialoguesResult,
   fakeProject,
   fakeResource,
-  fakeDialogue
+  fakeDialogue,
+  fakePermission
 };

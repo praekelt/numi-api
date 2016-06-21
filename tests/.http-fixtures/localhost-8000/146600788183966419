@@ -1,0 +1,13 @@
+GET /user/
+accept: application/json, text/plain, */*
+authorization: Token 4416016e9acba56b7f7f21350325b5456b9c80e9
+
+HTTP/1.0 200 OK
+date: Wed, 15 Jun 2016 16:24:41 GMT
+server: WSGIServer/0.1 Python/2.7.10
+vary: Accept
+x-frame-options: SAMEORIGIN
+content-type: application/json
+allow: GET, HEAD, OPTIONS
+
+{"id":15,"url":"http://localhost:8000/users/15/","first_name":"","last_name":"","email":"project4admin@users.org","admin":false,"active":true,"permissions":[{"id":14,"type":"project:admin","object_id":"4","namespace":"numi"},{"id":17,"type":"team:admin","object_id":"9","namespace":"__auth__"}]}
