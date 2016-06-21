@@ -36,6 +36,7 @@ properties:
       $ref: '#/definitions/dialogue/sequence'
     description: |
       The dialogue's set of sequences
+    default: []
 
   is_archived:
     type: boolean
@@ -69,6 +70,5 @@ properties:
 
 required:
   - title
-  - sequences
 
 additionalProperties: false

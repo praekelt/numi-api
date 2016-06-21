@@ -52,13 +52,6 @@ describe("api.permissions", () => {
 
   describe("remove", () => {
     it("should remove the given permission", () => {
-      const expected = {
-        id: 22,
-        type: 'project:write',
-        namespace: '_numi_',
-        object_id: 21
-      };
-
       const auth = {
         type: 'token',
         token: 'abc'
@@ -66,10 +59,10 @@ describe("api.permissions", () => {
 
       this.sandbox.stub(authApi.teams, 'removePermission')
         .withArgs(23, 21, {conf: authConf(auth)})
-        .returns(fakeAuthResult(expected));
+        .returns(fakeAuthResult(null));
 
       return permissions.remove(23, 21, {auth})
-        .then(res => expect(res).to.deep.equal(expected));
+        .then(res => expect(res).to.be.null);
     });
   });
 });
