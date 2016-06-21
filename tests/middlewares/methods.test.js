@@ -136,6 +136,18 @@ describe("middlewares/api/methods", () => {
         .end(done);
     });
 
+    it("should set the status code to 204 for null results", done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.post('/', create(constant(null))));
+
+      request(app.listen())
+        .post('/')
+        .expect(204)
+        .expect('')
+        .end(done);
+    });
+
     it("should assume authentication is needed if access options are given",
     done => {
       const next = multicb();
@@ -820,6 +832,18 @@ describe("middlewares/api/methods", () => {
 
       next(done);
     });
+
+    it("should set the status code to 204 for null results", done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.put('/', update(constant(null))));
+
+      request(app.listen())
+        .put('/')
+        .expect(204)
+        .expect('')
+        .end(done);
+    });
   });
 
   describe("patch", () => {
@@ -993,6 +1017,19 @@ describe("middlewares/api/methods", () => {
         .end(next());
 
       next(done);
+    });
+
+    it("should set the status code to 204 for null results", done => {
+      const app = new Koa()
+        .use(bodyParser())
+        .use(_.patch('/', patch(constant(null))));
+
+      request(app.listen())
+        .patch('/')
+        .send([])
+        .expect(204)
+        .expect('')
+        .end(done);
     });
   });
 
