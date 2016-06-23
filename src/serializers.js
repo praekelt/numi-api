@@ -1,27 +1,32 @@
-const ary = require('lodash/ary');
-const mapValues = require('lodash/mapValues');
 const { overrides } = require('src/utils');
 
 
-const project = ({id}) => ({url: `/projects/${id}`});
+const project = overrides(({id}) => ({url: `/projects/${id}`}));
 
 
-const dialogue = ({id}) => ({url: `/dialogues/${id}`});
+const dialogue = overrides(({id}) => ({url: `/dialogues/${id}`}));
 
 
-const channel = ({id}) => ({url: `/channels/${id}`});
+const channel = overrides(({id}) => ({url: `/channels/${id}`}));
 
 
-const provider = ({id}) => ({url: `/providers/${id}`});
+const provider = overrides(({id}) => ({url: `/providers/${id}`}));
 
 
-const team = ({id}) => ({url: `/teams/${id}`});
+const team = overrides(({id, users}) => ({
+  url: `/teams/${id}`,
+  users: users.map(user)
+}));
 
 
-module.exports = mapValues({
+const user = overrides(() => ({url: void 0}));
+
+
+module.exports = {
   project,
   dialogue,
   channel,
   provider,
-  team
-}, ary(overrides, 1));
+  team,
+  user
+};

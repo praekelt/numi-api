@@ -1,5 +1,8 @@
 const { expect } = require('chai');
+
 const serializers = require('src/serializers');
+
+const { fakeTeam, fakeUser } = require('tests/fakes');
 
 
 describe("serializers", () => {
@@ -29,7 +32,20 @@ describe("serializers", () => {
 
   describe("team", () => {
     it("should construct the team's url", () => {
-      expect(serializers.team({id: 23}).url).to.equal('/teams/23');
+      expect(serializers.team(fakeTeam({id: 23})).url).to.equal('/teams/23');
+    });
+
+    it("should serialize users", () => {
+      const user = fakeUser();
+      const {users} = serializers.team(fakeTeam({users: [user]}));
+      expect(users).to.deep.equal([serializers.user(user)]);
+    });
+  });
+
+  describe("user", () => {
+    it("should omit the user's url", () => {
+      expect(serializers.user({url: '/users/1'}))
+        .to.not.have.property('url');
     });
   });
 });

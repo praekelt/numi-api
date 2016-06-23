@@ -121,7 +121,7 @@ describe("routes/permissions", () => {
       request(this.numi)
         .delete('/teams/9/permissions/11')
         .set('Authorization', `Token ${tokens.admin}`)
-        .expect(200)
+        .expect(204)
         .end(done);
     });
 

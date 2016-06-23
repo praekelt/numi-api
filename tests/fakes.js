@@ -77,6 +77,19 @@ const fakePermission = fakeResource(() => ({
 }));
 
 
+const fakeTeam = fakeResource(() => ({
+  id: '11',
+  url: 'authapi/teams/11/',
+  users: [fakeUser()]
+}));
+
+
+const fakeUser = fakeResource(() => ({
+  id: '11',
+  url: 'authapi/users/11/'
+}));
+
+
 module.exports = {
   fakeAuthResult,
   fakeProjectsResult,
@@ -84,9 +97,11 @@ module.exports = {
   fakeReleasesResult,
   fakeRevisionsResult,
   fakeProject,
-  fakeResource,
   fakeDialogue,
   fakeRelease,
   fakeRevision,
-  fakePermission
+  fakePermission,
+  fakeResource,
+  fakeTeam,
+  fakeUser
 };
