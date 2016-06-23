@@ -434,8 +434,7 @@ Permissions
 
 .. http:delete:: /teams/(str:team_id)/permissions/(str:permission_id)
 
-  Revokes the permission with id ``permission_id`` for the team with id
-  ``team_id`` and returns the revoked permission.
+  Revokes the permission with id ``permission_id`` for the team.
 
   .. sourcecode:: http
 
@@ -443,14 +442,8 @@ Permissions
 
   .. sourcecode:: http
 
-     HTTP/1.1 200 OK
+     HTTP/1.1 204 OK
      Content-Type: application/json
-
-     {
-       "id": 182,
-       "type": "projects:admin",
-       "object_id": 23
-     }
 
 .. _projects:
 

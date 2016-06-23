@@ -24,11 +24,6 @@ properties:
     description: |
       Identifies the type of this permission.
 
-  metadata:
-    type: object
-    default: {}
-    description: |
-      Additional data relevant to the permission type.
-
 required:
   - type
+  - object_id

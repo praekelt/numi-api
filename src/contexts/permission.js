@@ -1,10 +1,15 @@
 const find = require('lodash/find');
 const isNull = require('lodash/isNull');
+const isUndefined = require('lodash/isUndefined');
 const project = require('src/contexts/project');
 const authApi = require('src/core/auth');
 const { effect } = require('src/utils');
 const { authConf } = require('src/auth-utils');
-const { NotImplementedError, AuthorizationError } = require('src/errors');
+const {
+  NotFoundError,
+  NotImplementedError,
+  AuthorizationError
+} = require('src/errors');
 
 
 function createAccess(teamId, permission) {
@@ -17,7 +22,10 @@ function createAccess(teamId, permission) {
 
 function removeAccess(teamId, id, {auth}) {
   return authApi.teams.get(teamId, {conf: authConf(auth)})
-    .then(({data: {permissions}}) => find(permissions, {id}))
+    .then(({data: {permissions}}) => find(permissions, {id: +id}))
+    .then(effect(d => {
+      if (isUndefined(d)) throw new NotFoundError();
+    }))
     .then(access)
     .then(effect(v => {
       if (isNull(v)) throw new AuthorizationError();

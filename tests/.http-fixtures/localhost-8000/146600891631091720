@@ -1,0 +1,13 @@
+GET /teams/9/
+accept: application/json, text/plain, */*
+authorization: Token 76c05e887eaf379b46d613faf6a2db0eb324b892
+
+HTTP/1.0 403 Forbidden
+date: Wed, 15 Jun 2016 16:41:56 GMT
+server: WSGIServer/0.1 Python/2.7.10
+vary: Accept
+x-frame-options: SAMEORIGIN
+content-type: application/json
+allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+
+{"detail":"You do not have permission to perform this action."}

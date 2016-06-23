@@ -111,5 +111,14 @@ describe("utils", () => {
         b: 2
       });
     });
+
+    it("should omit undefined values", () => {
+      const fn = utils.overrides(() => ({
+        a: void 0,
+        b: 23
+      }));
+
+      expect(fn()).to.deep.equal({b: 23});
+    });
   });
 });

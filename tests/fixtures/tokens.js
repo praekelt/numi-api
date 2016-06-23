@@ -7,5 +7,7 @@
     project1Read: '4287d076fffd3367fd1ed6c58814d042ce610755',
     project1Write: 'cb028e103d6621ff5238b79211b13065db30da4b',
     project2Read: 'fbf71ff2f54df0c92617e715b306fe1891c2c122',
-    project2Write: 'a27a8868ab2f04fbb6b2cf0bbd6f150b43cdf9bd'
+    project2Write: 'a27a8868ab2f04fbb6b2cf0bbd6f150b43cdf9bd',
+    project3Admin: 'a2792b8ace1aeea3fa7816744ebe3bfcc485bce6',
+    project4Admin: '4416016e9acba56b7f7f21350325b5456b9c80e9'
   };
