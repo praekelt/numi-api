@@ -1,8 +1,12 @@
-const { NotImplementedError } = require('src/errors');
+const providers = require('src/core/providers');
 
 
-function access() {
-  throw new NotImplementedError();
+function access(providerId) {
+  return providers.get(providerId)
+    .then(({data: {organization_id}}) => ({
+      providerId,
+      organizationId: organization_id
+    }));
 }
 
 

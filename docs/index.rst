@@ -1251,34 +1251,6 @@ Ordering releases
 Channels
 --------
 
-.. http:get:: /organizations/:organization_id/channels/
-
-  Retrieves the :ref:`descriptions <data-channel>` of all channels contained by
-  the organization with id ``organization_id``.
-
-  .. sourcecode:: http
-
-     GET /channels/ HTTP/1.1
-
-  .. sourcecode:: http
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json
-
-     [{
-       "id": "23",
-       "url": "/channels/23",
-       "project_id": "21",
-       "title": "@foo",
-       "address": "@foo",
-       "type": "twitter",
-       "is_available": true,
-       "provider": {
-         "id": "21",
-         "title": "Twitter"
-       }
-     }]
-
 .. http:get:: /channels/(str:channel_id)
 
   Retrieves the :ref:`description <data-channel>` of the channel with the id
@@ -1295,6 +1267,7 @@ Channels
 
      {
        "id": "23",
+       "provider_id": "3",
        "url": "/channels/23",
        "project_id": "21",
        "title": "@foo",
@@ -1323,6 +1296,7 @@ Channels
 
      {
        "id": "23",
+       "provider_id": "3",
        "project_id": "17",
        "url": "/channels/23",
        "title": "@foo",
@@ -1374,6 +1348,7 @@ Channels
 
      {
        "id": "23",
+       "provider_id": "3",
        "project_id": "17",
        "url": "/channels/23",
        "title": "@foo",
@@ -1433,8 +1408,9 @@ Providers
        "title": "Twitter"
        "channels": [{
          "id": "23",
+         "provider_id": "21",
          "url": "/channels/23",
-         "project_id": 21,
+         "project_id": 3,
          "title": "@foo",
          "address": "@foo",
          "type": "twitter",
