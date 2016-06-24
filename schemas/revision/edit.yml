@@ -14,7 +14,6 @@ properties:
           this revision.
 
       patch:
-        $ref: 'http://json.schemastore.org/json-patch'
         description: |
           JSON patch representing the changes made in this revision
 

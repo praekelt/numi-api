@@ -7,15 +7,15 @@ const contexts = require('src/contexts');
 
 
 module.exports = [
-  _.post('/dialogue/:dialogue_id/releases/', create(releases.create, {
+  _.post('/dialogues/:dialogue_id/releases/', create(releases.create, {
     schema,
     access: {
       permission: permissions.create,
-      context: contexts.release.access
+      context: contexts.dialogue.access
     }
   })),
 
-  _.get('/dialogue/:dialogue_id/releases/', list(releases.list, {
+  _.get('/dialogues/:dialogue_id/releases/', list(releases.list, {
     schema: {
       type: 'object',
       properties: {
@@ -26,7 +26,7 @@ module.exports = [
     },
     access: {
       permission: permissions.list,
-      context: contexts.release.access
+      context: contexts.dialogue.access
     }
   }))
 ];
