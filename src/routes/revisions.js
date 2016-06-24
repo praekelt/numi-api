@@ -8,7 +8,7 @@ const contexts = require('src/contexts');
 
 
 module.exports = [
-  _.post('/dialogue/:dialogue_id/revisions/', create(revisions.create, {
+  _.post('/dialogues/:dialogue_id/revisions/', create(revisions.create, {
     schema,
     serializer,
     access: {
@@ -17,7 +17,7 @@ module.exports = [
     }
   })),
 
-  _.get('/dialogue/:dialogue_id/revisions/', list(revisions.list, {
+  _.get('/dialogues/:dialogue_id/revisions/', list(revisions.list, {
     serializer,
     schema: {
       type: 'object',

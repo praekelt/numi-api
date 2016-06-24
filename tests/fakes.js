@@ -26,6 +26,16 @@ function fakeDialoguesResult(data) {
 }
 
 
+function fakeReleasesResult(data) {
+  return Promise.resolve({data});
+}
+
+
+function fakeRevisionsResult(data) {
+  return Promise.resolve({data});
+}
+
+
 function fakeResource(defaults) {
   return (d = {}) => conj(defaults(), d);
 }
@@ -61,6 +71,30 @@ const fakeDialogue = fakeResource(() => ({
 }));
 
 
+const fakeRelease = fakeResource(() => ({
+  id: '1',
+  dialogue_id: '1',
+  revision_id: '1',
+  number: 1
+}));
+
+
+const fakeRevision = fakeResource(() => ({
+  id: '1',
+  dialogue_id: '1',
+  created: +new Date(0),
+  type: 'edit',
+  properties: {
+    edit_type: 'new_sequence',
+    patch: [{
+      op: 'add',
+      path: '/sequences/',
+      value: {title: 'Sequence 1'}
+    }]
+  }
+}));
+
+
 const fakePermission = fakeResource(() => ({
   id: '11',
   object_id: '3',
@@ -85,14 +119,18 @@ const fakeUser = fakeResource(() => ({
 module.exports = {
   fakeAuthResult,
   fakeProjectsResult,
+  fakeDialoguesResult,
+  fakeReleasesResult,
+  fakeRevisionsResult,
   fakeProvidersResult,
   fakeChannelsResult,
-  fakeProject,
   fakeResource,
+  fakeProject,
+  fakeDialogue,
+  fakeRelease,
+  fakeRevision,
   fakeProvider,
   fakeChannel,
-  fakeDialoguesResult,
-  fakeDialogue,
   fakePermission,
   fakeTeam,
   fakeUser
